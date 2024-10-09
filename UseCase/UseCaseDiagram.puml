@@ -1,0 +1,17 @@
+@startuml
+
+actor DataAnalyst as "DataAnalyst"
+
+rectangle Database
+
+rectangle "Population Information System" {
+    usecase Usecase1 as "Get population data for all countries"
+
+    usecase uc as "Sort countries by population size"
+
+    DataAnalyst - Usecase1 : "Requests data"
+    Usecase1 ..> uc : include
+    Usecase1 - Database : "Fetched population data"
+}
+
+@enduml
