@@ -1,4 +1,4 @@
-//Main
+//Main method for the app
 package com.napier.sem;
 
 public class App {
