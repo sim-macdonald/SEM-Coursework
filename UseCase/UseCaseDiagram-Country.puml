@@ -1,6 +1,6 @@
 @startuml
 
-actor GlobalDirector as "GlobalDirector"
+actor GOA as "GlobalOperationsAnalyst"
 
 rectangle Database
 
@@ -19,7 +19,7 @@ rectangle "Database Queries" {
 
     usecase column6 as "Capital"
 
-    GlobalDirector - Usecase1 : "Requests data"
+    GOA - Usecase1 : "Requests data"
     Usecase1 ..> column1 : include
     Usecase1 ..> column2 : include
     Usecase1 ..> column3 : include
