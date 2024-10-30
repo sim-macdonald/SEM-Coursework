@@ -36,7 +36,7 @@ Data Analyst Reviews and Delivers Report:
 The data analyst reviews the processed data for completeness and accuracy, then delivers the report to the organization.
 
 # EXTENSIONS
-Incomplete Data at Specified Level:
+Incomplete Data at Specified Level.
 
 Condition: Population data is incomplete for the requested level (e.g., missing city data for a specific region).
 

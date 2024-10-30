@@ -36,7 +36,7 @@ Data Analyst Reviews and Delivers Report:
 The data analyst reviews the ordered list for completeness and accuracy, then provides the report to the organization.
 
 # Extensions
-Missing Population Data for Some Countries
+Missing Population Data for Some Countries.
 
 Condition: Population data is incomplete for certain countries within the specified scope.
 
