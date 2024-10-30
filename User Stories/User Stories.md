@@ -15,3 +15,7 @@ As a data analyst for a tech company, I would like to be able to use a database 
 - Capital City Report - Aswin Vazhakkoottathil Podimon
 
 As a data analyst for a tech company, I want to use a database to query the populations of capital cities worldwide, so that I can identify key urban areas with significant user potential. By understanding the population sizes of these capitals, we can assess our product's market popularity in major cities and strategically target our marketing efforts and resources to boost user engagement in these densely populated regions. This analysis will enable us to make data-driven decisions to enhance our outreach and optimize service delivery in capital cities that show high growth potential.
+
+- City Report - Dylan McQuaker
+
+As a data analyst for a tech company, I would like to be able to access the database and query a list of cities ordered by population from largest to smallest at multiple geographical levels to provide detailed demographics. This will help us understand our user demographic better.
