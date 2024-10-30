@@ -36,7 +36,7 @@ Data Analyst Reviews and Delivers Report:
 The data analyst reviews the ordered list for completeness and accuracy, then provides the report to the organization.
 
 # Extensions
-Incomplete Data for Some Cities
+Incomplete Data for Some Cities.
 
 Condition: Population data is missing for certain cities within the specified scope.
 

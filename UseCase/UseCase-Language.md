@@ -36,7 +36,7 @@ Data Analyst Reviews and Delivers Report:
 The data analyst reviews the ordered list for accuracy, including each language’s speaker count and percentage of the world population, and provides the report to the organization.
 
 # Extensions
-Incomplete Data for Certain Languages.
+Incomplete Data for Certain Languages. 
 
 Condition: Population data is missing for one or more languages.
 
