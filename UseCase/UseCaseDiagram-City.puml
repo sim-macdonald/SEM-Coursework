@@ -1,0 +1,26 @@
+@startuml
+
+actor DataAnalyst as "Data Analyst"
+
+rectangle Database
+
+rectangle "Database Queries" {
+    usecase Usecase1 as "Create a City Report"
+
+    usecase column1 as "Name"
+
+    usecase column2 as "Country"
+
+    usecase column3 as "District"
+
+    usecase column4 as "Population"
+
+    DataAnalyst - Usecase1 : "Requests data"
+    Usecase1 ..> column1 : include
+    Usecase1 ..> column2 : include
+    Usecase1 ..> column3 : include
+    Usecase1 ..> column4 : include
+    Usecase1 - Database : "Fetched data"
+}
+
+@enduml
