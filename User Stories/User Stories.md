@@ -18,4 +18,4 @@ As a data analyst for a tech company, I want to use a database to query the popu
 
 - City Report - Dylan McQuaker
 
-As a data analyst for a tech company, I would like to be able to access the database and query a list of cities ordered by population from largest to smallest at multiple geographical levels to provide detailed demographics. This will help us understand our user demographic better.
+As a data analyst for a tech company, I would like to be able to access the database and query a list of cities ordered by population from largest to smallest at multiple geographical levels to provide detailed demographics. This will help us understand our user demographic better which in turn will allow us to tailor our development and decisions to align with the targetted demographics that we decide upon.
