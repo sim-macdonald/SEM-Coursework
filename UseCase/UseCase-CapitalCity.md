@@ -5,7 +5,7 @@ As a data analyst, I want to retrieve a list of capital cities ordered by popula
 Business
 
 # Level
-Primary task.
+Primary task. 
 
 # Preconditions
 Access to a database containing up-to-date population data for each capital city.
