@@ -1,65 +1,44 @@
 # Goal in Context
-As a global director, I want to retrieve a list of countries ordered by population (from largest to smallest) to meet the organization's reporting needs at a global level or by specific continent or region.
+As a Data Analyst, I want to retrieve a list of countries ordered by population, from largest to smallest, so that I can create reports to inform better allocation of resources on a global and regional scale
 
 # Scope
-Country population data collection and ordering by size.
+Business
 
 # Level
 Primary task.
 
 # Preconditions
-Access to a database containing up-to-date population data for each country.
+Access to a database that contains all the correct and current data of all countries.
 
 # Success End Condition
-A report listing countries ordered by population from largest to smallest, either for the world or a specific continent or region, or the top N populated countries based on user input, is provided to the organization.
+A report listing countries ordered by population from largest to smallest, either for the world or a specific continent or region.
 
 # Failed End Condition
-No list is produced, or the data is inaccurate or incomplete.
+No report is produced, or the data is inaccurate or incomplete. 
 
 # Primary Actor
 Data Analyst.
 
 # Trigger
-A request for a country population report ordered by size is sent to the data analyst.
+A request for a country report is sent to the data analyst.
 
 # Main Success Scenario
-Organization Requests Country Population Data:
-The organization requests a list of countries ordered by population at a specified level (global, continent, or region) and may specify a top N requirement.
-
-Data Analyst Queries the Database:
-The data analyst queries the database for population information relevant to the requested level, either globally, by continent, or by region, with an option for the top N countries if specified.
-
-System Retrieves and Orders Data:
-The system retrieves the population data and orders the countries in descending order by population, filtering to the top N if needed.
-
-Data Analyst Reviews and Delivers Report:
-The data analyst reviews the ordered list for completeness and accuracy, then provides the report to the organization.
+1. Organisation requests the query on the list of countries.
+2. Data Analyst runs the query and extracts all the populations of each country.
+3. Data Analyst receives the list in descending order.
+4. Data Analyst provides this list to the organisation.
 
 # Extensions
-Missing Population Data for Some Countries.
-
-Condition: Population data is incomplete for certain countries within the specified scope.
-
-Action: The data analyst notes this in the report and informs the organization of any missing data.
+3. Population data for country doesn't exist:
+    - i. Data analyst informs organisation that some population data doesn't exist.
 
 # Sub-Variations
-Variation 1: All Countries in the World Ordered by Population
-Details: System retrieves all countries globally and orders them by population, from largest to smallest.
-
-Variation 2: All Countries in a Continent Ordered by Population
-Details: System retrieves all countries within a specified continent and orders them by population from largest to smallest.
-
-Variation 3: All Countries in a Region Ordered by Population
-Details: System retrieves all countries within a specified region and orders them by population from largest to smallest.
-
-Variation 4: Top N Populated Countries in the World
-Details: System retrieves and orders all countries by population globally, then filters to return the top N populated countries as specified by the user.
-
-Variation 5: Top N Populated Countries in a Continent
-Details: System retrieves and orders all countries by population within a specified continent, then filters to return the top N populated countries as specified by the user.
-
-Variation 6: Top N Populated Countries in a Region
-Details: System retrieves and orders all countries by population within a specified region, then filters to return the top N populated countries as specified by the user.
+1. All the countries in the world organised by largest population to smallest.
+2. All the countries in a continent organised by largest population to smallest.
+3. All the countries in a region organised by largest population to smallest.
+4. The top N populated countries in the world where N is provided by the user.
+5. The top N populated countries in a continent where N is provided by the user.
+6. The top N populated countries in a region where N is provided by the user
 
 # Schedule
-Due Date: Release 1.2.0
+Due Date: Release 2.0
