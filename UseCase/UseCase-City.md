@@ -37,6 +37,7 @@ The data analyst reviews the ordered list for completeness and accuracy, then pr
 
 # Extensions
 Incomplete Data for Some Cities.
+
     1. Data analyst notifies the organisation that the data is incomplete.
 
 # Sub-Variations
