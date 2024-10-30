@@ -1,5 +1,5 @@
 # Goal in Context
-As a data analyst, I want to retrieve a list of countries ordered by population (from largest to smallest) to meet the organization's reporting needs at a global level or by specific continent or region.
+As a global director, I want to retrieve a list of countries ordered by population (from largest to smallest) to meet the organization's reporting needs at a global level or by specific continent or region.
 
 # Scope
 Country population data collection and ordering by size.

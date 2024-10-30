@@ -1,0 +1,21 @@
+@startuml
+
+actor GOA as "GlobalOperationsAnalyst"
+
+rectangle Database
+
+rectangle "Database Queries" {
+    usecase Usecase1 as "Create a Language Report providing the number of people who speak: Chinese, English, Hindi, Spanish, Arabic"
+
+    usecase uc as "sort from greatest to smallest"
+
+    usecase uc2 as "include the percentage of worlds population"
+
+    GOA - Usecase1 : "Requests data"
+    Usecase1 ..> uc : include
+    Usecase1 ..> uc2 : include
+
+    Usecase1 - Database : "Fetched data"
+}
+
+@enduml
