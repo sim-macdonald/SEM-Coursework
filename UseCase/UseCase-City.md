@@ -37,41 +37,13 @@ The data analyst reviews the ordered list for completeness and accuracy, then pr
 
 # Extensions
 Incomplete Data for Some Cities.
-
-Condition: Population data is missing for certain cities within the specified scope.
-
-Action: The data analyst notes this in the report and informs the organization of any data gaps.
+    1. Data analyst notifies the organisation that the data is incomplete.
 
 # Sub-Variations
-Variation 1: All Cities in the World Ordered by Population
-Details: System retrieves all cities globally and orders them by population, from largest to smallest.
-
-Variation 2: All Cities in a Continent Ordered by Population
-Details: System retrieves all cities within a specified continent and orders them by population from largest to smallest.
-
-Variation 3: All Cities in a Region Ordered by Population
-Details: System retrieves all cities within a specified region and orders them by population from largest to smallest.
-
-Variation 4: All Cities in a Country Ordered by Population
-Details: System retrieves all cities within a specified country and orders them by population from largest to smallest.
-
-Variation 5: All Cities in a District Ordered by Population
-Details: System retrieves all cities within a specified district and orders them by population from largest to smallest.
-
-Variation 6: Top N Populated Cities in the World
-Details: System retrieves and orders all cities by population globally, then filters to return the top N populated cities as specified by the user.
-
-Variation 7: Top N Populated Cities in a Continent
-Details: System retrieves and orders all cities by population within a specified continent, then filters to return the top N populated cities as specified by the user.
-
-Variation 8: Top N Populated Cities in a Region
-Details: System retrieves and orders all cities by population within a specified region, then filters to return the top N populated cities as specified by the user.
-
-Variation 9: Top N Populated Cities in a Country
-Details: System retrieves and orders all cities by population within a specified country, then filters to return the top N populated cities as specified by the user.
-
-Variation 10: Top N Populated Cities in a District
-Details: System retrieves and orders all cities by population within a specified district, then filters to return the top N populated cities as specified by the user.
-
+All the cities in the world organised by largest population to smallest.
+All the cities in a continent organised by largest population to smallest.
+All the cities in a region organised by largest population to smallest.
+All the cities in a country organised by largest population to smallest.
+All the cities in a district organised by largest population to smallest.
 # Schedule
-Due Date: Release 1.2.0
+Due Date: Release 2.0
