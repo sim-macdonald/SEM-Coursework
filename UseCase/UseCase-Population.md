@@ -45,4 +45,4 @@ A request for population data at a specified geographic level is sent to the dat
 
 
 # SCHEDULE
-DUE DATE: Release 1.2.0
+DUE DATE: Release 2.0
