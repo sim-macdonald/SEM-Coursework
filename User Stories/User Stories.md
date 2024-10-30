@@ -11,3 +11,7 @@ As a data analyst for a tech company, I would like to use a database to query th
 - Population Report - Danussvar Jayanthi Narendran
 
 As a data analyst for a tech company, I would like to be able to use a database to query the population of people at various geographic levels, including those living in cities and those outside cities, so that I can gain insights into the distribution of urban and rural populations across continents, regions, and countries. This will help us better understand where our user base is concentrated, identify areas with high urban populations for targeted campaigns, and enable more strategic allocation of resources to areas with significant potential for user growth.
+
+- Capital City Report - Aswin Vazhakkoottathil Podimon
+
+As a data analyst for a tech company, I want to use a database to query the populations of capital cities worldwide, so that I can identify key urban areas with significant user potential. By understanding the population sizes of these capitals, we can assess our product's market popularity in major cities and strategically target our marketing efforts and resources to boost user engagement in these densely populated regions. This analysis will enable us to make data-driven decisions to enhance our outreach and optimize service delivery in capital cities that show high growth potential.
