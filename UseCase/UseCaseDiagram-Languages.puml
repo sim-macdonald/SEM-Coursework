@@ -1,6 +1,6 @@
 @startuml
 
-actor GOA as "GlobalOperationsAnalyst"
+actor DataAnalyst as "Data Analyst"
 
 rectangle Database
 
@@ -11,7 +11,7 @@ rectangle "Database Queries" {
 
     usecase uc2 as "include the percentage of worlds population"
 
-    GOA - Usecase1 : "Requests data"
+    DataAnalyst - Usecase1 : "Requests data"
     Usecase1 ..> uc : include
     Usecase1 ..> uc2 : include
 
