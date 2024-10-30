@@ -41,4 +41,4 @@ A request for a capital city population report ordered by size is sent to the da
 6. The top N populated capital cities in a region where N is provided by the user.
 
 # Schedule
-Due Date: Release 1.2.0
+Due Date: Release 2.0
