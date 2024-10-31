@@ -16,7 +16,7 @@ public class App
         a.connect();
 
         // Get country
-        Country country = a.getCountry("AUS");
+        Country country = a.getCountry("'Asia'");
         // Display results
         a.displayCountry(country);
 

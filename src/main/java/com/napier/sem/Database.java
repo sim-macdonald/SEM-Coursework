@@ -72,7 +72,7 @@ public class Database {
 
     }
 
-    public Country getCountry(String code) {
+    public Country getCountry(String continent) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -80,7 +80,7 @@ public class Database {
             String strSelect =
                     "SELECT Name, Population, Capital "
                             + "FROM country "
-                            + "WHERE code > " + code;
+                            + "WHERE continent = " + continent;
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // Return new country if valid.
