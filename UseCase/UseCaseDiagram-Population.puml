@@ -1,0 +1,26 @@
+@startuml
+
+actor DataAnalyst as "Data Analyst"
+
+rectangle Database
+
+rectangle "Database Queries" {
+    usecase Usecase1 as "Create a Population Report"
+
+    usecase column1 as "The name of the continent/region/country"
+
+    usecase column2 as "The total population of the continent/region/country"
+
+    usecase column3 as "The total population of the continent/region/country living in cities (including a %)"
+
+    usecase column4 as "The total population of the continent/region/country not living in cities (including a %)"
+
+    DataAnalyst - Usecase1 : "Requests data"
+    Usecase1 ..> column1 : include
+    Usecase1 ..> column2 : include
+    Usecase1 ..> column3 : include
+    Usecase1 ..> column4 : include
+    Usecase1 - Database : "Fetched data"
+}
+
+@enduml
