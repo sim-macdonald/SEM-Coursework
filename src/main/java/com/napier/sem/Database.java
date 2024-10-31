@@ -1,5 +1,7 @@
 package com.napier.sem;
 
+import com.napier.sem.reports.Country;
+
 import java.sql.*;
 
 public class Database {
@@ -66,6 +68,49 @@ public class Database {
             {
                 System.out.println("Error closing connection to database");
             }
+        }
+
+    }
+
+    public Country getCountry(String code) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT Name, Population, Capital "
+                            + "FROM country "
+                            + "WHERE code > " + code;
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Return new country if valid.
+            // Check one is returned
+            if (rset.next()) {
+                Country country = new Country();
+                country.name = rset.getString("name");
+                country.population = rset.getInt("population");
+                country.capital = rset.getString("capital");
+                return country;
+            } else
+                return null;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
+    public void displayCountry(Country country)
+    {
+        if (country != null)
+        {
+            System.out.println(
+                    country.code + "\n"
+                            + country.name + "\n"
+                            + country.continent+ "\n"
+                            + country.region + "\n"
+                            + country.population + "\n"
+                            + country.capital + "\n");
         }
     }
 

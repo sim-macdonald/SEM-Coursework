@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import com.napier.sem.Database;
+import com.napier.sem.reports.Country;
 
 import java.sql.*;
 
@@ -13,6 +14,11 @@ public class App
 
         // Connect to database
         a.connect();
+
+        // Get country
+        Country country = a.getCountry("AUS");
+        // Display results
+        a.displayCountry(country);
 
         // Disconnect from database
         a.disconnect();
