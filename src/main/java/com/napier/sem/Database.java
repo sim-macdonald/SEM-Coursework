@@ -76,7 +76,7 @@ public class Database {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = query
-                    + "ORDER BY Population DESC";
+                    + " ORDER BY Population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             //Extract country information
@@ -105,7 +105,7 @@ public class Database {
             Statement stmt = con.createStatement();
             // Create string for SQL statement
             String strSelect = query
-                    + "ORDER BY Population DESC "
+                    + " ORDER BY Population DESC "
                     + "LIMIT " + N;
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);

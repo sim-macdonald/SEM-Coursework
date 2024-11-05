@@ -4,17 +4,16 @@ public class Country_queries {
 
     public static String query1 = "SELECT Code, country.Name, country.Continent, country.Region, country.Population, city.Name AS Capital "
             + "FROM country "
-            + "JOIN city ON country.Capital=city.ID "
-            + "ORDER BY Population DESC";
+            + "JOIN city ON country.Capital=city.ID";
 
     public static String query2 = "SELECT Code, country.Name, country.Continent, country.Region, country.Population, city.Name AS Capital "
             + "FROM country "
             + "JOIN city ON country.Capital=city.ID "
-            + "WHERE country.Continent= ";
+            + "WHERE country.Continent=";
 
     public static String query3 = "SELECT Code, country.Name, country.Continent, country.Region, country.Population, city.Name AS Capital "
             + "FROM country "
             + "JOIN city ON country.Capital=city.ID "
-            + "WHERE country.Region= ";
+            + "WHERE country.Region=";
 
 }

@@ -18,7 +18,7 @@ public class App
         a.connect();
 
         // Extract country information
-        ArrayList<Country> countries = a.getCountry1(Country_queries.query1);
+        ArrayList<Country> countries = a.getCountry2(Country_queries.query1, 5);
         // Display results
         a.printCountries(countries);
 
