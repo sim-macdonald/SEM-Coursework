@@ -126,12 +126,12 @@ public class Database {
     public void printCountries(ArrayList<Country> country)
     {
         // Print header
-        System.out.println(String.format("%-10s %-20s %-15s %-10s %-10s %-10s", "Code","Name", "Continent", "Region", "Population","Capital"));
+        System.out.println(String.format("%-10s %-40s %-15s %-25s %-15s %-15s", "Code","Name", "Continent", "Region", "Population","Capital"));
         // Loop over all countries in the list
         for (Country cou : country)
         {
             String cou_string =
-                    String.format("%-10s %-20s %-15s %-10s %-10s",
+                    String.format("%-10s %-40s %-15s %-25s %-15s %15s",
                             cou.code, cou.name, cou.continent, cou.region, cou.population, cou.capital);
             System.out.println(cou_string);
         }
