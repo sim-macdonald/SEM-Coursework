@@ -70,22 +70,47 @@ public class Database {
 
     }
 
-    public ArrayList<Country> getCountry() {
+    public ArrayList<Country> getCountry1(String query) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect =
-                    "SELECT Code, country.Name, country.Continent, country.Region, country.Population, city.Name AS Capital "
-                            + "FROM country "
-                            + "JOIN city ON country.Capital=city.ID "
-                            + "ORDER BY Population DESC";
+            String strSelect = query
+                    + "ORDER BY Population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             //Extract country information
             ArrayList<Country> country = new ArrayList<Country>();
-            // Return new country if valid.
-            // Check one is returned
+            while (rset.next()) {
+                Country cou = new Country();
+                cou.code = rset.getString("Code");
+                cou.name = rset.getString("Name");
+                cou.continent = rset.getString("Continent");
+                cou.region = rset.getString("Region");
+                cou.population = rset.getInt("Population");
+                cou.capital = rset.getString("Capital");
+                country.add(cou);
+            }
+            return country;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
+    public ArrayList<Country> getCountry2(String query, int N) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = query
+                    + "ORDER BY Population DESC "
+                    + "LIMIT " + N;
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            //Extract country information
+            ArrayList<Country> country = new ArrayList<Country>();
             while (rset.next()) {
                 Country cou = new Country();
                 cou.code = rset.getString("Code");

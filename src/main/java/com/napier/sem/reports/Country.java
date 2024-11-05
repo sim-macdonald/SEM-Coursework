@@ -21,11 +21,9 @@ public class Country
 
     public String capital;
 
-
-
-
-
 }
+
+
 
 
 

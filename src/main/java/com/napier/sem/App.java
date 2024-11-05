@@ -2,6 +2,7 @@ package com.napier.sem;
 
 import com.napier.sem.Database;
 import com.napier.sem.reports.Country;
+import com.napier.sem.queries.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class App
         a.connect();
 
         // Extract country information
-        ArrayList<Country> countries = a.getCountry();
+        ArrayList<Country> countries = a.getCountry1(Country_queries.query1);
         // Display results
         a.printCountries(countries);
 
