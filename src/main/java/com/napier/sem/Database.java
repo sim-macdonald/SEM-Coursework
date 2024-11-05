@@ -79,7 +79,6 @@ public class Database {
                     "SELECT Code, country.Name, country.Continent, country.Region, country.Population, city.Name AS Capital "
                             + "FROM country "
                             + "JOIN city ON country.Capital=city.ID "
-                            + "WHERE country.Capital IS NOT NULL "
                             + "ORDER BY Population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -105,20 +104,6 @@ public class Database {
         }
     }
 
-    public void displayCountry(Country country)
-    {
-        if (country != null)
-        {
-            System.out.println(
-                    country.code + "\n"
-                            + country.name + "\n"
-                            + country.continent+ "\n"
-                            + country.region + "\n"
-                            + country.population + "\n"
-                            + country.capital + "\n");
-        }
-    }
-
     /**
      * Prints a list of employees.
      * @param country The list of employees to print.
@@ -126,7 +111,7 @@ public class Database {
     public void printCountries(ArrayList<Country> country)
     {
         // Print header
-        System.out.println(String.format("%-10s %-40s %-15s %-25s %-15s %-15s", "Code","Name", "Continent", "Region", "Population","Capital"));
+        System.out.println(String.format("%-10s %-40s %-15s %-25s %-15s %15s", "Code","Name", "Continent", "Region", "Population","Capital"));
         // Loop over all countries in the list
         for (Country cou : country)
         {
