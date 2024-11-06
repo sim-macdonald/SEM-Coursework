@@ -2,6 +2,7 @@ package com.napier.sem;
 
 import com.napier.sem.queries.Country_queries;
 import com.napier.sem.reports.Country;
+import com.napier.sem.reports.Population;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -203,6 +204,8 @@ public class Database {
             System.out.println(cou_string);
         }
     }
+
+    //------------------------------------------------------------------------------------------------------------------------------
 
     public Population getPopulationReport(String query, int N, String condition, String value) {
         try {

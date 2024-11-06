@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import com.napier.sem.queries.Country_queries;
+import com.napier.sem.queries.Population_queries;
 import com.napier.sem.reports.Country;
 import com.napier.sem.reports.Population;
 import org.junit.jupiter.api.BeforeAll;
@@ -8,6 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import javax.xml.crypto.Data;
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseTest
 {
@@ -100,5 +103,4 @@ public class DatabaseTest
         assertEquals("USA", report.getName());
         assertTrue(report.getTotalPopulation() > 0);
     }
-}
 }
