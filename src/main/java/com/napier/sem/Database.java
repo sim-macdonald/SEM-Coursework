@@ -5,6 +5,7 @@ import com.napier.sem.reports.Country;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Database {
 
@@ -51,6 +52,8 @@ public class Database {
         }
     }
 
+    Scanner scanner = new Scanner(System.in);
+
     /**
      * Disconnect from the MySQL database.
      */
@@ -82,7 +85,8 @@ public class Database {
             String strSelect = query;
             if(scope != null)
             {
-                strSelect = strSelect + " " + scope;
+                String user_input = "'" + scanner.nextLine() + "'";
+                strSelect = strSelect + " " + scope + user_input;
             }
             strSelect = strSelect + " ORDER BY Population DESC";
             // Execute SQL statement
@@ -116,7 +120,8 @@ public class Database {
             String strSelect = query;
             if(scope != null)
             {
-                strSelect = strSelect + " " + scope;
+                String user_input = "'" + scanner.nextLine() + "'";
+                strSelect = strSelect + " " + scope + user_input;
             }
             strSelect = strSelect + " ORDER BY Population DESC LIMIT " + N;
             // Execute SQL statement
