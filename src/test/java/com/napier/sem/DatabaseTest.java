@@ -74,17 +74,17 @@ public class DatabaseTest
         db.getCountryWorld(query, N);
     }
 
-    @Test
-    void getPopulationReportTest() {
-        // Test population report for a continent (e.g., Asia)
-        Population report = db.getPopulationReport(Population_queries.query, 0, Population_queries.continent, "Asia");
-        assertNotNull(report);
-        assertEquals("Asia", report.getName());
-        assertTrue(report.getTotalPopulation() > 0);
-        assertTrue(report.getCityPopulation() >= 0);
-        assertTrue(report.getNonCityPopulation() >= 0);
-        assertEquals(report.getCityPercentage() + report.getNonCityPercentage(), 100, 0.01);
-    }
+        @Test
+        void getPopulationReportTest() {
+            // Test population report for a continent (e.g., Asia)
+            Population report = db.getPopulationReport(Population_queries.query, 0, Population_queries.continent, "Asia");
+            assertNotNull(report);
+            assertEquals("Asia", report.getName());
+            assertTrue(report.getTotalPopulation() > 0);
+            assertTrue(report.getCityPopulation() >= 0);
+            assertTrue(report.getNonCityPopulation() >= 0);
+            assertEquals(report.getCityPercentage() + report.getNonCityPercentage(), 100, 0.01);
+        }
 
     @Test
     void getPopulationReportRegionTest() {

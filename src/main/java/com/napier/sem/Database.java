@@ -76,6 +76,14 @@ public class Database {
     //Methods for creating Country Reports
 //--------------------------------------------------------------------------------------------------
 
+    /**
+     * Retrieves a list of countries in the world based on a given query.
+     * Optionally limits the number of countries returned.
+     *
+     * @param query the SQL query to execute to fetch country data, found in Country_queries.
+     * @param N the maximum number of countries to return. If N <= 0, no limit is applied.
+     * @return a list of countries matching the query or null if an error occurs.
+     */
     public ArrayList<Country> getCountryWorld(String query, int N) {
         try {
             // Create an SQL statement
@@ -110,6 +118,15 @@ public class Database {
         }
     }
 
+    /**
+     * Retrieves a list of countries in a specific region, based on a given query.
+     * Optionally limits the number of countries returned.
+     *
+     * @param query the SQL query to execute to fetch country data, found in Country_queries.
+     * @param N the maximum number of countries to return. If N <= 0, no limit is applied.
+     * @param region the region to filter the countries by.
+     * @return a list of countries in the specified region or null if an error occurs.
+     */
     public ArrayList<Country> getCountryRegion(String query, int N, String region) {
         try {
             // Create an SQL statement
@@ -144,6 +161,15 @@ public class Database {
         }
     }
 
+    /**
+     * Retrieves a list of countries in a specific continent, based on a given query.
+     * Optionally limits the number of countries returned.
+     *
+     * @param query the SQL query to execute to fetch country data, found in Country_queries.
+     * @param N the maximum number of countries to return. If N <= 0, no limit is applied.
+     * @param continent the continent to filter the countries by.
+     * @return a list of countries in the specified continent or null if an error occurs.
+     */
     public ArrayList<Country> getCountryContinent(String query, int N, String continent) {
         try {
             // Create an SQL statement
@@ -179,8 +205,10 @@ public class Database {
     }
 
     /**
-     * Prints a list of employees.
-     * @param country The list of employees to print.
+     * Prints the details of a list of countries in a formatted table.
+     * Each country's details (code, name, continent, region, population, and capital) are printed on a separate line.
+     *
+     * @param country the list of countries to print.
      */
     public void printCountries(ArrayList<Country> country)
     {
