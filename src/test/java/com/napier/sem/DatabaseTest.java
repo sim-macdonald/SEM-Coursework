@@ -75,32 +75,75 @@ public class DatabaseTest
     }
 
     @Test
-    void getPopulationReportTest() {
-        // Test population report for a continent (e.g., Asia)
-        Population report = db.getPopulationReport(Population_queries.query, 0, Population_queries.continent, "Asia");
-        assertNotNull(report);
-        assertEquals("Asia", report.getName());
-        assertTrue(report.getTotalPopulation() > 0);
-        assertTrue(report.getCityPopulation() >= 0);
-        assertTrue(report.getNonCityPopulation() >= 0);
-        assertEquals(report.getCityPercentage() + report.getNonCityPercentage(), 100, 0.01);
+    void printPopulationTestNull()
+    {
+        // Test when the list of countries is null
+        db.printPopulation(null);
     }
 
     @Test
-    void getPopulationReportRegionTest() {
-        // Test population report for a region (e.g., Europe)
-        Population report = db.getPopulationReport(Population_queries.query, 0, Population_queries.region, "Europe");
-        assertNotNull(report);
-        assertEquals("Europe", report.getName());
-        assertTrue(report.getTotalPopulation() > 0);
+    void printPopulationTestEmpty()
+    {
+        // Test when the list of countries is empty
+        ArrayList<Country> countries = new ArrayList<Country>();
+        db.printPopulation(countries);
     }
 
     @Test
-    void getPopulationReportCountryTest() {
-        // Test population report for a specific country (e.g., USA)
-        Population report = db.getPopulationReport(Population_queries.query, 0, Population_queries.country, "USA");
-        assertNotNull(report);
-        assertEquals("USA", report.getName());
-        assertTrue(report.getTotalPopulation() > 0);
+    void printPopulationTestContainsNull()
+    {
+        // Test when the list contains a null country object
+        ArrayList<Country> countries = new ArrayList<Country>();
+        countries.add(null);
+        db.printPopulation(countries);
     }
+
+    @Test
+    void printPopulationTestContainsZeroPopulation()
+    {
+        // Test when a country has a population of 0
+        ArrayList<Country> countries = new ArrayList<Country>();
+        Country cou = new Country();
+        cou.code = "XYZ";
+        cou.name = "ZeroPop";
+        cou.continent = "TestContinent";
+        cou.region = "TestRegion";
+        cou.population = 0;
+        cou.capital = "TestCapital";
+        countries.add(cou);
+        db.printPopulation(countries);
+    }
+
+    @Test
+    void printPopulationTestContainsNegativePopulation()
+    {
+        // Test when a country has a negative population value (edge case)
+        ArrayList<Country> countries = new ArrayList<Country>();
+        Country cou = new Country();
+        cou.code = "NEG";
+        cou.name = "NegativePop";
+        cou.continent = "TestContinent";
+        cou.region = "TestRegion";
+        cou.population = -1000;
+        cou.capital = "TestCapital";
+        countries.add(cou);
+        db.printPopulation(countries);
+    }
+
+    @Test
+    void printPopulationTestValidPopulation()
+    {
+        // Test when the country has a valid population value
+        ArrayList<Country> countries = new ArrayList<Country>();
+        Country cou = new Country();
+        cou.code = "ABC";
+        cou.name = "TestName";
+        cou.continent = "TestContinent";
+        cou.region = "TestRegion";
+        cou.population = 1234567;
+        cou.capital = "TestCapital";
+        countries.add(cou);
+        db.printPopulation(countries);
+    }
+
 }

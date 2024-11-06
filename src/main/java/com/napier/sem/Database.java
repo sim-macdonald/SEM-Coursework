@@ -207,45 +207,104 @@ public class Database {
 
     //------------------------------------------------------------------------------------------------------------------------------
 
-    public Population getPopulationReport(String query, int N, String condition, String value) {
+    public void getPopulationReport(String level, String name) {
+        // Define the queries to get total population and city population
+        String totalPopulationQuery = "";
+        String cityPopulationQuery = "";
+
+        // Adjust query based on the level (Continent, Region, or Country)
+        switch (level.toLowerCase()) {
+            case "continent":
+                totalPopulationQuery = "SELECT SUM(Population) FROM country WHERE Continent = '" + name + "'";
+                cityPopulationQuery = "SELECT SUM(Population) FROM city WHERE CountryCode IN (SELECT Code FROM country WHERE Continent = '" + name + "')";
+                break;
+            case "region":
+                totalPopulationQuery = "SELECT SUM(Population) FROM country WHERE Region = '" + name + "'";
+                cityPopulationQuery = "SELECT SUM(Population) FROM city WHERE CountryCode IN (SELECT Code FROM country WHERE Region = '" + name + "')";
+                break;
+            case "country":
+                totalPopulationQuery = "SELECT Population FROM country WHERE Name = '" + name + "'";
+                cityPopulationQuery = "SELECT SUM(Population) FROM city WHERE CountryCode IN (SELECT Code FROM country WHERE Name = '" + name + "')";
+                break;
+            default:
+                System.out.println("Invalid level: " + level);
+                return;
+        }
+
         try {
+            // Execute the total population query
             Statement stmt = con.createStatement();
-            String strSelect = query;
-
-            if (condition != null && value != null) {
-                strSelect += " " + condition + "'" + value + "'";
-            }
-
-            if (N > 0) {
-                strSelect += " LIMIT " + N;
-            }
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
+            ResultSet rsetTotalPopulation = stmt.executeQuery(totalPopulationQuery);
             int totalPopulation = 0;
-            int totalCityPopulation = 0;
-            int totalNonCityPopulation = 0;
 
-            while (rset.next()) {
-                int population = rset.getInt("Population");
-                totalPopulation += population;
-
-                if (rset.getInt("CityPopulation") > 0) {
-                    totalCityPopulation += population;
-                } else {
-                    totalNonCityPopulation += population;
-                }
+            if (rsetTotalPopulation.next()) {
+                totalPopulation = rsetTotalPopulation.getInt(1);
             }
 
-            double cityPercentage = (totalPopulation > 0) ? (double) totalCityPopulation / totalPopulation * 100 : 0;
-            double nonCityPercentage = (totalPopulation > 0) ? (double) totalNonCityPopulation / totalPopulation * 100 : 0;
+            // Execute the city population query
+            ResultSet rsetCityPopulation = stmt.executeQuery(cityPopulationQuery);
+            int cityPopulation = 0;
 
-            // Return a Population object with the calculated data
-            return new Population(value, totalPopulation, totalCityPopulation, totalNonCityPopulation, cityPercentage, nonCityPercentage);
+            if (rsetCityPopulation.next()) {
+                cityPopulation = rsetCityPopulation.getInt(1);
+            }
 
-        } catch (Exception e) {
-            System.out.println("Error retrieving population report: " + e.getMessage());
-            return null;
+            // Calculate the population not living in cities
+            int nonCityPopulation = totalPopulation - cityPopulation;
+
+            // Calculate the percentage of people living in cities and not living in cities
+            double cityPercentage = totalPopulation > 0 ? (double) cityPopulation / totalPopulation * 100 : 0;
+            double nonCityPercentage = totalPopulation > 0 ? (double) nonCityPopulation / totalPopulation * 100 : 0;
+
+            // Print the report
+            System.out.println("Population Report for " + name + " (" + level + ")");
+            System.out.println("------------------------------------------------------------");
+            System.out.println("Total Population: " + totalPopulation);
+            System.out.println("Population in Cities: " + cityPopulation + " (" + String.format("%.2f", cityPercentage) + "%)");
+            System.out.println("Population Not in Cities: " + nonCityPopulation + " (" + String.format("%.2f", nonCityPercentage) + "%)");
+
+        } catch (SQLException e) {
+            System.out.println("Error in getting population report: " + e.getMessage());
+        }
+    }
+
+    public void printPopulation(ArrayList<Country> countries) {
+        // Check if the countries list is null
+        if (countries == null) {
+            System.out.println("No countries provided.");
+            return;
+        }
+
+        // Check if the list is empty
+        if (countries.isEmpty()) {
+            System.out.println("No countries in the list.");
+            return;
+        }
+
+        // Print the header for the population report
+        System.out.println(String.format("%-10s %-40s %-15s %-25s %-15s %15s", "Code", "Name", "Continent", "Region", "Population", "Capital"));
+
+        // Loop through each country in the list
+        for (Country cou : countries) {
+            // Skip null countries in the list
+            if (cou == null) {
+                continue;
+            }
+
+            // Check if the population is a valid value
+            if (cou.population < 0) {
+                System.out.println("Error: Country " + cou.name + " has an invalid negative population value.");
+                continue;
+            }
+
+            // Handle the case where population is zero
+            if (cou.population == 0) {
+                System.out.println(String.format("%-10s %-40s %-15s %-25s %-15s %15s", cou.code, cou.name, cou.continent, cou.region, "0", cou.capital));
+                continue;
+            }
+
+            // Print the country details
+            System.out.println(String.format("%-10s %-40s %-15s %-25s %-15d %15s", cou.code, cou.name, cou.continent, cou.region, cou.population, cou.capital));
         }
     }
 
