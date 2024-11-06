@@ -3,6 +3,7 @@ package com.napier.sem;
 import com.napier.sem.Database;
 import com.napier.sem.reports.Country;
 import com.napier.sem.queries.*;
+import com.napier.sem.reports.Population;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class App
         //Scanner scanner = new Scanner(System.in);
 
         //if N <= 0 then set no limit
-        int N  = 0;
+        int N  = 5;
 
         // Connect to database
         a.connect();
@@ -28,6 +29,8 @@ public class App
         ArrayList<Country> countries = a.getCountryWorld(Country_queries.query1, N);
         // Display results
         a.printCountries(countries);
+
+        a.getPopulationReport("Continent", "Asia");
 
         // Disconnect from database
         a.disconnect();

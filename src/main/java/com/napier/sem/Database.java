@@ -263,7 +263,7 @@ public class Database {
             // Execute the total population query
             Statement stmt = con.createStatement();
             ResultSet rsetTotalPopulation = stmt.executeQuery(totalPopulationQuery);
-            int totalPopulation = 0;
+            long totalPopulation = 0;
 
             if (rsetTotalPopulation.next()) {
                 totalPopulation = rsetTotalPopulation.getInt(1);
@@ -271,18 +271,18 @@ public class Database {
 
             // Execute the city population query
             ResultSet rsetCityPopulation = stmt.executeQuery(cityPopulationQuery);
-            int cityPopulation = 0;
+            long cityPopulation = 0;
 
             if (rsetCityPopulation.next()) {
                 cityPopulation = rsetCityPopulation.getInt(1);
             }
 
             // Calculate the population not living in cities
-            int nonCityPopulation = totalPopulation - cityPopulation;
+            long nonCityPopulation = totalPopulation - cityPopulation;
 
             // Calculate the percentage of people living in cities and not living in cities
-            double cityPercentage = totalPopulation > 0 ? (double) cityPopulation / totalPopulation * 100 : 0;
-            double nonCityPercentage = totalPopulation > 0 ? (double) nonCityPopulation / totalPopulation * 100 : 0;
+            long cityPercentage = totalPopulation > 0 ? (long) cityPopulation / totalPopulation * 100 : 0;
+            long nonCityPercentage = totalPopulation > 0 ? (long) nonCityPopulation / totalPopulation * 100 : 0;
 
             // Print the report
             System.out.println("Population Report for " + name + " (" + level + ")");
