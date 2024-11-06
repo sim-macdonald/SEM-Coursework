@@ -113,7 +113,7 @@ public class Database {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = query + " " + Country_queries.region + "''"+region+"''" + " ORDER BY Population DESC";
+            String strSelect = query + " " + Country_queries.region + "'"+region+"'" + " ORDER BY Population DESC";
 
             if(N>0) {
                 strSelect = strSelect + " LIMIT " + N;
@@ -146,7 +146,7 @@ public class Database {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = query + " " + Country_queries.continent + "''"+continent+"''" + " ORDER BY Population DESC";
+            String strSelect = query + " " + Country_queries.continent + "'"+continent+"'" + " ORDER BY Population DESC";
 
             if(N>0) {
                 strSelect = strSelect + " LIMIT " + N;
