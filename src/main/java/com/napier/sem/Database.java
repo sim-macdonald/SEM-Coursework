@@ -180,11 +180,20 @@ public class Database {
      */
     public void printCountries(ArrayList<Country> country)
     {
+        // Check country is not null
+        if (country == null)
+        {
+            System.out.println("No countries");
+            return;
+        }
         // Print header
         System.out.println(String.format("%-10s %-40s %-15s %-25s %-15s %15s", "Code","Name", "Continent", "Region", "Population","Capital"));
         // Loop over all countries in the list
         for (Country cou : country)
         {
+            if (cou == null)
+                continue;
+
             String cou_string =
                     String.format("%-10s %-40s %-15s %-25s %-15s %15s",
                             cou.code, cou.name, cou.continent, cou.region, cou.population, cou.capital);
