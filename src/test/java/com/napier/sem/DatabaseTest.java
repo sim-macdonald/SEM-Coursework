@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import com.napier.sem.reports.Country;
+import com.napier.sem.reports.Population;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -52,4 +53,35 @@ public class DatabaseTest
         countries.add(cou);
         db.printCountries(countries);
     }
+
+    @Test
+    void getPopulationReportTest() {
+        // Test population report for a continent (e.g., Asia)
+        Population report = db.getPopulationReport(Population_queries.query, 0, Population_queries.continent, "Asia");
+        assertNotNull(report);
+        assertEquals("Asia", report.getName());
+        assertTrue(report.getTotalPopulation() > 0);
+        assertTrue(report.getCityPopulation() >= 0);
+        assertTrue(report.getNonCityPopulation() >= 0);
+        assertEquals(report.getCityPercentage() + report.getNonCityPercentage(), 100, 0.01);
+    }
+
+    @Test
+    void getPopulationReportRegionTest() {
+        // Test population report for a region (e.g., Europe)
+        Population report = db.getPopulationReport(Population_queries.query, 0, Population_queries.region, "Europe");
+        assertNotNull(report);
+        assertEquals("Europe", report.getName());
+        assertTrue(report.getTotalPopulation() > 0);
+    }
+
+    @Test
+    void getPopulationReportCountryTest() {
+        // Test population report for a specific country (e.g., USA)
+        Population report = db.getPopulationReport(Population_queries.query, 0, Population_queries.country, "USA");
+        assertNotNull(report);
+        assertEquals("USA", report.getName());
+        assertTrue(report.getTotalPopulation() > 0);
+    }
+}
 }

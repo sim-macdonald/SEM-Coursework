@@ -201,4 +201,46 @@ public class Database {
         }
     }
 
+    public Population getPopulationReport(String query, int N, String condition, String value) {
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect = query;
+
+            if (condition != null && value != null) {
+                strSelect += " " + condition + "'" + value + "'";
+            }
+
+            if (N > 0) {
+                strSelect += " LIMIT " + N;
+            }
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            int totalPopulation = 0;
+            int totalCityPopulation = 0;
+            int totalNonCityPopulation = 0;
+
+            while (rset.next()) {
+                int population = rset.getInt("Population");
+                totalPopulation += population;
+
+                if (rset.getInt("CityPopulation") > 0) {
+                    totalCityPopulation += population;
+                } else {
+                    totalNonCityPopulation += population;
+                }
+            }
+
+            double cityPercentage = (totalPopulation > 0) ? (double) totalCityPopulation / totalPopulation * 100 : 0;
+            double nonCityPercentage = (totalPopulation > 0) ? (double) totalNonCityPopulation / totalPopulation * 100 : 0;
+
+            // Return a Population object with the calculated data
+            return new Population(value, totalPopulation, totalCityPopulation, totalNonCityPopulation, cityPercentage, nonCityPercentage);
+
+        } catch (Exception e) {
+            System.out.println("Error retrieving population report: " + e.getMessage());
+            return null;
+        }
+    }
+
 }
