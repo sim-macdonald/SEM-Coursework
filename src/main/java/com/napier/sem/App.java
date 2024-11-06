@@ -17,8 +17,11 @@ public class App
         // Connect to database
         a.connect();
 
+        //The WHERE clause in a sql query. null => no WHERE
+        String scope = null;
+
         // Extract country information
-        ArrayList<Country> countries = a.getCountry2(Country_queries.query1, 5);
+        ArrayList<Country> countries = a.getCountry2(Country_queries.query1, scope, 5);
         // Display results
         a.printCountries(countries);
 

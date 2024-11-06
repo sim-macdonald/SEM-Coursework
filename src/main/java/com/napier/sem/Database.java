@@ -1,5 +1,6 @@
 package com.napier.sem;
 
+import com.napier.sem.queries.Country_queries;
 import com.napier.sem.reports.Country;
 
 import java.sql.*;
@@ -70,13 +71,20 @@ public class Database {
 
     }
 
-    public ArrayList<Country> getCountry1(String query) {
+    //Methods for creating Country Reports
+
+
+    public ArrayList<Country> getCountry1(String query, String scope) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = query
-                    + " ORDER BY Population DESC";
+            String strSelect = query;
+            if(scope != null)
+            {
+                strSelect = strSelect + " " + scope;
+            }
+            strSelect = strSelect + " ORDER BY Population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             //Extract country information
@@ -99,14 +107,18 @@ public class Database {
         }
     }
 
-    public ArrayList<Country> getCountry2(String query, int N) {
+
+    public ArrayList<Country> getCountry2(String query, String scope, int N) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = query
-                    + " ORDER BY Population DESC "
-                    + "LIMIT " + N;
+            String strSelect = query;
+            if(scope != null)
+            {
+                strSelect = strSelect + " " + scope;
+            }
+            strSelect = strSelect + " ORDER BY Population DESC LIMIT " + N;
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             //Extract country information
@@ -128,6 +140,7 @@ public class Database {
             return null;
         }
     }
+
 
     /**
      * Prints a list of employees.

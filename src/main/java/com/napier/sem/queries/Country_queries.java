@@ -2,18 +2,14 @@ package com.napier.sem.queries;
 
 public class Country_queries {
 
+    //Default string for country report
     public static String query1 = "SELECT Code, country.Name, country.Continent, country.Region, country.Population, city.Name AS Capital "
             + "FROM country "
             + "JOIN city ON country.Capital=city.ID";
 
-    public static String query2 = "SELECT Code, country.Name, country.Continent, country.Region, country.Population, city.Name AS Capital "
-            + "FROM country "
-            + "JOIN city ON country.Capital=city.ID "
-            + "WHERE country.Continent=";
+    //WHERE statements
+    public static String continent = "WHERE country.Continent=";
 
-    public static String query3 = "SELECT Code, country.Name, country.Continent, country.Region, country.Population, city.Name AS Capital "
-            + "FROM country "
-            + "JOIN city ON country.Capital=city.ID "
-            + "WHERE country.Region=";
+    public static String region = "WHERE country.Region=";
 
 }
