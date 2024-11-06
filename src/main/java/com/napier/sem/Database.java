@@ -52,8 +52,6 @@ public class Database {
         }
     }
 
-    Scanner scanner = new Scanner(System.in);
-
     /**
      * Disconnect from the MySQL database.
      */
@@ -77,18 +75,17 @@ public class Database {
     //Methods for creating Country Reports
 
 
-    public ArrayList<Country> getCountry1(String query, String scope) {
+    public ArrayList<Country> getCountryWorld(String query, int N) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = query;
-            if(scope != null)
-            {
-                String user_input = "'" + scanner.nextLine() + "'";
-                strSelect = strSelect + " " + scope + user_input;
+            String strSelect = query + " ORDER BY Population DESC";
+
+            if(N>0) {
+                strSelect = strSelect + " LIMIT " + N;
             }
-            strSelect = strSelect + " ORDER BY Population DESC";
+
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             //Extract country information
@@ -111,19 +108,17 @@ public class Database {
         }
     }
 
-
-    public ArrayList<Country> getCountry2(String query, String scope, int N) {
+    public ArrayList<Country> getCountryRegion(String query, int N, String region) {
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = query;
-            if(scope != null)
-            {
-                String user_input = "'" + scanner.nextLine() + "'";
-                strSelect = strSelect + " " + scope + user_input;
+            String strSelect = query + " " + Country_queries.region + "'"+region+"'" + " ORDER BY Population DESC";
+
+            if(N>0) {
+                strSelect = strSelect + " LIMIT " + N;
             }
-            strSelect = strSelect + " ORDER BY Population DESC LIMIT " + N;
+
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             //Extract country information
@@ -146,6 +141,38 @@ public class Database {
         }
     }
 
+    public ArrayList<Country> getCountryContinent(String query, int N, String continent) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = query + " " + Country_queries.continent + "'"+continent+"'" + " ORDER BY Population DESC";
+
+            if(N>0) {
+                strSelect = strSelect + " LIMIT " + N;
+            }
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            //Extract country information
+            ArrayList<Country> country = new ArrayList<Country>();
+            while (rset.next()) {
+                Country cou = new Country();
+                cou.code = rset.getString("Code");
+                cou.name = rset.getString("Name");
+                cou.continent = rset.getString("Continent");
+                cou.region = rset.getString("Region");
+                cou.population = rset.getInt("Population");
+                cou.capital = rset.getString("Capital");
+                country.add(cou);
+            }
+            return country;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
 
     /**
      * Prints a list of employees.
@@ -153,11 +180,20 @@ public class Database {
      */
     public void printCountries(ArrayList<Country> country)
     {
+        // Check country is not null
+        if (country == null)
+        {
+            System.out.println("No countries");
+            return;
+        }
         // Print header
         System.out.println(String.format("%-10s %-40s %-15s %-25s %-15s %15s", "Code","Name", "Continent", "Region", "Population","Capital"));
         // Loop over all countries in the list
         for (Country cou : country)
         {
+            if (cou == null)
+                continue;
+
             String cou_string =
                     String.format("%-10s %-40s %-15s %-25s %-15s %15s",
                             cou.code, cou.name, cou.continent, cou.region, cou.population, cou.capital);

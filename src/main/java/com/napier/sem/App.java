@@ -6,6 +6,7 @@ import com.napier.sem.queries.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class App
 {
@@ -14,14 +15,16 @@ public class App
         // Create new Application
         Database a = new Database();
 
+        //Scanner for user input
+        //Scanner scanner = new Scanner(System.in);
+
+        int N  = 0;
+
         // Connect to database
         a.connect();
 
-        //The WHERE clause in a sql query. null => no WHERE
-        String scope = null;
-
         // Extract country information
-        ArrayList<Country> countries = a.getCountry2(Country_queries.query1, scope, 5);
+        ArrayList<Country> countries = a.getCountryWorld(Country_queries.query1, N);
         // Display results
         a.printCountries(countries);
 
