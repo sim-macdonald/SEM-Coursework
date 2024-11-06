@@ -1,5 +1,6 @@
 package com.napier.sem;
 
+import com.napier.sem.queries.Country_queries;
 import com.napier.sem.reports.Country;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -51,5 +52,21 @@ public class DatabaseTest
         cou.capital = "TestCapital";
         countries.add(cou);
         db.printCountries(countries);
+    }
+
+    @Test
+    void getCountryWorldValidQueries()
+    {
+        String query = "SELECT * FROM Country WHERE population > 0";
+        int N = 0;
+        db.getCountryWorld(query, N);
+    }
+
+    @Test
+    void getCountryWorldValidQueriesWithLimit()
+    {
+        String query = "SELECT * FROM Country WHERE population > 0";
+        int N = 5;
+        db.getCountryWorld(query, N);
     }
 }

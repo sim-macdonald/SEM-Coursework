@@ -18,6 +18,7 @@ public class App
         //Scanner for user input
         //Scanner scanner = new Scanner(System.in);
 
+        //if N <= 0 then set no limit
         int N  = 0;
 
         // Connect to database
