@@ -4,6 +4,8 @@ import com.napier.sem.queries.Country_queries;
 import com.napier.sem.reports.City;
 import com.napier.sem.reports.Country;
 import com.napier.sem.reports.Population;
+import com.napier.sem.queries.Population_queries;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -237,62 +239,53 @@ public class Database {
     //------------------------------------------------------------------------------------------------------------------------------
 
     /**
-     * Retrieves a population report for a specified level (Continent, Region, Country).
+     * Generates a population report for a specific level of aggregation and returns a single Population object.
      *
      * @param level the level of aggregation (Continent, Region, or Country)
      * @param name  the name of the level (e.g., "Asia", "Europe", or a specific country)
-     * @return a Population object containing the population data, or null if an error occurs.
+     * @return a Population object representing the aggregated population data for a single level
      */
     public Population getPopulationReport(String level, String name) {
-        String totalPopulationQuery;
-        String cityPopulationQuery;
+        // Query template for population data
+        String query = Population_queries.query;
 
-        // Define queries based on level
-        switch (level.toLowerCase()) {
-            case "continent":
-                totalPopulationQuery = "SELECT SUM(Population) FROM country WHERE Continent = ?";
-                cityPopulationQuery = "SELECT SUM(Population) FROM city WHERE CountryCode IN (SELECT Code FROM country WHERE Continent = ?)";
-                break;
-            case "region":
-                totalPopulationQuery = "SELECT SUM(Population) FROM country WHERE Region = ?";
-                cityPopulationQuery = "SELECT SUM(Population) FROM city WHERE CountryCode IN (SELECT Code FROM country WHERE Region = ?)";
-                break;
-            case "country":
-                totalPopulationQuery = "SELECT Population FROM country WHERE Name = ?";
-                cityPopulationQuery = "SELECT SUM(Population) FROM city WHERE CountryCode = (SELECT Code FROM country WHERE Name = ?)";
-                break;
-            default:
-                System.out.println("Invalid level: " + level);
-                return null;
+        // Add the WHERE clause depending on the level of aggregation
+        if (level.equalsIgnoreCase("Continent")) {
+            query += " " + Population_queries.continent + "'" + name + "'";
+        } else if (level.equalsIgnoreCase("Region")) {
+            query += " " + Population_queries.region + "'" + name + "'";
+        } else if (level.equalsIgnoreCase("Country")) {
+            query += " " + Population_queries.country + "'" + name + "'";
+        } else {
+            // Handle invalid level
+            System.out.println("Invalid level specified.");
+            return null; // Return null if the level is invalid
         }
 
-        try (PreparedStatement stmtTotal = con.prepareStatement(totalPopulationQuery);
-             PreparedStatement stmtCity = con.prepareStatement(cityPopulationQuery)) {
+        Population population = null;
 
-            // Set the parameters for the queries
-            stmtTotal.setString(1, name);
-            stmtCity.setString(1, name);
+        // Execute the query and process the result
+        try (Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
 
-            // Execute and retrieve total population
-            ResultSet rsetTotal = stmtTotal.executeQuery();
-            long totalPopulation = rsetTotal.next() ? rsetTotal.getLong(1) : 0;
+            if (rs.next()) {
+                String countryName = rs.getString("Name");
+                long totalPopulation = rs.getLong("TotalPopulation");
+                long cityPopulation = rs.getLong("CityPopulation");
+                long nonCityPopulation = rs.getLong("NonCityPopulation");
 
-            // Execute and retrieve city population
-            ResultSet rsetCity = stmtCity.executeQuery();
-            long cityPopulation = rsetCity.next() ? rsetCity.getLong(1) : 0;
+                // Calculate percentages
+                double cityPercentage = (double) cityPopulation / totalPopulation * 100;
+                double nonCityPercentage = (double) nonCityPopulation / totalPopulation * 100;
 
-            // Calculate non-city population and percentages
-            long nonCityPopulation = totalPopulation - cityPopulation;
-            double cityPercentage = totalPopulation > 0 ? (double) cityPopulation / totalPopulation * 100 : 0;
-            double nonCityPercentage = totalPopulation > 0 ? (double) nonCityPopulation / totalPopulation * 100 : 0;
-
-            // Return the population data in a Population object
-            return new Population(name, totalPopulation, cityPopulation, nonCityPopulation, cityPercentage, nonCityPercentage);
+                population = new Population(countryName, totalPopulation, cityPopulation, nonCityPopulation, cityPercentage, nonCityPercentage);
+            }
 
         } catch (SQLException e) {
-            System.out.println("Error in getting population report: " + e.getMessage());
-            return null;
+            e.printStackTrace();
         }
+
+        return population; // Return a single Population object
     }
 
     /**
