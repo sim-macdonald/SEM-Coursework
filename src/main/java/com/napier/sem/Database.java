@@ -236,106 +236,83 @@ public class Database {
 
     //------------------------------------------------------------------------------------------------------------------------------
 
-    public void getPopulationReport(String level, String name) {
-        // Define the queries to get total population and city population
-        String totalPopulationQuery = "";
-        String cityPopulationQuery = "";
+    /**
+     * Retrieves a population report for a specified level (Continent, Region, Country).
+     *
+     * @param level the level of aggregation (Continent, Region, or Country)
+     * @param name  the name of the level (e.g., "Asia", "Europe", or a specific country)
+     * @return a Population object containing the population data, or null if an error occurs.
+     */
+    public Population getPopulationReport(String level, String name) {
+        String totalPopulationQuery;
+        String cityPopulationQuery;
 
-        // Adjust query based on the level (Continent, Region, or Country)
+        // Define queries based on level
         switch (level.toLowerCase()) {
             case "continent":
-                totalPopulationQuery = "SELECT SUM(Population) FROM country WHERE Continent = '" + name + "'";
-                cityPopulationQuery = "SELECT SUM(Population) FROM city WHERE CountryCode IN (SELECT Code FROM country WHERE Continent = '" + name + "')";
+                totalPopulationQuery = "SELECT SUM(Population) FROM country WHERE Continent = ?";
+                cityPopulationQuery = "SELECT SUM(Population) FROM city WHERE CountryCode IN (SELECT Code FROM country WHERE Continent = ?)";
                 break;
             case "region":
-                totalPopulationQuery = "SELECT SUM(Population) FROM country WHERE Region = '" + name + "'";
-                cityPopulationQuery = "SELECT SUM(Population) FROM city WHERE CountryCode IN (SELECT Code FROM country WHERE Region = '" + name + "')";
+                totalPopulationQuery = "SELECT SUM(Population) FROM country WHERE Region = ?";
+                cityPopulationQuery = "SELECT SUM(Population) FROM city WHERE CountryCode IN (SELECT Code FROM country WHERE Region = ?)";
                 break;
             case "country":
-                totalPopulationQuery = "SELECT Population FROM country WHERE Name = '" + name + "'";
-                cityPopulationQuery = "SELECT SUM(Population) FROM city WHERE CountryCode IN (SELECT Code FROM country WHERE Name = '" + name + "')";
+                totalPopulationQuery = "SELECT Population FROM country WHERE Name = ?";
+                cityPopulationQuery = "SELECT SUM(Population) FROM city WHERE CountryCode = (SELECT Code FROM country WHERE Name = ?)";
                 break;
             default:
                 System.out.println("Invalid level: " + level);
-                return;
+                return null;
         }
 
-        try {
-            // Execute the total population query
-            Statement stmt = con.createStatement();
-            ResultSet rsetTotalPopulation = stmt.executeQuery(totalPopulationQuery);
-            long totalPopulation = 0;
+        try (PreparedStatement stmtTotal = con.prepareStatement(totalPopulationQuery);
+             PreparedStatement stmtCity = con.prepareStatement(cityPopulationQuery)) {
 
-            if (rsetTotalPopulation.next()) {
-                totalPopulation = rsetTotalPopulation.getInt(1);
-            }
+            // Set the parameters for the queries
+            stmtTotal.setString(1, name);
+            stmtCity.setString(1, name);
 
-            // Execute the city population query
-            ResultSet rsetCityPopulation = stmt.executeQuery(cityPopulationQuery);
-            long cityPopulation = 0;
+            // Execute and retrieve total population
+            ResultSet rsetTotal = stmtTotal.executeQuery();
+            long totalPopulation = rsetTotal.next() ? rsetTotal.getLong(1) : 0;
 
-            if (rsetCityPopulation.next()) {
-                cityPopulation = rsetCityPopulation.getLong(1);
-            }
+            // Execute and retrieve city population
+            ResultSet rsetCity = stmtCity.executeQuery();
+            long cityPopulation = rsetCity.next() ? rsetCity.getLong(1) : 0;
 
-            // Calculate the population not living in cities
+            // Calculate non-city population and percentages
             long nonCityPopulation = totalPopulation - cityPopulation;
+            double cityPercentage = totalPopulation > 0 ? (double) cityPopulation / totalPopulation * 100 : 0;
+            double nonCityPercentage = totalPopulation > 0 ? (double) nonCityPopulation / totalPopulation * 100 : 0;
 
-            // Calculate the percentage of people living in cities and not living in cities
-            long cityPercentage = totalPopulation > 0 ? (long) cityPopulation / totalPopulation * 100 : 0;
-            long nonCityPercentage = totalPopulation > 0 ? (long) nonCityPopulation / totalPopulation * 100 : 0;
-
-            // Print the report
-            System.out.println("Population Report for " + name + " (" + level + ")");
-            System.out.println("------------------------------------------------------------");
-            System.out.println("Total Population: " + totalPopulation);
-            System.out.println("Population in Cities: " + cityPopulation + " (" + String.format("%.2f", cityPercentage) + "%)");
-            System.out.println("Population Not in Cities: " + nonCityPopulation + " (" + String.format("%.2f", nonCityPercentage) + "%)");
+            // Return the population data in a Population object
+            return new Population(name, totalPopulation, cityPopulation, nonCityPopulation, cityPercentage, nonCityPercentage);
 
         } catch (SQLException e) {
             System.out.println("Error in getting population report: " + e.getMessage());
+            return null;
         }
     }
 
-    public void printPopulation(ArrayList<Country> countries) {
-        // Check if the countries list is null
-        if (countries == null) {
-            System.out.println("No countries provided.");
+    /**
+     * Prints a population report in a readable format.
+     *
+     * @param population the Population object containing the report data.
+     */
+    public void printPopulationReport(Population population) {
+        if (population == null) {
+            System.out.println("No population data available.");
             return;
         }
 
-        // Check if the list is empty
-        if (countries.isEmpty()) {
-            System.out.println("No countries in the list.");
-            return;
-        }
-
-        // Print the header for the population report
-        System.out.println(String.format("%-10s %-40s %-15s %-25s %-15s %15s", "Code", "Name", "Continent", "Region", "Population", "Capital"));
-
-        // Loop through each country in the list
-        for (Country cou : countries) {
-            // Skip null countries in the list
-            if (cou == null) {
-                continue;
-            }
-
-            // Check if the population is a valid value
-            if (cou.population < 0) {
-                System.out.println("Error: Country " + cou.name + " has an invalid negative population value.");
-                continue;
-            }
-
-            // Handle the case where population is zero
-            if (cou.population == 0) {
-                System.out.println(String.format("%-10s %-40s %-15s %-25s %-15s %15s", cou.code, cou.name, cou.continent, cou.region, "0", cou.capital));
-                continue;
-            }
-
-            // Print the country details
-            System.out.println(String.format("%-10s %-40s %-15s %-25s %-15d %15s", cou.code, cou.name, cou.continent, cou.region, cou.population, cou.capital));
-        }
+        System.out.println("Population Report for " + population.getName());
+        System.out.println("------------------------------------------------------------");
+        System.out.println("Total Population: " + population.getTotalPopulation());
+        System.out.println("Population in Cities: " + population.getCityPopulation() + " (" + String.format("%.2f", population.getCityPercentage()) + "%)");
+        System.out.println("Population Not in Cities: " + population.getNonCityPopulation() + " (" + String.format("%.2f", population.getNonCityPercentage()) + "%)");
     }
+
 
     public ArrayList<City> getCitiesByPopulation() {
         try {
