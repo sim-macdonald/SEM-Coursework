@@ -3,14 +3,14 @@ package com.napier.sem.reports;
 public class Population {
 
     public String name;
-    public int totalPopulation;
-    public int cityPopulation;
-    public int nonCityPopulation;
+    public long totalPopulation;
+    public long cityPopulation;
+    public long nonCityPopulation;
     public double cityPercentage;
     public double nonCityPercentage;
 
     // Constructor
-    public Population(String name, int totalPopulation, int cityPopulation, int nonCityPopulation, double cityPercentage, double nonCityPercentage) {
+    public Population(String name, long totalPopulation, long cityPopulation, long nonCityPopulation, double cityPercentage, double nonCityPercentage) {
         this.name = name;
         this.totalPopulation = totalPopulation;
         this.cityPopulation = cityPopulation;
@@ -24,15 +24,15 @@ public class Population {
         return name;
     }
 
-    public int getTotalPopulation() {
+    public long getTotalPopulation() {
         return totalPopulation;
     }
 
-    public int getCityPopulation() {
+    public long getCityPopulation() {
         return cityPopulation;
     }
 
-    public int getNonCityPopulation() {
+    public long getNonCityPopulation() {
         return nonCityPopulation;
     }
 

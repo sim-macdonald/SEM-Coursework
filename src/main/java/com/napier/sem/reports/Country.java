@@ -17,7 +17,7 @@ public class Country
 
     public String region;
 
-    public int population;
+    public long population;
 
     public String capital;
 

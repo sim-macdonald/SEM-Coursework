@@ -274,7 +274,7 @@ public class Database {
             long cityPopulation = 0;
 
             if (rsetCityPopulation.next()) {
-                cityPopulation = rsetCityPopulation.getInt(1);
+                cityPopulation = rsetCityPopulation.getLong(1);
             }
 
             // Calculate the population not living in cities
