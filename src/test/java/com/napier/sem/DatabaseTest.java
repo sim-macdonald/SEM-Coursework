@@ -2,6 +2,7 @@ package com.napier.sem;
 
 import com.napier.sem.queries.Country_queries;
 import com.napier.sem.queries.Population_queries;
+import com.napier.sem.reports.Capital_City;
 import com.napier.sem.reports.Country;
 import com.napier.sem.reports.City;
 import com.napier.sem.reports.Population;
@@ -60,19 +61,37 @@ public class DatabaseTest
     }
 
     @Test
-    void getCountryWorldValidQueries()
+    void printCapTestNull()
     {
-        String query = "SELECT * FROM Country WHERE population > 0";
-        int N = 0;
-        db.getCountryWorld(query, N);
+        db.printCapital(null);
     }
 
     @Test
-    void getCountryWorldValidQueriesWithLimit()
+    void printCapTestEmpty()
     {
-        String query = "SELECT * FROM Country WHERE population > 0";
-        int N = 5;
-        db.getCountryWorld(query, N);
+        ArrayList<Capital_City> cap = new ArrayList<Capital_City>();
+        db.printCapital(cap);
     }
+
+    @Test
+    void printCapTestContainsNull()
+    {
+        ArrayList<Capital_City> cap = new ArrayList<Capital_City>();
+        cap.add(null);
+        db.printCapital(cap);
+    }
+
+    @Test
+    void printCap()
+    {
+        ArrayList<Capital_City> cap = new ArrayList<Capital_City>();
+        Capital_City c = new Capital_City();
+        c.name = "TestName";
+        c.Country="ASDF";
+        c.population = 123;
+        cap.add(c);
+        db.printCapital(cap);
+    }
+
 
 }

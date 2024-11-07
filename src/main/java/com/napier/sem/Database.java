@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import com.napier.sem.queries.Country_queries;
+import com.napier.sem.reports.Capital_City;
 import com.napier.sem.reports.City;
 import com.napier.sem.reports.Country;
 import com.napier.sem.reports.Population;
@@ -334,6 +335,53 @@ public class Database {
             System.out.println(e.getMessage());
             System.out.println("Failed to get city details");
             return null;
+        }
+    }
+
+
+    public ArrayList<Capital_City> getCapitalCitiesByPopulation() {
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect = "SELECT ID, city.name, country.name, city.population FROM city, country JOIN city ON country.code = city.countrycode WHERE city.id = country.capital ORDER BY city.Population DESC";
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<Capital_City> cities = new ArrayList<>();
+            while (rset.next()) {
+                Capital_City city = new Capital_City();
+                city.name = rset.getString("Name");
+                city.Country = rset.getString("Country");
+                city.population = rset.getLong("Population");
+                cities.add(city);
+            }
+            return cities;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public void printCapital(ArrayList<Capital_City> capital)
+    {
+        // Check country is not null
+        if (capital == null)
+        {
+            System.out.println("No capital cities");
+            return;
+        }
+        // Print header
+        System.out.println(String.format("%-15s %-15s %15s", "Name","Country", "Population"));
+        // Loop over all countries in the list
+        for (Capital_City cap : capital)
+        {
+            if (cap == null)
+                continue;
+
+            String cou_string =
+                    String.format("%-15s %-15s %15s",
+                            cap.name, cap.Country, cap.population);
+            System.out.println(cou_string);
         }
     }
 

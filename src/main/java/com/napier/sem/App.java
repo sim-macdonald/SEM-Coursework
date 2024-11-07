@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import com.napier.sem.Database;
+import com.napier.sem.reports.Capital_City;
 import com.napier.sem.reports.Country;
 import com.napier.sem.reports.City;
 import com.napier.sem.queries.*;
@@ -51,9 +52,8 @@ public class App
         // Display results
         a.printCountries(countries3);
 
-        // Retrieve and display population report for a specific level and name
-        ArrayList<Population> populationList = a.getPopulationReport("Continent", "Asia");
-        a.printPopulationReport(populationList);
+        ArrayList<Capital_City> cap = a.getCapitalCitiesByPopulation();
+        a.printCapital(cap);
 
         ArrayList<City> cities = a.getCitiesByPopulation();
 
