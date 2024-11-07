@@ -55,8 +55,6 @@ public class App
         ArrayList<Population> populationList = a.getPopulationReport("Continent", "Asia");
         a.printPopulationReport(populationList);
 
-        ArrayList<City> cities = a.getCitiesByPopulation();
-
         // Disconnect from database
         a.disconnect();
     }
