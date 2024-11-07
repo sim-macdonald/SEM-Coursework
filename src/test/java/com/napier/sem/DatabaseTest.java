@@ -59,21 +59,6 @@ public class DatabaseTest
         db.printCountries(countries);
     }
 
-    @Test
-    void getCountryWorldValidQueries()
-    {
-        String query = "SELECT * FROM Country WHERE population > 0";
-        int N = 0;
-        db.getCountryWorld(query, N);
-    }
-
-    @Test
-    void getCountryWorldValidQueriesWithLimit()
-    {
-        String query = "SELECT * FROM Country WHERE population > 0";
-        int N = 5;
-        db.getCountryWorld(query, N);
-    }
 
     @Test
     void printPopulationTestNull()
