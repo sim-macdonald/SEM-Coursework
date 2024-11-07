@@ -3,6 +3,7 @@ package com.napier.sem;
 import com.napier.sem.queries.Country_queries;
 import com.napier.sem.queries.Population_queries;
 import com.napier.sem.reports.Country;
+import com.napier.sem.reports.City;
 import com.napier.sem.reports.Population;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -145,5 +146,29 @@ public class DatabaseTest
         countries.add(cou);
         db.printPopulation(countries);
     }
+
+    @Test
+    void getCitiesByPopulationTestNullConnection() {
+        db.disconnect();
+        ArrayList<City> cities = db.getCitiesByPopulation();
+        assertNull(cities, "Expected null when database connection is not established.");
+    }
+
+    @Test
+    void getCitiesByPopulationTestEmptyDatabase() {
+        db.connect();
+        ArrayList<City> cities = db.getCitiesByPopulation();
+        assertNotNull(cities, "Expected non-null empty list for cities in an empty database.");
+        assertEquals(0, cities.size(), "Expected an empty list of cities when no data is present.");
+    }
+
+    @Test
+    void getCitiesByPopulationTestValidData() {
+        db.connect();
+        ArrayList<City> cities = db.getCitiesByPopulation();
+        assertNotNull(cities, "Expected a list of cities.");
+        assertFalse(cities.isEmpty(), "Expected non-empty list of cities for populated database.");
+    }
+
 
 }

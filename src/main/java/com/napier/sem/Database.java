@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import com.napier.sem.queries.Country_queries;
+import com.napier.sem.reports.City;
 import com.napier.sem.reports.Country;
 import com.napier.sem.reports.Population;
 
@@ -335,6 +336,32 @@ public class Database {
             System.out.println(String.format("%-10s %-40s %-15s %-25s %-15d %15s", cou.code, cou.name, cou.continent, cou.region, cou.population, cou.capital));
         }
     }
+
+    public ArrayList<City> getCitiesByPopulation() {
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect = "SELECT ID, Name, CountryCode, District, Population FROM city ORDER BY Population DESC";
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cities = new ArrayList<>();
+            while (rset.next()) {
+                City city = new City();
+                city.ID = rset.getInt("ID");
+                city.name = rset.getString("Name");
+                city.countryCode = rset.getString("CountryCode");
+                city.district = rset.getString("District");
+                city.population = rset.getInt("Population");
+                cities.add(city);
+            }
+            return cities;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
 
     //------------------------------------------------------------------------------------------------------------------------------
 

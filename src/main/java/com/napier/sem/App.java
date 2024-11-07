@@ -2,6 +2,7 @@ package com.napier.sem;
 
 import com.napier.sem.Database;
 import com.napier.sem.reports.Country;
+import com.napier.sem.reports.City;
 import com.napier.sem.queries.*;
 import com.napier.sem.reports.Population;
 
@@ -31,6 +32,8 @@ public class App
         a.printCountries(countries);
 
         a.getPopulationReport("Continent", "Asia");
+
+        ArrayList<City> cities = a.getCitiesByPopulation();
 
         // Disconnect from database
         a.disconnect();
