@@ -69,7 +69,6 @@ public class DatabaseTest
 
     @Test
     void printCapTestEmpty()
-    void printPopulationTestNull()
     {
         ArrayList<Capital_City> cap = new ArrayList<Capital_City>();
         db.printCapital(cap);
@@ -93,7 +92,6 @@ public class DatabaseTest
 
     @Test
     void printCap()
-    void printPopulationTestContainsNull()
     {
         ArrayList<Capital_City> cap = new ArrayList<Capital_City>();
         Capital_City c = new Capital_City();

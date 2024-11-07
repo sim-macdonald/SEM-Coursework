@@ -52,8 +52,9 @@ public class App
         // Display results
         a.printCountries(countries3);
 
-        ArrayList<Capital_City> cap = a.getCapitalCitiesByPopulation();
-        a.printCapital(cap);
+
+        //ArrayList<Capital_City> cap = a.getCapitalCitiesByPopulation();
+        //a.printCapital(cap);
 
         // Disconnect from database
         a.disconnect();

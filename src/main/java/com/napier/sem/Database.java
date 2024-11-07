@@ -343,7 +343,7 @@ public class Database {
     public ArrayList<Capital_City> getCapitalCitiesByPopulation() {
         try {
             Statement stmt = con.createStatement();
-            String strSelect = "SELECT ID, city.name, country.name, city.population FROM city, country JOIN city ON country.code = city.countrycode WHERE city.id = country.capital ORDER BY city.Population DESC";
+            String strSelect = "SELECT city.name, country.name, city.population FROM city JOIN city ON country.code = city.countrycode WHERE city.id = country.capital ORDER BY city.Population DESC";
             ResultSet rset = stmt.executeQuery(strSelect);
 
             ArrayList<Capital_City> cities = new ArrayList<>();
