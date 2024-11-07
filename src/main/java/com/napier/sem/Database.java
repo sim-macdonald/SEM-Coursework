@@ -239,17 +239,16 @@ public class Database {
     //------------------------------------------------------------------------------------------------------------------------------
 
     /**
-     * Generates a population report for a specific level of aggregation and returns a single Population object.
+     * Generates a population report for a specific level of aggregation and returns a list of Population objects.
      *
      * @param level the level of aggregation (Continent, Region, or Country)
      * @param name  the name of the level (e.g., "Asia", "Europe", or a specific country)
-     * @return a Population object representing the aggregated population data for a single level
+     * @return a list of Population objects representing the aggregated population data for multiple entries
      */
-    public Population getPopulationReport(String level, String name) {
-        // Query template for population data
+    public ArrayList<Population> getPopulationReport(String level, String name) {
         String query = Population_queries.query;
 
-        // Add the WHERE clause depending on the level of aggregation
+        // Build the appropriate WHERE clause based on the level
         if (level.equalsIgnoreCase("Continent")) {
             query += " " + Population_queries.continent + "'" + name + "'";
         } else if (level.equalsIgnoreCase("Region")) {
@@ -257,54 +256,60 @@ public class Database {
         } else if (level.equalsIgnoreCase("Country")) {
             query += " " + Population_queries.country + "'" + name + "'";
         } else {
-            // Handle invalid level
             System.out.println("Invalid level specified.");
-            return null; // Return null if the level is invalid
+            return null;
         }
 
-        Population population = null;
+        ArrayList<Population> populationList = new ArrayList<>();
 
-        // Execute the query and process the result
         try (Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
-            if (rs.next()) {
+            // Loop through each row in the ResultSet
+            while (rs.next()) {
                 String countryName = rs.getString("Name");
                 long totalPopulation = rs.getLong("TotalPopulation");
                 long cityPopulation = rs.getLong("CityPopulation");
                 long nonCityPopulation = rs.getLong("NonCityPopulation");
 
                 // Calculate percentages
-                double cityPercentage = (double) cityPopulation / totalPopulation * 100;
-                double nonCityPercentage = (double) nonCityPopulation / totalPopulation * 100;
+                double cityPercentage = (cityPopulation / (double) totalPopulation) * 100;
+                double nonCityPercentage = (nonCityPopulation / (double) totalPopulation) * 100;
 
-                population = new Population(countryName, totalPopulation, cityPopulation, nonCityPopulation, cityPercentage, nonCityPercentage);
+                // Create and add Population object to the list
+                Population population = new Population(countryName, totalPopulation, cityPopulation, nonCityPopulation, cityPercentage, nonCityPercentage);
+                populationList.add(population);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return population; // Return a single Population object
+        return populationList; // Return the list of Population objects
     }
 
+
     /**
-     * Prints a population report in a readable format.
+     * Prints a population report for each Population object in a readable format.
      *
-     * @param population the Population object containing the report data.
+     * @param populationList the list of Population objects containing the report data.
      */
-    public void printPopulationReport(Population population) {
-        if (population == null) {
+    public void printPopulationReport(ArrayList<Population> populationList) {
+        if (populationList == null || populationList.isEmpty()) {
             System.out.println("No population data available.");
             return;
         }
 
-        System.out.println("Population Report for " + population.getName());
-        System.out.println("------------------------------------------------------------");
-        System.out.println("Total Population: " + population.getTotalPopulation());
-        System.out.println("Population in Cities: " + population.getCityPopulation() + " (" + String.format("%.2f", population.getCityPercentage()) + "%)");
-        System.out.println("Population Not in Cities: " + population.getNonCityPopulation() + " (" + String.format("%.2f", population.getNonCityPercentage()) + "%)");
+        for (Population population : populationList) {
+            System.out.println("Population Report for " + population.getName());
+            System.out.println("------------------------------------------------------------");
+            System.out.println("Total Population: " + population.getTotalPopulation());
+            System.out.println("Population in Cities: " + population.getCityPopulation() + " (" + String.format("%.2f", population.getCityPercentage()) + "%)");
+            System.out.println("Population Not in Cities: " + population.getNonCityPopulation() + " (" + String.format("%.2f", population.getNonCityPercentage()) + "%)");
+            System.out.println();
+        }
     }
+
 
 
     public ArrayList<City> getCitiesByPopulation() {

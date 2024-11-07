@@ -31,9 +31,9 @@ public class App
         // Display results
         a.printCountries(countries);
 
-        // Retrieve and display population report
-        Population asiaPopulation = a.getPopulationReport("Continent", "Asia");
-        a.printPopulationReport(asiaPopulation);
+        // Retrieve and display population report for a specific level and name
+        ArrayList<Population> populationList = a.getPopulationReport("Continent", "Asia");
+        a.printPopulationReport(populationList);
 
         ArrayList<City> cities = a.getCitiesByPopulation();
 
