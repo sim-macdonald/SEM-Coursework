@@ -75,4 +75,34 @@ public class DatabaseTest
         db.getCountryWorld(query, N);
     }
 
+    @Test
+    void printPopulationTestNull()
+    {
+        db.printPopulationReport(null);
+    }
+
+    @Test
+    void printPopulationTestEmpty()
+    {
+        ArrayList<Population> populationList = new ArrayList<Population>();
+        db.printPopulationReport(populationList);
+    }
+
+    @Test
+    void printPopulationTestContainsNull()
+    {
+        ArrayList<Population> populationList = new ArrayList<Population>();
+        populationList.add(null);
+        db.printPopulationReport(populationList);
+    }
+
+    @Test
+    void printPopulation()
+    {
+        ArrayList<Population> populationList = new ArrayList<Population>();
+        Population cou = new Population("Test",1000,500,500,50,50);
+        populationList.add(cou);
+        db.printPopulationReport(populationList);
+    }
+
 }
