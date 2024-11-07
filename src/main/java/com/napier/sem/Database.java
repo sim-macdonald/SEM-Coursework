@@ -109,7 +109,7 @@ public class Database {
                 cou.name = rset.getString("Name");
                 cou.continent = rset.getString("Continent");
                 cou.region = rset.getString("Region");
-                cou.population = rset.getInt("Population");
+                cou.population = rset.getLong("Population");
                 cou.capital = rset.getString("Capital");
                 country.add(cou);
             }
@@ -152,7 +152,7 @@ public class Database {
                 cou.name = rset.getString("Name");
                 cou.continent = rset.getString("Continent");
                 cou.region = rset.getString("Region");
-                cou.population = rset.getInt("Population");
+                cou.population = rset.getLong("Population");
                 cou.capital = rset.getString("Capital");
                 country.add(cou);
             }
@@ -195,7 +195,7 @@ public class Database {
                 cou.name = rset.getString("Name");
                 cou.continent = rset.getString("Continent");
                 cou.region = rset.getString("Region");
-                cou.population = rset.getInt("Population");
+                cou.population = rset.getLong("Population");
                 cou.capital = rset.getString("Capital");
                 country.add(cou);
             }
@@ -320,7 +320,7 @@ public class Database {
                 city.name = rset.getString("Name");
                 city.countryCode = rset.getString("CountryCode");
                 city.district = rset.getString("District");
-                city.population = rset.getInt("Population");
+                city.population = rset.getLong("Population");
                 cities.add(city);
             }
             return cities;
