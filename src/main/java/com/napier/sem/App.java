@@ -55,8 +55,6 @@ public class App
         ArrayList<Capital_City> cap = a.getCapitalCitiesByPopulation();
         a.printCapital(cap);
 
-        ArrayList<City> cities = a.getCitiesByPopulation();
-
         // Disconnect from database
         a.disconnect();
     }

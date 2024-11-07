@@ -60,6 +60,7 @@ public class DatabaseTest
         db.printCountries(countries);
     }
 
+
     @Test
     void printCapTestNull()
     {
@@ -68,9 +69,18 @@ public class DatabaseTest
 
     @Test
     void printCapTestEmpty()
+    void printPopulationTestNull()
     {
         ArrayList<Capital_City> cap = new ArrayList<Capital_City>();
         db.printCapital(cap);
+        db.printPopulationReport(null);
+    }
+
+    @Test
+    void printPopulationTestEmpty()
+    {
+        ArrayList<Population> populationList = new ArrayList<Population>();
+        db.printPopulationReport(populationList);
     }
 
     @Test
@@ -83,6 +93,7 @@ public class DatabaseTest
 
     @Test
     void printCap()
+    void printPopulationTestContainsNull()
     {
         ArrayList<Capital_City> cap = new ArrayList<Capital_City>();
         Capital_City c = new Capital_City();
@@ -91,7 +102,18 @@ public class DatabaseTest
         c.population = 123;
         cap.add(c);
         db.printCapital(cap);
+        ArrayList<Population> populationList = new ArrayList<Population>();
+        populationList.add(null);
+        db.printPopulationReport(populationList);
     }
 
+    @Test
+    void printPopulation()
+    {
+        ArrayList<Population> populationList = new ArrayList<Population>();
+        Population cou = new Population("Test",1000,500,500,50,50);
+        populationList.add(cou);
+        db.printPopulationReport(populationList);
+    }
 
 }

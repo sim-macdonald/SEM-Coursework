@@ -302,6 +302,7 @@ public class Database {
         }
 
         for (Population population : populationList) {
+            if (population == null){ continue;}
             System.out.println("Population Report for " + population.getName());
             System.out.println("------------------------------------------------------------");
             System.out.println("Total Population: " + population.getTotalPopulation());
