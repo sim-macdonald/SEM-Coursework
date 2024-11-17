@@ -2,10 +2,7 @@ package com.napier.sem;
 
 import com.napier.sem.queries.Country_queries;
 import com.napier.sem.queries.Population_queries;
-import com.napier.sem.reports.Capital_City;
-import com.napier.sem.reports.Country;
-import com.napier.sem.reports.City;
-import com.napier.sem.reports.Population;
+import com.napier.sem.reports.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +21,7 @@ public class DatabaseTest
         db = new Database();
     }
 
+//---------------------------------------------------------------------------------------------
     @Test
     void printCountriesTestNull()
     {
@@ -60,6 +58,7 @@ public class DatabaseTest
         db.printCountries(countries);
     }
 
+    //-------------------------------------------------------------------------------------------
 
     @Test
     void printCapTestNull()
@@ -105,6 +104,8 @@ public class DatabaseTest
         db.printPopulationReport(populationList);
     }
 
+    //-----------------------------------------------------------------------------------------------------------------
+
     @Test
     void printPopulation()
     {
@@ -114,4 +115,37 @@ public class DatabaseTest
         db.printPopulationReport(populationList);
     }
 
+    //----------------------------------------------------------------------------------------------------------------------
+
+    @Test
+    void printLanguageTestNull()
+    {
+        db.printLanguage(null);
+    }
+
+    @Test
+    void printLanguageTestEmpty()
+    {
+        ArrayList<Language> languages = new ArrayList<Language>();
+        db.printLanguage(languages);
+    }
+
+    @Test
+    void printLanguageTestContainsNull()
+    {
+        ArrayList<Language> lang = new ArrayList<Language>();
+        lang.add(null);
+        db.printLanguage(lang);
+    }
+
+    @Test
+    void printLanguage()
+    {
+        ArrayList<Language> languages = new ArrayList<Language>();
+        Language lang = new Language();
+        lang.name = "ABC";
+        lang.population = 11.11;
+        languages.add(lang);
+        db.printLanguage(languages);
+    }
 }

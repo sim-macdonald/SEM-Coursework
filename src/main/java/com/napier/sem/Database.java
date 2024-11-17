@@ -1,11 +1,9 @@
 package com.napier.sem;
 
 import com.napier.sem.queries.Country_queries;
-import com.napier.sem.reports.Capital_City;
-import com.napier.sem.reports.City;
-import com.napier.sem.reports.Country;
-import com.napier.sem.reports.Population;
+import com.napier.sem.reports.*;
 import com.napier.sem.queries.Population_queries;
+import com.napier.sem.queries.Language_queries;
 
 
 import java.sql.*;
@@ -386,7 +384,54 @@ public class Database {
         }
     }
 
-
+    //Methods for creating Language report by Simon MacDonald
     //------------------------------------------------------------------------------------------------------------------------------
 
+    public ArrayList<Language> getLanguages(String query) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = query;
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            //Extract country information
+            ArrayList<Language> report = new ArrayList<Language>();
+            while (rset.next()) {
+                Language lang = new Language();
+                lang.name = rset.getString("Language");
+                lang.population = rset.getDouble("Population");
+
+                report.add(lang);
+            }
+            return report;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get country details");
+            return null;
+        }
+    }
+
+    public void printLanguage(ArrayList<Language> report)
+    {
+        // Check country is not null
+        if (report == null)
+        {
+            System.out.println("No languages found");
+            return;
+        }
+        // Print header
+        System.out.println(String.format("%-15s %-15s", "Language", "Population"));
+        // Loop over all countries in the list
+        for (Language lang : report)
+        {
+            if (lang == null)
+                continue;
+
+            String lang_string =
+                    String.format("%-15s %-15s",
+                            lang.name, lang.population + "%");
+            System.out.println(lang_string);
+        }
+    }
 }

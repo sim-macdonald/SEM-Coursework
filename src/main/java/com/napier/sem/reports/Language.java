@@ -1,7 +1,7 @@
 package com.napier.sem.reports;
 
 public class Language {
-    private String language;
+    public String name;
 
-    private double population;
+    public double population;
 }

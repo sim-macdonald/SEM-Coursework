@@ -1,11 +1,8 @@
 package com.napier.sem;
 
 import com.napier.sem.Database;
-import com.napier.sem.reports.Capital_City;
-import com.napier.sem.reports.Country;
-import com.napier.sem.reports.City;
+import com.napier.sem.reports.*;
 import com.napier.sem.queries.*;
-import com.napier.sem.reports.Population;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -51,6 +48,14 @@ public class App
         ArrayList<Country> countries3 = a.getCountryContinent(Country_queries.query1,N,"Asia");
         // Display results
         a.printCountries(countries3);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("The number of people who speak the following the following languages: Chinese, English, Hindi, Spanish, Arabic");
+        System.out.println("-----------------------------------------------------------------------------");
+        //Extract country information
+        ArrayList<Language> languageReport = a.getLanguages(Language_queries.query);
+        // Display results
+        a.printLanguage(languageReport);
 
 
         //ArrayList<Capital_City> cap = a.getCapitalCitiesByPopulation();
