@@ -1,5 +1,6 @@
 package com.napier.sem.queries;
 
+//Class that contains the string for a language report sql query
 public class Language_queries {
 
     public static String query = "SELECT countrylanguage.Language, " +

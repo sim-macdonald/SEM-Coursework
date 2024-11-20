@@ -384,9 +384,17 @@ public class Database {
         }
     }
 
-    //Methods for creating Language report by Simon MacDonald
+    //Methods for creating Language report - Simon
     //------------------------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Retrieves a list of languages and their associated populations based on
+     * the provided SQL query.
+     *
+     * @param query The SQL query string to fetch language details from the database.
+     * @return A list of `Language` objects, each containing the name and population
+     *         percentage of a language, or `null` if an error occurs.
+     */
     public ArrayList<Language> getLanguages(String query) {
         try {
             // Create an SQL statement
@@ -412,6 +420,15 @@ public class Database {
         }
     }
 
+    /**
+     * Prints a formatted list of languages and their populations.
+     * This method takes the list of `Language` objects and outputs each language's
+     * name and population percentage.
+     *
+     * @param report The list of `Language` objects containing language details
+     *               to be printed. If the list is `null`, a message indicating
+     *               no languages are found will be printed.
+     */
     public void printLanguage(ArrayList<Language> report)
     {
         // Check country is not null
