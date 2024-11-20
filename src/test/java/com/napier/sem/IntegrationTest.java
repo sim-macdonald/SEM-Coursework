@@ -66,7 +66,7 @@ public class IntegrationTest {
     @Test
     void testGetCountryRegion() {
         String query = "SELECT * FROM country";
-        String region = "Europe";
+        String region = "North America";
         ArrayList<Country> countries = db.getCountryRegion(query, 5, region);  // Limit to 5 countries
 
         // Verify the result is not null and contains the correct region
