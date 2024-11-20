@@ -336,6 +336,8 @@ public class Database {
         }
     }
 
+    //Captial City
+//-------------------------------------------------------------------------------------------------------------
 
     public ArrayList<Capital_City> getCapitalCitiesByPopulation() {
         try {
