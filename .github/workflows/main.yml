@@ -50,7 +50,7 @@ jobs:
           directory: ./target/site/jacoco
           flags: Integration Tests # optional
           verbose: true # optional (default = false)
-          slug: <sim-macdonald>/<SEM-Coursework>
+          slug: sim-macdonald/SEM-Coursework
 
   build:
     name: Build and Start Using docker compose
