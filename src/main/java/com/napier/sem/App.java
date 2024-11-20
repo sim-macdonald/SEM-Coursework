@@ -23,7 +23,11 @@ public class App
         System.out.println("N set to 5");
 
         // Connect to database
-        a.connect();
+        if (args.length < 1) {
+            a.connect("localhost:33060", 10000);
+        } else {
+            a.connect(args[0], Integer.parseInt(args[1]));
+        }
 
         System.out.println("---------------------------------------------------------------------------");
         System.out.println("The top N populated countries in the world where N is provided by the user.");
