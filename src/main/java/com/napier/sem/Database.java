@@ -1,10 +1,9 @@
 package com.napier.sem;
 
 import com.napier.sem.queries.Country_queries;
-import com.napier.sem.reports.City;
-import com.napier.sem.reports.Country;
-import com.napier.sem.reports.Population;
+import com.napier.sem.reports.*;
 import com.napier.sem.queries.Population_queries;
+import com.napier.sem.queries.Language_queries;
 
 
 import java.sql.*;
@@ -18,39 +17,38 @@ public class Database {
     /**
      * Connect to the MySQL database.
      */
-    public void connect()
-    {
-        try
-        {
+    public void connect(String location, int delay) {
+        try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
 
         int retries = 10;
-        for (int i = 0; i < retries; ++i)
-        {
+        boolean shouldWait = false;
+        for (int i = 0; i < retries; ++i) {
             System.out.println("Connecting to database...");
-            try
-            {
-                // Wait a bit for db to start
-                Thread.sleep(30000);
+            try {
+                if (shouldWait) {
+                    // Wait a bit for db to start
+                    Thread.sleep(delay);
+                }
+
                 // Connect to database
-                con = DriverManager.getConnection("jdbc:mysql://db:3306/world?useSSL=false", "root", "group20");
+                con = DriverManager.getConnection("jdbc:mysql://" + location
+                                + "/world?allowPublicKeyRetrieval=true&useSSL=false",
+                        "root", "group20");
                 System.out.println("Successfully connected");
                 break;
-            }
-            catch (SQLException sqle)
-            {
-                System.out.println("Failed to connect to database attempt " + Integer.toString(i));
+            } catch (SQLException sqle) {
+                System.out.println("Failed to connect to database attempt " + i);
                 System.out.println(sqle.getMessage());
-            }
-            catch (InterruptedException ie)
-            {
+
+                // Let's wait before attempting to reconnect
+                shouldWait = true;
+            } catch (InterruptedException ie) {
                 System.out.println("Thread interrupted? Should not happen.");
             }
         }
@@ -247,8 +245,6 @@ public class Database {
      */
     public ArrayList<Population> getPopulationReport(String level, String name) {
         String query = Population_queries.query;
-
-        // Build the appropriate WHERE clause based on the level
         if (level.equalsIgnoreCase("Continent")) {
             query += " " + Population_queries.continent + "'" + name + "'";
         } else if (level.equalsIgnoreCase("Region")) {
@@ -265,18 +261,15 @@ public class Database {
         try (Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
-            // Loop through each row in the ResultSet
             while (rs.next()) {
                 String countryName = rs.getString("Name");
-                long totalPopulation = rs.getLong("TotalPopulation");
-                long cityPopulation = rs.getLong("CityPopulation");
-                long nonCityPopulation = rs.getLong("NonCityPopulation");
+                long totalPopulation = rs.getLong("TotalPopulation");  // Use getLong
+                long cityPopulation = rs.getLong("CityPopulation");    // Use getLong
+                long nonCityPopulation = rs.getLong("NonCityPopulation"); // Use getLong
 
-                // Calculate percentages
                 double cityPercentage = (cityPopulation / (double) totalPopulation) * 100;
                 double nonCityPercentage = (nonCityPopulation / (double) totalPopulation) * 100;
 
-                // Create and add Population object to the list
                 Population population = new Population(countryName, totalPopulation, cityPopulation, nonCityPopulation, cityPercentage, nonCityPercentage);
                 populationList.add(population);
             }
@@ -285,8 +278,9 @@ public class Database {
             e.printStackTrace();
         }
 
-        return populationList; // Return the list of Population objects
+        return populationList;
     }
+
 
 
     /**
@@ -339,6 +333,117 @@ public class Database {
     }
 
 
+    public ArrayList<Capital_City> getCapitalCitiesByPopulation() {
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect = "SELECT city.name, country.name, city.population FROM city JOIN city ON country.code = city.countrycode WHERE city.id = country.capital ORDER BY city.Population DESC";
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<Capital_City> cities = new ArrayList<>();
+            while (rset.next()) {
+                Capital_City city = new Capital_City();
+                city.name = rset.getString("Name");
+                city.Country = rset.getString("Country");
+                city.population = rset.getLong("Population");
+                cities.add(city);
+            }
+            return cities;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public void printCapital(ArrayList<Capital_City> capital)
+    {
+        // Check country is not null
+        if (capital == null)
+        {
+            System.out.println("No capital cities");
+            return;
+        }
+        // Print header
+        System.out.println(String.format("%-15s %-15s %15s", "Name","Country", "Population"));
+        // Loop over all countries in the list
+        for (Capital_City cap : capital)
+        {
+            if (cap == null)
+                continue;
+
+            String cou_string =
+                    String.format("%-15s %-15s %15s",
+                            cap.name, cap.Country, cap.population);
+            System.out.println(cou_string);
+        }
+    }
+
+    //Methods for creating Language report - Simon
     //------------------------------------------------------------------------------------------------------------------------------
 
+    /**
+     * Retrieves a list of languages and their associated populations based on
+     * the provided SQL query.
+     *
+     * @param query The SQL query string to fetch language details from the database.
+     * @return A list of `Language` objects, each containing the name and population
+     *         percentage of a language, or `null` if an error occurs.
+     */
+    public ArrayList<Language> getLanguages(String query) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = query;
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            //Extract country information
+            ArrayList<Language> report = new ArrayList<Language>();
+            while (rset.next()) {
+                Language lang = new Language();
+                lang.name = rset.getString("Language");
+                lang.population = rset.getDouble("Population");
+
+                report.add(lang);
+            }
+            return report;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get language details");
+            return null;
+        }
+    }
+
+    /**
+     * Prints a formatted list of languages and their populations.
+     * This method takes the list of `Language` objects and outputs each language's
+     * name and population percentage.
+     *
+     * @param report The list of `Language` objects containing language details
+     *               to be printed. If the list is `null`, a message indicating
+     *               no languages are found will be printed.
+     */
+    public void printLanguage(ArrayList<Language> report)
+    {
+        // Check country is not null
+        if (report == null)
+        {
+            System.out.println("No languages found");
+            return;
+        }
+        // Print header
+        System.out.println(String.format("%-15s %-15s", "Language", "Population"));
+        // Loop over all countries in the list
+        for (Language lang : report)
+        {
+            if (lang == null)
+                continue;
+
+            String lang_string =
+                    String.format("%-15s %-15s",
+                            lang.name, lang.population + "%");
+            System.out.println(lang_string);
+        }
+    }
 }

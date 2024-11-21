@@ -1,10 +1,8 @@
 package com.napier.sem;
 
 import com.napier.sem.Database;
-import com.napier.sem.reports.Country;
-import com.napier.sem.reports.City;
+import com.napier.sem.reports.*;
 import com.napier.sem.queries.*;
-import com.napier.sem.reports.Population;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -25,7 +23,11 @@ public class App
         System.out.println("N set to 5");
 
         // Connect to database
-        a.connect();
+        if (args.length < 1) {
+            a.connect("localhost:33060", 10000);
+        } else {
+            a.connect(args[0], Integer.parseInt(args[1]));
+        }
 
         System.out.println("---------------------------------------------------------------------------");
         System.out.println("The top N populated countries in the world where N is provided by the user.");
@@ -51,9 +53,17 @@ public class App
         // Display results
         a.printCountries(countries3);
 
-        // Retrieve and display population report for a specific level and name
-        ArrayList<Population> populationList = a.getPopulationReport("Continent", "Asia");
-        a.printPopulationReport(populationList);
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("The number of people who speak the following the following languages: Chinese, English, Hindi, Spanish, Arabic");
+        System.out.println("-----------------------------------------------------------------------------");
+        //Extract country information
+        ArrayList<Language> languageReport = a.getLanguages(Language_queries.query);
+        // Display results
+        a.printLanguage(languageReport);
+
+
+        //ArrayList<Capital_City> cap = a.getCapitalCitiesByPopulation();
+        //a.printCapital(cap);
 
         // Disconnect from database
         a.disconnect();

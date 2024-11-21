@@ -2,9 +2,7 @@ package com.napier.sem;
 
 import com.napier.sem.queries.Country_queries;
 import com.napier.sem.queries.Population_queries;
-import com.napier.sem.reports.Country;
-import com.napier.sem.reports.City;
-import com.napier.sem.reports.Population;
+import com.napier.sem.reports.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -15,20 +13,32 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseTest
 {
+    //create a test database
     static Database db;
 
+    //Create a initialise the database
     @BeforeAll
     static void init()
     {
         db = new Database();
     }
 
+//---------------------------------------------------------------------------------------------
+    /**
+     * Test case for the `printCountries` method when the input is `null`.
+     * This test ensures that the method handles a `null` input.
+     */
     @Test
     void printCountriesTestNull()
     {
         db.printCountries(null);
     }
 
+    /**
+     * Test case for the `printCountries` method when the input is an empty list.
+     * This test ensures that the method handles an empty list correctly,
+     * printing a message indicating no countries are found.
+     */
     @Test
     void printCountriesTestEmpty()
     {
@@ -36,6 +46,11 @@ public class DatabaseTest
         db.printCountries(countries);
     }
 
+    /**
+     * Test case for the `printCountries` method when the input list contains a `null` element.
+     * This test ensures that the method can handle a list where one or more elements are `null`,
+     * and continues processing the remaining valid elements or prints nothing if all are `null`.
+     */
     @Test
     void printCountriesTestContainsNull()
     {
@@ -44,6 +59,10 @@ public class DatabaseTest
         db.printCountries(countries);
     }
 
+    /**
+     * Test case for the `printCountries` method when the input contains a valid country.
+     * This test ensures that the method correctly formats and prints a country's code, name, continent, region, population and capital.
+     */
     @Test
     void printCountries()
     {
@@ -59,10 +78,19 @@ public class DatabaseTest
         db.printCountries(countries);
     }
 
+    //-------------------------------------------------------------------------------------------
 
     @Test
-    void printPopulationTestNull()
+    void printCapTestNull()
     {
+        db.printCapital(null);
+    }
+
+    @Test
+    void printCapTestEmpty()
+    {
+        ArrayList<Capital_City> cap = new ArrayList<Capital_City>();
+        db.printCapital(cap);
         db.printPopulationReport(null);
     }
 
@@ -74,12 +102,29 @@ public class DatabaseTest
     }
 
     @Test
-    void printPopulationTestContainsNull()
+    void printCapTestContainsNull()
     {
+        ArrayList<Capital_City> cap = new ArrayList<Capital_City>();
+        cap.add(null);
+        db.printCapital(cap);
+    }
+
+    @Test
+    void printCap()
+    {
+        ArrayList<Capital_City> cap = new ArrayList<Capital_City>();
+        Capital_City c = new Capital_City();
+        c.name = "TestName";
+        c.Country="ASDF";
+        c.population = 123;
+        cap.add(c);
+        db.printCapital(cap);
         ArrayList<Population> populationList = new ArrayList<Population>();
         populationList.add(null);
         db.printPopulationReport(populationList);
     }
+
+    //-----------------------------------------------------------------------------------------------------------------
 
     @Test
     void printPopulation()
@@ -90,4 +135,55 @@ public class DatabaseTest
         db.printPopulationReport(populationList);
     }
 
+    //----------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Test case for the `printLanguage` method when the input is `null`.
+     * This test ensures that the method handles a `null` input.
+     */
+    @Test
+    void printLanguageTestNull()
+    {
+        db.printLanguage(null);
+    }
+
+    /**
+     * Test case for the `printLanguage` method when the input is an empty list.
+     * This test ensures that the method handles an empty list correctly,
+     * printing a message indicating no languages are found.
+     */
+    @Test
+    void printLanguageTestEmpty()
+    {
+        ArrayList<Language> languages = new ArrayList<Language>();
+        db.printLanguage(languages);
+    }
+
+    /**
+     * Test case for the `printLanguage` method when the input list contains a `null` element.
+     * This test ensures that the method can handle a list where one or more elements are `null`,
+     * and continues processing the remaining valid elements or prints nothing if all are `null`.
+     */
+    @Test
+    void printLanguageTestContainsNull()
+    {
+        ArrayList<Language> lang = new ArrayList<Language>();
+        lang.add(null);
+        db.printLanguage(lang);
+    }
+
+    /**
+     * Test case for the `printLanguage` method when the input contains a valid language.
+     * This test ensures that the method correctly formats and prints a language's name and population.
+     */
+    @Test
+    void printLanguage()
+    {
+        ArrayList<Language> languages = new ArrayList<Language>();
+        Language lang = new Language();
+        lang.name = "ABC";
+        lang.population = 11.11;
+        languages.add(lang);
+        db.printLanguage(languages);
+    }
 }
