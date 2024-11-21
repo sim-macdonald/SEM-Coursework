@@ -268,6 +268,17 @@ public class IntegrationTest {
         assertTrue(languages.isEmpty(), "The list should be empty due to no matching results");
     }
 
+
+    //City Tests
+    //--------------------------------------------------------------------------------------
+
+    /**
+     * Integration test for retrieving a list of cities from the world.
+     * Verifies that the `getCityWorld` method works as expected.
+     */
+
+
+
     @Test
     void testGetCityWorld() {
         String query = "SELECT * FROM city";
@@ -283,6 +294,13 @@ public class IntegrationTest {
         assertNotNull(city.countryCode, "City code should not be null");
     }
 
+
+    /**
+     * Integration test for handling invalid queries.
+     * Verifies that the method gracefully handles invalid SQL queries.
+     */
+
+
     @Test
     void testGetCityWorldInvalidQuery() {
         String invalidQuery = "SELECT * FROM non_existing_table";
@@ -291,6 +309,13 @@ public class IntegrationTest {
         // Assert that the result is null, as the query is invalid
         assertNull(cities, "The result should be null due to invalid query");
     }
+
+
+    /**
+     * Integration test for handling empty result sets.
+     * Verifies that the method returns an empty list for queries that return no results.
+     */
+
 
     @Test
     void testGetCityWorldEmpty() {
