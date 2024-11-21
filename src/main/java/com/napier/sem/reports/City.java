@@ -17,4 +17,5 @@ public class City {
 
     public long population;
 
+
 }
