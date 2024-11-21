@@ -95,13 +95,6 @@ public class DatabaseTest
     }
 
     @Test
-    void printPopulationTestEmpty()
-    {
-        ArrayList<Population> populationList = new ArrayList<Population>();
-        db.printPopulationReport(populationList);
-    }
-
-    @Test
     void printCapTestContainsNull()
     {
         ArrayList<Capital_City> cap = new ArrayList<Capital_City>();
@@ -127,11 +120,32 @@ public class DatabaseTest
     //-----------------------------------------------------------------------------------------------------------------
 
     @Test
+    void printPopulationTestNull()
+    {
+        db.printPopulationReport(null);
+    }
+
+    @Test
+    void printPopulationTestContainsNull()
+    {
+        ArrayList<Population> population = new ArrayList<Population>();
+        population.add(null);
+        db.printPopulationReport(population);
+    }
+
+    @Test
     void printPopulation()
     {
         ArrayList<Population> populationList = new ArrayList<Population>();
         Population cou = new Population("Test",1000,500,500,50,50);
         populationList.add(cou);
+        db.printPopulationReport(populationList);
+    }
+
+    @Test
+    void printPopulationTestEmpty()
+    {
+        ArrayList<Population> populationList = new ArrayList<Population>();
         db.printPopulationReport(populationList);
     }
 
