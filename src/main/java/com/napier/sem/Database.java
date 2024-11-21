@@ -360,6 +360,7 @@ public class Database {
         }
     }
 
+    //--------------------------------------------------------------------------------------------------
     public void printCapital(ArrayList<Capital_City> capital)
     {
         // Check country is not null
