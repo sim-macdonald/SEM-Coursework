@@ -1,5 +1,7 @@
 package com.napier.sem.queries;
 
+//Query strings that are used in Database methods to generate reports
+
 public class Country_queries {
 
     //Default string for country report

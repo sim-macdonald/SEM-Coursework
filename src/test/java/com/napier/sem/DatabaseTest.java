@@ -1,11 +1,17 @@
 package com.napier.sem;
 
+import com.napier.sem.queries.Country_queries;
+import com.napier.sem.queries.Population_queries;
 import com.napier.sem.reports.Country;
+import com.napier.sem.reports.City;
+import com.napier.sem.reports.Population;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import javax.xml.crypto.Data;
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DatabaseTest
 {
@@ -52,4 +58,36 @@ public class DatabaseTest
         countries.add(cou);
         db.printCountries(countries);
     }
+
+
+    @Test
+    void printPopulationTestNull()
+    {
+        db.printPopulationReport(null);
+    }
+
+    @Test
+    void printPopulationTestEmpty()
+    {
+        ArrayList<Population> populationList = new ArrayList<Population>();
+        db.printPopulationReport(populationList);
+    }
+
+    @Test
+    void printPopulationTestContainsNull()
+    {
+        ArrayList<Population> populationList = new ArrayList<Population>();
+        populationList.add(null);
+        db.printPopulationReport(populationList);
+    }
+
+    @Test
+    void printPopulation()
+    {
+        ArrayList<Population> populationList = new ArrayList<Population>();
+        Population cou = new Population("Test",1000,500,500,50,50);
+        populationList.add(cou);
+        db.printPopulationReport(populationList);
+    }
+
 }
