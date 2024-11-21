@@ -335,30 +335,40 @@ public class Database {
     //Captial City
 //-------------------------------------------------------------------------------------------------------------
 
-    public ArrayList<Capital_City> getCapitalCitiesByPopulation() {
-        try {
-            Statement stmt = con.createStatement();
-            String strSelect = "SELECT city.name, country.name, city.population FROM city JOIN city ON country.code = city.countrycode WHERE city.id = country.capital ORDER BY city.Population DESC";
-            ResultSet rset = stmt.executeQuery(strSelect);
+    public ArrayList<Capital_City> getCapitalCitiesByPopulation(String query, int limit, String... parameter) {
+        ArrayList<Capital_City> capitalCities = new ArrayList<>();
 
-            ArrayList<Capital_City> cities = new ArrayList<>();
-            while (rset.next()) {
-                Capital_City city = new Capital_City();
-                city.name = rset.getString("Name");
-                city.Country = rset.getString("Country");
-                city.population = rset.getLong("Population");
-                cities.add(city);
+        try {
+            // Prepare the query
+            PreparedStatement stmt = con.prepareStatement(query);
+
+            // Bind optional parameters
+            if (parameter.length > 0) {
+                stmt.setString(1, parameter[0]);
             }
-            return cities;
+
+            // Execute the query
+            ResultSet rs = stmt.executeQuery();
+
+            // Process the result set
+            while (rs.next() && (limit == 0 || capitalCities.size() < limit)) {
+                Capital_City city = new Capital_City();
+                city.name = rs.getString("Name");
+                city.Country = rs.getString("Country");
+                city.population = rs.getLong("Population");
+
+                capitalCities.add(city);
+            }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get city details");
-            return null;
+            System.err.println("SQL Error: " + e.getMessage());
         }
+
+        return capitalCities;
     }
 
-    public void printCapital(ArrayList<Capital_City> capital)
+
+public void printCapital(ArrayList<Capital_City> capital)
     {
         // Check country is not null
         if (capital == null)

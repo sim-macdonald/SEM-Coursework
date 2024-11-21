@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import com.napier.sem.queries.Language_queries;
+import com.napier.sem.reports.Capital_City;
 import com.napier.sem.reports.Country;
 import com.napier.sem.reports.Language;
 import org.junit.jupiter.api.AfterAll;
@@ -266,6 +267,152 @@ public class IntegrationTest {
         assertNotNull(languages, "The list should not be null");
         assertTrue(languages.isEmpty(), "The list should be empty due to no matching results");
     }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    // Capital City Tests
+//--------------------------------------------------------------------------------------
+
+    /**
+     * Integration test for retrieving all capital cities in the world by population.
+     * Verifies that the `getCapitalCitiesByPopulation` method works as expected.
+     */
+    @Test
+    void testGetAllCapitalCitiesWorld() {
+        String query = "SELECT city.Name, country.Name AS Country, city.Population " +
+                "FROM city " +
+                "JOIN country ON city.ID = country.Capital " +
+                "ORDER BY city.Population DESC";
+        ArrayList<Capital_City> capitalCities = db.getCapitalCitiesByPopulation(query, 0);
+
+        // Verify the result is not null and list contains capital cities
+        assertNotNull(capitalCities, "The list of capital cities should not be null");
+        assertFalse(capitalCities.isEmpty(), "The list of capital cities should not be empty");
+
+        Capital_City capital = capitalCities.get(0);
+        assertNotNull(capital, "The first capital city should not be null");
+        assertNotNull(capital.name, "Capital city name should not be null");
+        assertNotNull(capital.Country, "Capital city country name should not be null");
+        assertTrue(capital.population > 0, "Capital city population should be greater than zero");
+    }
+
+    /**
+     * Integration test for retrieving all capital cities in a continent by population.
+     * Verifies that the `getCapitalCitiesByPopulation` method works as expected.
+     */
+    @Test
+    void testGetAllCapitalCitiesContinent() {
+        String continent = "Asia";
+        String query = "SELECT city.Name, country.Name AS Country, city.Population " +
+                "FROM city " +
+                "JOIN country ON city.ID = country.Capital " +
+                "WHERE country.Continent = '" + continent + "' " +
+                "ORDER BY city.Population DESC";
+        ArrayList<Capital_City> capitalCities = db.getCapitalCitiesByPopulation(query, 0);
+
+        // Verify the result is not null and list contains capital cities
+        assertNotNull(capitalCities, "The list of capital cities should not be null");
+        assertFalse(capitalCities.isEmpty(), "The list of capital cities should not be empty");
+
+        for (Capital_City capital : capitalCities) {
+            assertEquals(continent, capital.Country, "The capital city should belong to the specified continent: " + continent);
+        }
+    }
+
+    /**
+     * Integration test for retrieving all capital cities in a region by population.
+     * Verifies that the `getCapitalCitiesByPopulation` method works as expected.
+     */
+    @Test
+    void testGetAllCapitalCitiesRegion() {
+        String region = "Eastern Europe";
+        String query = "SELECT city.Name, country.Name AS Country, city.Population " +
+                "FROM city " +
+                "JOIN country ON city.ID = country.Capital " +
+                "WHERE country.Region = '" + region + "' " +
+                "ORDER BY city.Population DESC";
+        ArrayList<Capital_City> capitalCities = db.getCapitalCitiesByPopulation(query, 0);
+
+        // Verify the result is not null and list contains capital cities
+        assertNotNull(capitalCities, "The list of capital cities should not be null");
+        assertFalse(capitalCities.isEmpty(), "The list of capital cities should not be empty");
+
+        for (Capital_City capital : capitalCities) {
+            assertEquals(region, capital.Country, "The capital city should belong to the specified region: " + region);
+        }
+    }
+
+    /**
+     * Integration test for retrieving the top N populated capital cities in the world.
+     * Verifies that the `getCapitalCitiesByPopulation` method works as expected.
+     */
+    @Test
+    void testGetTopNCapitalCitiesWorld() {
+        int topN = 5;
+        String query = "SELECT city.Name, country.Name AS Country, city.Population " +
+                "FROM city " +
+                "JOIN country ON city.ID = country.Capital " +
+                "ORDER BY city.Population DESC";
+        ArrayList<Capital_City> capitalCities = db.getCapitalCitiesByPopulation(query, topN);
+
+        // Verify the result is not null and contains exactly top N entries
+        assertNotNull(capitalCities, "The list of capital cities should not be null");
+        assertEquals(topN, capitalCities.size(), "The list should contain exactly " + topN + " entries");
+
+        for (Capital_City capital : capitalCities) {
+            assertNotNull(capital.name, "Capital city name should not be null");
+            assertTrue(capital.population > 0, "Capital city population should be greater than zero");
+        }
+    }
+
+    /**
+     * Integration test for retrieving the top N populated capital cities in a continent.
+     * Verifies that the `getCapitalCitiesByPopulation` method works as expected.
+     */
+    @Test
+    void testGetTopNCapitalCitiesContinent() {
+        int topN = 3;
+        String continent = "Europe";
+        String query = "SELECT city.Name, country.Name AS Country, city.Population " +
+                "FROM city " +
+                "JOIN country ON city.ID = country.Capital " +
+                "WHERE country.Continent = '" + continent + "' " +
+                "ORDER BY city.Population DESC";
+        ArrayList<Capital_City> capitalCities = db.getCapitalCitiesByPopulation(query, topN);
+
+        // Verify the result is not null and contains exactly top N entries
+        assertNotNull(capitalCities, "The list of capital cities should not be null");
+        assertEquals(topN, capitalCities.size(), "The list should contain exactly " + topN + " entries");
+
+        for (Capital_City capital : capitalCities) {
+            assertEquals(continent, capital.Country, "The capital city should belong to the specified continent: " + continent);
+        }
+    }
+
+    /**
+     * Integration test for retrieving the top N populated capital cities in a region.
+     * Verifies that the `getCapitalCitiesByPopulation` method works as expected.
+     */
+    @Test
+    void testGetTopNCapitalCitiesRegion() {
+        int topN = 2;
+        String region = "Western Africa";
+        String query = "SELECT city.Name, country.Name AS Country, city.Population " +
+                "FROM city " +
+                "JOIN country ON city.ID = country.Capital " +
+                "WHERE country.Region = '" + region + "' " +
+                "ORDER BY city.Population DESC";
+        ArrayList<Capital_City> capitalCities = db.getCapitalCitiesByPopulation(query, topN);
+
+        // Verify the result is not null and contains exactly top N entries
+        assertNotNull(capitalCities, "The list of capital cities should not be null");
+        assertEquals(topN, capitalCities.size(), "The list should contain exactly " + topN + " entries");
+
+        for (Capital_City capital : capitalCities) {
+            assertEquals(region, capital.Country, "The capital city should belong to the specified region: " + region);
+        }
+    }
+
 }
 
 
