@@ -1,5 +1,6 @@
 package com.napier.sem;
 
+import com.napier.sem.reports.City;
 import com.napier.sem.queries.Language_queries;
 import com.napier.sem.reports.Country;
 import com.napier.sem.reports.Language;
@@ -266,6 +267,118 @@ public class IntegrationTest {
         assertNotNull(languages, "The list should not be null");
         assertTrue(languages.isEmpty(), "The list should be empty due to no matching results");
     }
+
+    @Test
+    void testGetCityWorld() {
+        String query = "SELECT * FROM city";
+        ArrayList<City> cities = db.getCitiesByPopulation(query, 5);
+
+        // Verify the result is not null and list contains countries
+        assertNotNull(cities, "The list of cities should not be null");
+        assertFalse(cities.isEmpty(), "The list of cities should not be empty");
+
+        City city = cities.get(0);
+        assertNotNull(city, "The first city should not be null");
+        assertNotNull(city.name, "City ID should not be null");
+        assertNotNull(city.countryCode, "City code should not be null");
+    }
+
+    @Test
+    void testGetCityWorldInvalidQuery() {
+        String invalidQuery = "SELECT * FROM non_existing_table";
+        ArrayList<City> cities = db.getCitiesByPopulation(invalidQuery, 5);
+
+        // Assert that the result is null, as the query is invalid
+        assertNull(cities, "The result should be null due to invalid query");
+    }
+
+    @Test
+    void testGetCityWorldEmpty() {
+        String query = "SELECT * FROM city WHERE Population < 0";
+        ArrayList<City> cities = db.getCitiesByPopulation(query, 5);
+
+        // Assert that the list is empty
+        assertNotNull(cities, "The list should not be null");
+        assertTrue(cities.isEmpty(), "The list should be empty due to no matching results");
+    }
+
+
+    @Test
+    void testGetCityContinent() {
+        String query = "SELECT * FROM city JOIN country ON city.ID = country.countryCode";
+        String continent = "Asia";
+        ArrayList<City> cities = db.getCityContinent(query, 5, continent);  // Limit to 5 countries
+
+        // Verify the result is not null and contains the correct continent
+        assertNotNull(cities, "The list of cities should not be null");
+        assertFalse(cities.isEmpty(), "The list of cities should not be empty");
+
+        for (City city : cities) {
+            assertEquals(continent, city.name, "City continent should be " + continent);
+        }
+    }
+
+    @Test
+    void testGetCityContinentInvalidQuery() {
+        String invalidQuery = "SELECT * FROM non_existing_table";
+        String continent = "Asia";
+        ArrayList<City> cities = db.getCityContinent(invalidQuery, 5, continent);
+
+        // Assert that the result is null, as the query is invalid
+        assertNull(cities, "The result should be null due to invalid query");
+    }
+
+    @Test
+    void testGetCityContinentEmpty() {
+        String query = "SELECT * FROM city";
+        String continent = "Asia AND population < 0";
+        ArrayList<City> cities = db.getCityContinent(query, 5, continent);
+
+        // Assert that the list is empty
+        assertNotNull(cities, "The list should not be null");
+        assertTrue(cities.isEmpty(), "The list should be empty due to no matching results");
+    }
+
+
+    @Test
+    void testGetCityDistrict() {
+        String query = "SELECT * FROM city JOIN country ON city.ID = country.countryCode";
+        String district = "Asia";
+        ArrayList<City> cities = db.getCityDistrict(query, 5, district);  // Limit to 5 countries
+
+        // Verify the result is not null and contains the correct continent
+        assertNotNull(cities, "The list of cities should not be null");
+        assertFalse(cities.isEmpty(), "The list of cities should not be empty");
+
+        for (City city : cities) {
+            assertEquals(district, city.name, "City continent should be " + district);
+        }
+    }
+
+    @Test
+    void testGetCityDistrictInvalidQuery() {
+        String invalidQuery = "SELECT * FROM non_existing_table";
+        String district = "invalid yes yes ooo";
+        ArrayList<City> cities = db.getCityContinent(invalidQuery, 5, district);
+
+        // Assert that the result is null, as the query is invalid
+        assertNull(cities, "The result should be null due to invalid query");
+    }
+
+    @Test
+    void testGetCityDistrictEmpty() {
+        String query = "SELECT * FROM city";
+        String district = "Asia AND population < 0";
+        ArrayList<City> cities = db.getCityContinent(query, 5, district);
+
+        // Assert that the list is empty
+        assertNotNull(cities, "The list should not be null");
+        assertTrue(cities.isEmpty(), "The list should be empty due to no matching results");
+    }
+
+
+
+
 }
 
 

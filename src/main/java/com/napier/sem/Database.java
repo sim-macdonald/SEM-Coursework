@@ -308,12 +308,11 @@ public class Database {
 
 
 
-    public ArrayList<City> getCitiesByPopulation(int N) {
+    public ArrayList<City> getCitiesByPopulation(String query, int N) {
         try {
             Statement stmt = con.createStatement();
-            String strSelect = "SELECT ID, Name, CountryCode, District, Population FROM city ORDER BY Population DESC";
+            String strSelect = query + " ORDER BY Population DESC";
             ResultSet rset = stmt.executeQuery(strSelect);
-
 
             //if N <= 0 then set no limit
             if(N>0) {
@@ -609,4 +608,8 @@ public class Database {
             return null;
         }
     }
+
+
+
+
 }
