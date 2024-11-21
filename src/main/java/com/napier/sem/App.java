@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class App
 {
     public static void main(String[] args)
@@ -62,8 +63,16 @@ public class App
         a.printLanguage(languageReport);
 
 
-        //ArrayList<Capital_City> cap = a.getCapitalCitiesByPopulation();
-        //a.printCapital(cap);
+        ArrayList<Population> population1 = a.getPopulationReport(Population_queries.query1);
+        a.printPopulationReport(population1);
+        ArrayList<Population> population2 = a.getPopulationReport(Population_queries.query2);
+        a.printPopulationReport(population2);
+        ArrayList<Population> population3 = a.getPopulationReport(Population_queries.query3);
+        a.printPopulationReport(population3);
+        ArrayList<Population> population4 = a.getPopulationReport(Population_queries.query4);
+        a.printPopulationReport(population4);
+        ArrayList<Population> population5 = a.getPopulationReport(Population_queries.query5);
+        a.printPopulationReport(population5);
 
         // Disconnect from database
         a.disconnect();

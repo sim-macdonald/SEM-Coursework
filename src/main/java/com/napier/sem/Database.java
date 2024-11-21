@@ -239,49 +239,43 @@ public class Database {
     /**
      * Generates a population report for a specific level of aggregation and returns a list of Population objects.
      *
-     * @param level the level of aggregation (Continent, Region, or Country)
-     * @param name  the name of the level (e.g., "Asia", "Europe", or a specific country)
+     *
      * @return a list of Population objects representing the aggregated population data for multiple entries
      */
-    public ArrayList<Population> getPopulationReport(String level, String name) {
-        String query = Population_queries.query;
-        if (level.equalsIgnoreCase("Continent")) {
-            query += " " + Population_queries.continent + "'" + name + "'";
-        } else if (level.equalsIgnoreCase("Region")) {
-            query += " " + Population_queries.region + "'" + name + "'";
-        } else if (level.equalsIgnoreCase("Country")) {
-            query += " " + Population_queries.country + "'" + name + "'";
-        } else {
-            System.out.println("Invalid level specified.");
-            return null;
-        }
-
+    public ArrayList<Population> getPopulationReport(String query) {
         ArrayList<Population> populationList = new ArrayList<>();
 
-        try (Statement stmt = con.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        try (Statement stmt = con.createStatement()) {
+            ResultSet rs = stmt.executeQuery(query);
 
+            // Process the result set into Population objects
             while (rs.next()) {
-                String countryName = rs.getString("Name");
-                long totalPopulation = rs.getLong("TotalPopulation");  // Use getLong
-                long cityPopulation = rs.getLong("CityPopulation");    // Use getLong
-                long nonCityPopulation = rs.getLong("NonCityPopulation"); // Use getLong
+                String name = rs.getString(1);
+                long totalPopulation = rs.getLong(2);
+                long cityPopulation = 0;
+                long nonCityPopulation = totalPopulation;
 
-                double cityPercentage = (cityPopulation / (double) totalPopulation) * 100;
-                double nonCityPercentage = (nonCityPopulation / (double) totalPopulation) * 100;
+                // For reports involving cities, we will get city and non-city populations
+                if (rs.getMetaData().getColumnCount() > 2) {
+                    cityPopulation = rs.getLong(3);
+                    nonCityPopulation = totalPopulation - cityPopulation;
+                }
 
-                Population population = new Population(countryName, totalPopulation, cityPopulation, nonCityPopulation, cityPercentage, nonCityPercentage);
+                // Calculate percentages
+                double cityPercentage = (totalPopulation != 0) ? ((double) cityPopulation / totalPopulation) * 100 : 0.0;
+                double nonCityPercentage = (totalPopulation != 0) ? ((double) nonCityPopulation / totalPopulation) * 100 : 0.0;
+
+                // Create Population object and add it to the list
+                Population population = new Population(name, totalPopulation, cityPopulation, nonCityPopulation, cityPercentage, nonCityPercentage);
                 populationList.add(population);
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;  // Return null in case of an error
         }
 
         return populationList;
     }
-
-
 
     /**
      * Prints a population report for each Population object in a readable format.
