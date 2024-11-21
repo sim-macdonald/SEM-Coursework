@@ -335,17 +335,12 @@ public class Database {
     //Captial City
 //-------------------------------------------------------------------------------------------------------------
 
-    public ArrayList<Capital_City> getCapitalCitiesByPopulation(String query, int limit, String... parameter) {
+    public ArrayList<Capital_City> getCapitalCitiesByPopulation(String query, int limit) {
         ArrayList<Capital_City> capitalCities = new ArrayList<>();
 
         try {
             // Prepare the query
             PreparedStatement stmt = con.prepareStatement(query);
-
-            // Bind optional parameters
-            if (parameter.length > 0) {
-                stmt.setString(1, parameter[0]);
-            }
 
             // Execute the query
             ResultSet rs = stmt.executeQuery();

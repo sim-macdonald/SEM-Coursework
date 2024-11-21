@@ -67,5 +67,25 @@ public class App
 
         // Disconnect from database
         a.disconnect();
+
+        // Retrieve and print reports for capital cities
+        ArrayList<Capital_City> capitalCitiesWorld = a.getCapitalCitiesByPopulation(CapitalCity_queries.query1,N);
+        a.printCapital(capitalCitiesWorld);
+
+        ArrayList<Capital_City> capitalCitiesContinent = a.getCapitalCitiesByPopulation(CapitalCity_queries.query2,N);
+        a.printCapital(capitalCitiesContinent);
+
+        ArrayList<Capital_City> capitalCitiesRegion = a.getCapitalCitiesByPopulation(CapitalCity_queries.query3,N);
+        a.printCapital(capitalCitiesRegion);
+
+        ArrayList<Capital_City> topNCapitalCitiesWorld = a.getCapitalCitiesByPopulation(CapitalCity_queries.query4,N);
+        a.printCapital(topNCapitalCitiesWorld);
+
+        ArrayList<Capital_City> topNCapitalCitiesContinent = a.getCapitalCitiesByPopulation(CapitalCity_queries.query5,N);
+        a.printCapital(topNCapitalCitiesContinent);
+
+        ArrayList<Capital_City> topNCapitalCitiesRegion = a.getCapitalCitiesByPopulation(CapitalCity_queries.query6,N);
+        a.printCapital(topNCapitalCitiesRegion);
+
     }
 }
