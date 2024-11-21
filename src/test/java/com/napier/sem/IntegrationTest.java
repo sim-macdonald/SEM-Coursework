@@ -268,8 +268,6 @@ public class IntegrationTest {
         assertTrue(languages.isEmpty(), "The list should be empty due to no matching results");
     }
 
-    //------------------------------------------------------------------------------------------------------------------
-
     // Capital City Tests
 //--------------------------------------------------------------------------------------
 
