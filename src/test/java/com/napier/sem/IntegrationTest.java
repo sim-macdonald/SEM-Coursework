@@ -400,7 +400,7 @@ public class IntegrationTest {
 
     @Test
     void testGetPopulationCity() {
-        // Query to get population data for a specific city (e.g., Mumbai)
+        // Query to get population data for a specific city
         String query = "SELECT city.Name AS Name, "
                 + "city.Population AS TotalPopulation, "
                 + "city.Population AS CityPopulation, "
@@ -408,7 +408,7 @@ public class IntegrationTest {
                 + "100 AS CityPercentage, "
                 + "0 AS NonCityPercentage "
                 + "FROM city "
-                + "WHERE city.Name = 'Mumbai'";
+                + "WHERE city.Name = 'Delhi'";
 
         // Get the population report using the query
         ArrayList<Population> populationReport = db.getPopulationReport(query);

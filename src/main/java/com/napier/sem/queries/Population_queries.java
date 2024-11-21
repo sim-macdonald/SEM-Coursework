@@ -48,7 +48,7 @@ public class Population_queries {
             + "WHERE country.Name = 'India' "
             + "GROUP BY country.Name, country.Population";
 
-    // Query to get population data for a specific city (e.g., Mumbai)
+    // Query to get population data for a specific city
     public static String query5 = "SELECT city.Name AS Name, "
             + "city.Population AS TotalPopulation, "
             + "city.Population AS CityPopulation, "
@@ -56,5 +56,5 @@ public class Population_queries {
             + "100 AS CityPercentage, "
             + "0 AS NonCityPercentage "
             + "FROM city "
-            + "WHERE city.Name = 'Mumbai'";
+            + "WHERE city.Name = 'Delhi'";
 }
