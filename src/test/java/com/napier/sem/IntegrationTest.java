@@ -271,7 +271,10 @@ public class IntegrationTest {
 
     //Population Tests
     //--------------------------------------------------------------------------------------
-
+    /**
+     * Integration test for retrieving population data for the whole world.
+     *
+     */
     @Test
     void testGetPopulationWorld() {
         // Query to get population data for the whole world
@@ -302,6 +305,10 @@ public class IntegrationTest {
         db.printPopulationReport(populationReport);
     }
 
+    /**
+     * Integration test for retrieving population data for a specific continent.
+     *
+     */
     @Test
     void testGetPopulationContinent() {
         // Query to get population data for a specific continent (e.g., Asia)
@@ -334,6 +341,10 @@ public class IntegrationTest {
         db.printPopulationReport(populationReport);
     }
 
+    /**
+     * Integration test for retrieving population data for a specific region.
+     *
+     */
     @Test
     void testGetPopulationRegion() {
         // Query to get population data for a specific region (e.g., Southeast Asia)
@@ -365,7 +376,10 @@ public class IntegrationTest {
         // Print the population report for visual verification
         db.printPopulationReport(populationReport);
     }
-
+    /**
+     * Integration test for retrieving population data for a specific country.
+     *
+     */
     @Test
     void testGetPopulationCountry() {
         // Query to get population data for a specific country (e.g., India)
@@ -397,7 +411,10 @@ public class IntegrationTest {
         // Print the population report for visual verification
         db.printPopulationReport(populationReport);
     }
-
+    /**
+     * Integration test for retrieving population data for a specific city.
+     *
+     */
     @Test
     void testGetPopulationCity() {
         // Query to get population data for a specific city
