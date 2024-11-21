@@ -245,8 +245,6 @@ public class Database {
      */
     public ArrayList<Population> getPopulationReport(String level, String name) {
         String query = Population_queries.query;
-
-        // Build the appropriate WHERE clause based on the level
         if (level.equalsIgnoreCase("Continent")) {
             query += " " + Population_queries.continent + "'" + name + "'";
         } else if (level.equalsIgnoreCase("Region")) {
@@ -263,18 +261,15 @@ public class Database {
         try (Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
-            // Loop through each row in the ResultSet
             while (rs.next()) {
                 String countryName = rs.getString("Name");
-                long totalPopulation = rs.getLong("TotalPopulation");
-                long cityPopulation = rs.getLong("CityPopulation");
-                long nonCityPopulation = rs.getLong("NonCityPopulation");
+                long totalPopulation = rs.getLong("TotalPopulation");  // Use getLong
+                long cityPopulation = rs.getLong("CityPopulation");    // Use getLong
+                long nonCityPopulation = rs.getLong("NonCityPopulation"); // Use getLong
 
-                // Calculate percentages
                 double cityPercentage = (cityPopulation / (double) totalPopulation) * 100;
                 double nonCityPercentage = (nonCityPopulation / (double) totalPopulation) * 100;
 
-                // Create and add Population object to the list
                 Population population = new Population(countryName, totalPopulation, cityPopulation, nonCityPopulation, cityPercentage, nonCityPercentage);
                 populationList.add(population);
             }
@@ -283,8 +278,9 @@ public class Database {
             e.printStackTrace();
         }
 
-        return populationList; // Return the list of Population objects
+        return populationList;
     }
+
 
 
     /**
