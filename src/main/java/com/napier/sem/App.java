@@ -61,14 +61,7 @@ public class App
         // Display results
         a.printLanguage(languageReport);
 
-
-        //ArrayList<Capital_City> cap = a.getCapitalCitiesByPopulation();
-        //a.printCapital(cap);
-
-        // Disconnect from database
-        a.disconnect();
-
-        // Retrieve and print reports for capital cities
+// Retrieve and print reports for capital cities
         ArrayList<Capital_City> capitalCitiesWorld = a.getCapitalCitiesByPopulation(CapitalCity_queries.query1,N);
         a.printCapital(capitalCitiesWorld);
 
@@ -86,6 +79,10 @@ public class App
 
         ArrayList<Capital_City> topNCapitalCitiesRegion = a.getCapitalCitiesByPopulation(CapitalCity_queries.query6,N);
         a.printCapital(topNCapitalCitiesRegion);
+
+        // Disconnect from database
+        a.disconnect();
+
 
     }
 }
