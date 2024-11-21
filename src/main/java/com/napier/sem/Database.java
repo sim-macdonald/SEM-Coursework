@@ -277,7 +277,6 @@ public class Database {
         return populationList;
     }
 
-
     /**
      * Prints a population report for each Population object in a readable format.
      *
