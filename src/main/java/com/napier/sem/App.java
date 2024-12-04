@@ -47,7 +47,7 @@ public class App
         a.printCountries(countries2);
 
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.println("The top N populated countries in a continent where N is provided by the user.");
+        System.out.println("All the countries in a region organised by largest population to smallest.");
         System.out.println("-----------------------------------------------------------------------------");
         //Extract country information
         ArrayList<Country> countries3 = a.getCountryContinent(Country_queries.query1,0,"Asia");
@@ -55,7 +55,8 @@ public class App
         a.printCountries(countries3);
 
         System.out.println("---------------------------------------------------------------------------");
-        System.out.println("All the countries in a region organised by largest population to smallest.");
+        System.out.println("The top N populated countries in the world where N is provided by the user.");
+        System.out.println("N = " + N);
         System.out.println("---------------------------------------------------------------------------");
         // Extract country information
         ArrayList<Country> countries4 = a.getCountryWorld(Country_queries.query1, N);
@@ -64,6 +65,7 @@ public class App
 
         System.out.println("--------------------------------------------------------------------------");
         System.out.println("The top N populated countries in a region where N is provided by the user.");
+        System.out.println("N = " + N);
         System.out.println("--------------------------------------------------------------------------");
         //Extract country information
         ArrayList<Country> countries5 = a.getCountryRegion(Country_queries.query1,N,"North America");
@@ -72,6 +74,7 @@ public class App
 
         System.out.println("-----------------------------------------------------------------------------");
         System.out.println("The top N populated countries in a continent where N is provided by the user.");
+        System.out.println("N = " + N);
         System.out.println("-----------------------------------------------------------------------------");
         //Extract country information
         ArrayList<Country> countries6 = a.getCountryContinent(Country_queries.query1,N,"Asia");
