@@ -62,13 +62,13 @@ public class App
         a.printLanguage(languageReport);
 
 // Retrieve and print reports for capital cities
-        ArrayList<Capital_City> capitalCitiesWorld = a.getCapitalCitiesByPopulation(CapitalCity_queries.query1,N);
+        ArrayList<Capital_City> capitalCitiesWorld = a.getCapitalCitiesByPopulation(CapitalCity_queries.query1,0);
         a.printCapital(capitalCitiesWorld);
 
-        ArrayList<Capital_City> capitalCitiesContinent = a.getCapitalCitiesByPopulation(CapitalCity_queries.query2,N);
+        ArrayList<Capital_City> capitalCitiesContinent = a.getCapitalCitiesByPopulation(CapitalCity_queries.query2,0);
         a.printCapital(capitalCitiesContinent);
 
-        ArrayList<Capital_City> capitalCitiesRegion = a.getCapitalCitiesByPopulation(CapitalCity_queries.query3,N);
+        ArrayList<Capital_City> capitalCitiesRegion = a.getCapitalCitiesByPopulation(CapitalCity_queries.query3,0);
         a.printCapital(capitalCitiesRegion);
 
         ArrayList<Capital_City> topNCapitalCitiesWorld = a.getCapitalCitiesByPopulation(CapitalCity_queries.query4,N);

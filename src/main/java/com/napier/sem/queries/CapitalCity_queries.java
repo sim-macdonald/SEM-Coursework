@@ -21,7 +21,7 @@ public class CapitalCity_queries {
             "SELECT city.Name, country.Name AS Country, city.Population " +
                     "FROM city " +
                     "JOIN country ON city.ID = country.Capital " +
-                    "WHERE country.Continent = ? " +
+                    "WHERE country.Continent = 'Asia' " +
                     "ORDER BY city.Population DESC";
 
     /**
@@ -32,7 +32,7 @@ public class CapitalCity_queries {
             "SELECT city.Name, country.Name AS Country, city.Population " +
                     "FROM city " +
                     "JOIN country ON city.ID = country.Capital " +
-                    "WHERE country.Region = ? " +
+                    "WHERE country.Region = 'North America' " +
                     "ORDER BY city.Population DESC";
 
     /**
@@ -43,8 +43,7 @@ public class CapitalCity_queries {
             "SELECT city.Name, country.Name AS Country, city.Population " +
                     "FROM city " +
                     "JOIN country ON city.ID = country.Capital " +
-                    "ORDER BY city.Population DESC " +
-                    "LIMIT ?";
+                    "ORDER BY city.Population DESC ";
 
     /**
      * Query to get the top N populated capital cities in a specific continent.
@@ -54,9 +53,8 @@ public class CapitalCity_queries {
             "SELECT city.Name, country.Name AS Country, city.Population " +
                     "FROM city " +
                     "JOIN country ON city.ID = country.Capital " +
-                    "WHERE country.Continent = ? " +
-                    "ORDER BY city.Population DESC " +
-                    "LIMIT ?";
+                    "WHERE country.Continent = 'Asia' " +
+                    "ORDER BY city.Population DESC ";
 
     /**
      * Query to get the top N populated capital cities in a specific region.
@@ -66,7 +64,6 @@ public class CapitalCity_queries {
             "SELECT city.Name, country.Name AS Country, city.Population " +
                     "FROM city " +
                     "JOIN country ON city.ID = country.Capital " +
-                    "WHERE country.Region = ? " +
-                    "ORDER BY city.Population DESC " +
-                    "LIMIT ?";
+                    "WHERE country.Region = 'North America' " +
+                    "ORDER BY city.Population DESC ";
 }
