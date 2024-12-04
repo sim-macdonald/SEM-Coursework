@@ -57,4 +57,10 @@ public class Population_queries {
             + "0 AS NonCityPercentage "
             + "FROM city "
             + "WHERE city.Name = 'Delhi'";
+
+    // Query to get population data of people, people living in cities, and people not living in cities in each continent.
+
+    // Query to get population data of people, people living in cities, and people not living in cities in each region.
+
+    // Query to get population data of people, people living in cities, and people not living in cities in each country.
 }

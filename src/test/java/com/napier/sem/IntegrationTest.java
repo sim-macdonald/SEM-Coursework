@@ -443,7 +443,86 @@ public class IntegrationTest {
         db.printPopulationReport(populationReport);
     }
 
+    /**
+     * Integration test for retrieving population data of people, people living in cities, and people not living in cities in each continent.
+     *
+     */
+    @Test
+    public void testPopulationByContinent() {
+        String query = "SELECT country.Continent AS Name, " +
+                "SUM(country.Population) AS TotalPopulation, " +
+                "SUM(city.Population) AS CityPopulation, " +
+                "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation, " +
+                "ROUND((SUM(city.Population) / SUM(country.Population)) * 100, 2) AS CityPercentage, " +
+                "ROUND(((SUM(country.Population) - SUM(city.Population)) / SUM(country.Population)) * 100, 2) AS NonCityPercentage " +
+                "FROM country " +
+                "LEFT JOIN city ON country.Capital = city.ID " +
+                "GROUP BY country.Continent";
 
+        ArrayList<Population> populationReport = db.getPopulationReport(query);
+        assertNotNull(populationReport);
+        assertFalse(populationReport.isEmpty());
+        populationReport.forEach(continent -> {
+            assertNotNull(continent.getName());
+            assertTrue(continent.getTotalPopulation() > 0);
+            assertTrue(continent.getCityPercentage() >= 0);
+            assertTrue(continent.getNonCityPercentage() >= 0);
+        });
+    }
+
+    /**
+     * Integration test for retrieving population data of people, people living in cities, and people not living in cities in each region.
+     *
+     */
+    @Test
+    public void testPopulationByRegion() {
+        String query = "SELECT country.Region AS Name, " +
+                "SUM(country.Population) AS TotalPopulation, " +
+                "SUM(city.Population) AS CityPopulation, " +
+                "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation, " +
+                "ROUND((SUM(city.Population) / SUM(country.Population)) * 100, 2) AS CityPercentage, " +
+                "ROUND(((SUM(country.Population) - SUM(city.Population)) / SUM(country.Population)) * 100, 2) AS NonCityPercentage " +
+                "FROM country " +
+                "LEFT JOIN city ON country.Capital = city.ID " +
+                "GROUP BY country.Region";
+
+        ArrayList<Population> populationReport = db.getPopulationReport(query);
+        assertNotNull(populationReport);
+        assertFalse(populationReport.isEmpty());
+        populationReport.forEach(region -> {
+            assertNotNull(region.getName());
+            assertTrue(region.getTotalPopulation() > 0);
+            assertTrue(region.getCityPercentage() >= 0);
+            assertTrue(region.getNonCityPercentage() >= 0);
+        });
+    }
+
+    /**
+     * Integration test for retrieving population data of people, people living in cities, and people not living in cities in each country.
+     *
+     */
+    @Test
+    public void testPopulationByCountry() {
+        String query = "SELECT country.Name AS Name, " +
+                "country.Population AS TotalPopulation, " +
+                "SUM(city.Population) AS CityPopulation, " +
+                "(country.Population - SUM(city.Population)) AS NonCityPopulation, " +
+                "ROUND((SUM(city.Population) / country.Population) * 100, 2) AS CityPercentage, " +
+                "ROUND(((country.Population - SUM(city.Population)) / country.Population) * 100, 2) AS NonCityPercentage " +
+                "FROM country " +
+                "LEFT JOIN city ON country.Capital = city.ID " +
+                "GROUP BY country.Name, country.Population";
+
+        ArrayList<Population> populationReport = db.getPopulationReport(query);
+        assertNotNull(populationReport);
+        assertFalse(populationReport.isEmpty());
+        populationReport.forEach(country -> {
+            assertNotNull(country.getName());
+            assertTrue(country.getTotalPopulation() > 0);
+            assertTrue(country.getCityPercentage() >= 0);
+            assertTrue(country.getNonCityPercentage() >= 0);
+        });
+    }
 }
 
 
