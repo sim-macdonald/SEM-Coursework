@@ -72,7 +72,7 @@ public class App
         System.out.println("-----------------------------------------------------------------------------");
         System.out.println("All the capital cities in a continent organized by largest population to smallest.");
         System.out.println("-----------------------------------------------------------------------------");
-//  capital cities in a continent
+// capital cities in a continent
         ArrayList<Capital_City> capitalCitiesContinent = a.getCapitalCitiesByPopulation(CapitalCity_queries.query2, 0);
         a.printCapital(capitalCitiesContinent);
 
