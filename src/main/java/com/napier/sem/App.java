@@ -89,6 +89,48 @@ public class App
         // Display results
         a.printLanguage(languageReport);
 
+// Retrieve and print reports for capital cities
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("All the capital cities in the world organized by largest population to smallest.");
+        System.out.println("-----------------------------------------------------------------------------");
+// capital cities in the world
+        ArrayList<Capital_City> capitalCitiesWorld = a.getCapitalCitiesByPopulation(CapitalCity_queries.query1, 0);
+        a.printCapital(capitalCitiesWorld);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("All the capital cities in a continent organized by largest population to smallest.");
+        System.out.println("-----------------------------------------------------------------------------");
+// capital cities in a continent
+        ArrayList<Capital_City> capitalCitiesContinent = a.getCapitalCitiesByPopulation(CapitalCity_queries.query2, 0);
+        a.printCapital(capitalCitiesContinent);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("All the capital cities in a region organized by largest to smallest.");
+        System.out.println("-----------------------------------------------------------------------------");
+// capital cities in a region
+        ArrayList<Capital_City> capitalCitiesRegion = a.getCapitalCitiesByPopulation(CapitalCity_queries.query3, 0);
+        a.printCapital(capitalCitiesRegion);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("The top N populated capital cities in the world where N is provided by the user.");
+        System.out.println("-----------------------------------------------------------------------------");
+// top N capital cities in the world
+        ArrayList<Capital_City> topNCapitalCitiesWorld = a.getCapitalCitiesByPopulation(CapitalCity_queries.query4, N);
+        a.printCapital(topNCapitalCitiesWorld);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("The top N populated capital cities in a continent where N is provided by the user.");
+        System.out.println("-----------------------------------------------------------------------------");
+// top N capital cities in a continent
+        ArrayList<Capital_City> topNCapitalCitiesContinent = a.getCapitalCitiesByPopulation(CapitalCity_queries.query5, N);
+        a.printCapital(topNCapitalCitiesContinent);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("The top N populated capital cities in a region where N is provided by the user.");
+        System.out.println("-----------------------------------------------------------------------------");
+// top N capital cities in a region
+        ArrayList<Capital_City> topNCapitalCitiesRegion = a.getCapitalCitiesByPopulation(CapitalCity_queries.query6, N);
+        a.printCapital(topNCapitalCitiesRegion);
 
         ArrayList<Population> population1 = a.getPopulationReport(Population_queries.query1);
         a.printPopulationReport(population1);
@@ -103,5 +145,7 @@ public class App
 
         // Disconnect from database
         a.disconnect();
+
+
     }
 }
