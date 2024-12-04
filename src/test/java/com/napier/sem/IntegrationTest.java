@@ -460,13 +460,15 @@ public class IntegrationTest {
                 "GROUP BY country.Continent";
 
         ArrayList<Population> populationReport = db.getPopulationReport(query);
-        assertNotNull(populationReport);
-        assertFalse(populationReport.isEmpty());
+
+        // Verify the results
+        assertNotNull(populationReport, "Population report should not be null.");
+        assertFalse(populationReport.isEmpty(), "Population report should not be empty.");
         populationReport.forEach(continent -> {
-            assertNotNull(continent.getName());
-            assertTrue(continent.getTotalPopulation() > 0);
-            assertTrue(continent.getCityPercentage() >= 0);
-            assertTrue(continent.getNonCityPercentage() >= 0);
+            assertNotNull(continent.getName(), "Continent name should not be null.");
+            assertTrue(continent.getTotalPopulation() > 0, "Total population should be greater than 0.");
+            assertTrue(continent.getCityPercentage() >= 0, "City percentage should be non-negative.");
+            assertTrue(continent.getNonCityPercentage() >= 0, "Non-city percentage should be non-negative.");
         });
     }
 
@@ -487,13 +489,15 @@ public class IntegrationTest {
                 "GROUP BY country.Region";
 
         ArrayList<Population> populationReport = db.getPopulationReport(query);
-        assertNotNull(populationReport);
-        assertFalse(populationReport.isEmpty());
+
+        // Verify the results
+        assertNotNull(populationReport, "Population report should not be null.");
+        assertFalse(populationReport.isEmpty(), "Population report should not be empty.");
         populationReport.forEach(region -> {
-            assertNotNull(region.getName());
-            assertTrue(region.getTotalPopulation() > 0);
-            assertTrue(region.getCityPercentage() >= 0);
-            assertTrue(region.getNonCityPercentage() >= 0);
+            assertNotNull(region.getName(), "Region name should not be null.");
+            assertTrue(region.getTotalPopulation() > 0, "Total population should be greater than 0.");
+            assertTrue(region.getCityPercentage() >= 0, "City percentage should be non-negative.");
+            assertTrue(region.getNonCityPercentage() >= 0, "Non-city percentage should be non-negative.");
         });
     }
 
@@ -514,15 +518,50 @@ public class IntegrationTest {
                 "GROUP BY country.Name, country.Population";
 
         ArrayList<Population> populationReport = db.getPopulationReport(query);
-        assertNotNull(populationReport);
-        assertFalse(populationReport.isEmpty());
+
+        // Verify the results
+        assertNotNull(populationReport, "Population report should not be null.");
+        assertFalse(populationReport.isEmpty(), "Population report should not be empty.");
         populationReport.forEach(country -> {
-            assertNotNull(country.getName());
-            assertTrue(country.getTotalPopulation() > 0);
-            assertTrue(country.getCityPercentage() >= 0);
-            assertTrue(country.getNonCityPercentage() >= 0);
+            assertNotNull(country.getName(), "Country name should not be null.");
+            assertTrue(country.getTotalPopulation() > 0, "Total population should be greater than 0.");
+            assertTrue(country.getCityPercentage() >= 0, "City percentage should be non-negative.");
+            assertTrue(country.getNonCityPercentage() >= 0, "Non-city percentage should be non-negative.");
         });
     }
+
+    /**
+     * Integration test for retrieving population data for a specific district.
+     */
+    @Test
+    void testGetPopulationDistrict() {
+        // Query to get population data for a specific district
+        String query = "SELECT city.District AS Name, "
+                + "SUM(city.Population) AS TotalPopulation, "
+                + "SUM(city.Population) AS CityPopulation, "
+                + "0 AS NonCityPopulation, "
+                + "100 AS CityPercentage, "
+                + "0 AS NonCityPercentage "
+                + "FROM city "
+                + "WHERE city.District = 'YourDistrictName' "
+                + "GROUP BY city.District";
+
+        // Get the population report using the query
+        ArrayList<Population> populationReport = db.getPopulationReport(query);
+
+        // Ensure the report is not null and contains at least one entry
+        assertNotNull(populationReport, "The population report should not be null");
+        assertFalse(populationReport.isEmpty(), "The population report should contain data");
+
+        // Check if the first report entry has valid data
+        Population population = populationReport.get(0);
+        assertNotNull(population.getName(), "The district name should not be null");
+        assertTrue(population.getTotalPopulation() > 0, "Total population should be greater than zero");
+
+        // Print the population report for visual verification
+        db.printPopulationReport(populationReport);
+    }
+
 }
 
 

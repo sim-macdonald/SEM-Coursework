@@ -92,6 +92,30 @@ public class App
         ArrayList<Population> population5 = a.getPopulationReport(Population_queries.query5);
         a.printPopulationReport(population5);
 
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of people living in cities, and people not living in cities in each continent.");
+        System.out.println("---------------------------------------------------------------------------");
+        ArrayList<Population> population6 = a.getPopulationReport(Population_queries.query6);
+        a.printPopulationReport(population6);
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of people living in cities, and people not living in cities in each region.");
+        System.out.println("---------------------------------------------------------------------------");
+        ArrayList<Population> population7 = a.getPopulationReport(Population_queries.query7);
+        a.printPopulationReport(population7);
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of people living in cities, and people not living in cities in each country.");
+        System.out.println("---------------------------------------------------------------------------");
+        ArrayList<Population> population8 = a.getPopulationReport(Population_queries.query8);
+        a.printPopulationReport(population8);
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of a specific district");
+        System.out.println("---------------------------------------------------------------------------");
+        ArrayList<Population> population9 = a.getPopulationReport(Population_queries.query9);
+        a.printPopulationReport(population9);
+
         // Disconnect from database
         a.disconnect();
     }
