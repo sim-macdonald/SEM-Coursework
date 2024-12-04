@@ -31,7 +31,31 @@ public class App
         }
 
         System.out.println("---------------------------------------------------------------------------");
-        System.out.println("The top N populated countries in the world where N is provided by the user.");
+        System.out.println("All the countries in the world organised by largest population to smallest.");
+        System.out.println("---------------------------------------------------------------------------");
+        // Extract country information
+        ArrayList<Country> countries = a.getCountryWorld(Country_queries.query1, 0);
+        // Display results
+        a.printCountries(countries);
+
+        System.out.println("--------------------------------------------------------------------------");
+        System.out.println("All the countries in a continent organised by largest population to smallest.");
+        System.out.println("--------------------------------------------------------------------------");
+        //Extract country information
+        ArrayList<Country> countries2 = a.getCountryRegion(Country_queries.query1,0,"North America");
+        // Display results
+        a.printCountries(countries2);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("The top N populated countries in a continent where N is provided by the user.");
+        System.out.println("-----------------------------------------------------------------------------");
+        //Extract country information
+        ArrayList<Country> countries3 = a.getCountryContinent(Country_queries.query1,0,"Asia");
+        // Display results
+        a.printCountries(countries3);
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("All the countries in a region organised by largest population to smallest.");
         System.out.println("---------------------------------------------------------------------------");
         // Extract country information
         ArrayList<Country> countries = a.getCountryWorld(Country_queries.query1, N);
