@@ -1,11 +1,11 @@
 | ID | Name | Met | Screenshot |
 |----|------|-----|------------|
-|1|All the countries in the world organised by largest population to smallest.|Yes|
-|2|All the countries in a continent organised by largest population to smallest.|Yes|
+|1|All the countries in the world organised by largest population to smallest.|Yes|Too much data, start and end screenshotted. ![img_7.png](img_7.png)![img_8.png](img_8.png)|
+|2|All the countries in a continent organised by largest population to smallest.|Yes|![img_4.png](img_4.png)![img_5.png](img_5.png)|
 |3|All the countries in a region organised by largest population to smallest.|Yes|![img.png](img.png)|
 |4|The top N populated countries in the world where N is provided by the user.|Yes|![img_1.png](img_1.png)|
 |5|The top N populated countries in a continent where N is provided by the user.|Yes|![img_2.png](img_2.png)|
-|6|The top N populated countries in a region where N is provided by the user.|Yes|
+|6|The top N populated countries in a region where N is provided by the user.|Yes|![img_3.png](img_3.png)|
 |7|All the cities in the world organised by largest population to smallest.|
 |8|All the cities in a continent organised by largest population to smallest.|
 |9|All the cities in a region organised by largest population to smallest.|
@@ -31,6 +31,6 @@
 |29|The population of a country.|
 |30|The population of a district.|
 |31|The population of a city.|
-|32|Finally, the organisation has asked if it is possible to provide the number of people who speak the following the following languages from greatest number to smallest, including the percentage of the world population:Chinese.English.Hindi.Spanish.Arabic.|Yes|
+|32|Finally, the organisation has asked if it is possible to provide the number of people who speak the following the following languages from greatest number to smallest, including the percentage of the world population:Chinese.English.Hindi.Spanish.Arabic.|Yes|![img_6.png](img_6.png)|
 
 
