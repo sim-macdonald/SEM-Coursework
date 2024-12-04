@@ -62,15 +62,33 @@ public class App
         // Display results
         a.printLanguage(languageReport);
 
-
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Total population of the world");
+        System.out.println("---------------------------------------------------------------------------");
         ArrayList<Population> population1 = a.getPopulationReport(Population_queries.query1);
         a.printPopulationReport(population1);
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of a specific continent");
+        System.out.println("---------------------------------------------------------------------------");
         ArrayList<Population> population2 = a.getPopulationReport(Population_queries.query2);
         a.printPopulationReport(population2);
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of a specific region");
+        System.out.println("---------------------------------------------------------------------------");
         ArrayList<Population> population3 = a.getPopulationReport(Population_queries.query3);
         a.printPopulationReport(population3);
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of a specific country");
+        System.out.println("---------------------------------------------------------------------------");
         ArrayList<Population> population4 = a.getPopulationReport(Population_queries.query4);
         a.printPopulationReport(population4);
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of a specific city");
+        System.out.println("---------------------------------------------------------------------------");
         ArrayList<Population> population5 = a.getPopulationReport(Population_queries.query5);
         a.printPopulationReport(population5);
 
