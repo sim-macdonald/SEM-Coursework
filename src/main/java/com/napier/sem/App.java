@@ -62,22 +62,46 @@ public class App
         a.printLanguage(languageReport);
 
 // Retrieve and print reports for capital cities
-        ArrayList<Capital_City> capitalCitiesWorld = a.getCapitalCitiesByPopulation(CapitalCity_queries.query1,0);
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("All the capital cities in the world organized by largest population to smallest.");
+        System.out.println("-----------------------------------------------------------------------------");
+// capital cities in the world
+        ArrayList<Capital_City> capitalCitiesWorld = a.getCapitalCitiesByPopulation(CapitalCity_queries.query1, 0);
         a.printCapital(capitalCitiesWorld);
 
-        ArrayList<Capital_City> capitalCitiesContinent = a.getCapitalCitiesByPopulation(CapitalCity_queries.query2,0);
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("All the capital cities in a continent organized by largest population to smallest.");
+        System.out.println("-----------------------------------------------------------------------------");
+//  capital cities in a continent
+        ArrayList<Capital_City> capitalCitiesContinent = a.getCapitalCitiesByPopulation(CapitalCity_queries.query2, 0);
         a.printCapital(capitalCitiesContinent);
 
-        ArrayList<Capital_City> capitalCitiesRegion = a.getCapitalCitiesByPopulation(CapitalCity_queries.query3,0);
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("All the capital cities in a region organized by largest to smallest.");
+        System.out.println("-----------------------------------------------------------------------------");
+// capital cities in a region
+        ArrayList<Capital_City> capitalCitiesRegion = a.getCapitalCitiesByPopulation(CapitalCity_queries.query3, 0);
         a.printCapital(capitalCitiesRegion);
 
-        ArrayList<Capital_City> topNCapitalCitiesWorld = a.getCapitalCitiesByPopulation(CapitalCity_queries.query4,N);
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("The top N populated capital cities in the world where N is provided by the user.");
+        System.out.println("-----------------------------------------------------------------------------");
+// top N capital cities in the world
+        ArrayList<Capital_City> topNCapitalCitiesWorld = a.getCapitalCitiesByPopulation(CapitalCity_queries.query4, N);
         a.printCapital(topNCapitalCitiesWorld);
 
-        ArrayList<Capital_City> topNCapitalCitiesContinent = a.getCapitalCitiesByPopulation(CapitalCity_queries.query5,N);
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("The top N populated capital cities in a continent where N is provided by the user.");
+        System.out.println("-----------------------------------------------------------------------------");
+// top N capital cities in a continent
+        ArrayList<Capital_City> topNCapitalCitiesContinent = a.getCapitalCitiesByPopulation(CapitalCity_queries.query5, N);
         a.printCapital(topNCapitalCitiesContinent);
 
-        ArrayList<Capital_City> topNCapitalCitiesRegion = a.getCapitalCitiesByPopulation(CapitalCity_queries.query6,N);
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("The top N populated capital cities in a region where N is provided by the user.");
+        System.out.println("-----------------------------------------------------------------------------");
+// top N capital cities in a region
+        ArrayList<Capital_City> topNCapitalCitiesRegion = a.getCapitalCitiesByPopulation(CapitalCity_queries.query6, N);
         a.printCapital(topNCapitalCitiesRegion);
 
         // Disconnect from database
