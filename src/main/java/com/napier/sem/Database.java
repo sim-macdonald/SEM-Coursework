@@ -327,61 +327,59 @@ public class Database {
     }
 
 
-    public ArrayList<Capital_City> getCapitalCitiesByPopulation() {
-    //Captial City
+        //Captial City
 //-------------------------------------------------------------------------------------------------------------
 
-    public ArrayList<Capital_City> getCapitalCitiesByPopulation(String query, int limit) {
-        ArrayList<Capital_City> capitalCities = new ArrayList<>();
+        public ArrayList<Capital_City> getCapitalCitiesByPopulation(String query, int limit) {
+            ArrayList<Capital_City> capitalCities = new ArrayList<>();
 
-        try {
-            // Prepare the query
-            PreparedStatement stmt = con.prepareStatement(query);
+            try {
+                // Prepare the query
+                PreparedStatement stmt = con.prepareStatement(query);
 
-            // Execute the query
-            ResultSet rs = stmt.executeQuery();
+                // Execute the query
+                ResultSet rs = stmt.executeQuery();
 
-            // Process the result set
-            while (rs.next() && (limit == 0 || capitalCities.size() < limit)) {
-                Capital_City city = new Capital_City();
-                city.name = rs.getString("Name");
-                city.Country = rs.getString("Country");
-                city.population = rs.getLong("Population");
+                // Process the result set
+                while (rs.next() && (limit == 0 || capitalCities.size() < limit)) {
+                    Capital_City city = new Capital_City();
+                    city.name = rs.getString("Name");
+                    city.Country = rs.getString("Country");
+                    city.population = rs.getLong("Population");
 
-                capitalCities.add(city);
+                    capitalCities.add(city);
+                }
+
+            } catch (SQLException e) {
+                System.err.println("SQL Error: " + e.getMessage());
             }
-            return cities;
 
-        } catch (SQLException e) {
-            System.err.println("SQL Error: " + e.getMessage());
+            return capitalCities;
         }
 
-        return capitalCities;
-    }
 
-
-public void printCapital(ArrayList<Capital_City> capital)
-    {
-        // Check country is not null
-        if (capital == null)
+        public void printCapital(ArrayList<Capital_City> capital)
         {
-            System.out.println("No capital cities");
-            return;
-        }
-        // Print header
-        System.out.println(String.format("%-15s %-15s %15s", "Name","Country", "Population"));
-        // Loop over all countries in the list
-        for (Capital_City cap : capital)
-        {
-            if (cap == null)
-                continue;
+            // Check country is not null
+            if (capital == null)
+            {
+                System.out.println("No capital cities");
+                return;
+            }
+            // Print header
+            System.out.println(String.format("%-15s %-15s %15s", "Name","Country", "Population"));
+            // Loop over all countries in the list
+            for (Capital_City cap : capital)
+            {
+                if (cap == null)
+                    continue;
 
-            String cou_string =
-                    String.format("%-15s %-15s %15s",
-                            cap.name, cap.Country, cap.population);
-            System.out.println(cou_string);
+                String cou_string =
+                        String.format("%-15s %-15s %15s",
+                                cap.name, cap.Country, cap.population);
+                System.out.println(cou_string);
+            }
         }
-    }
 
     //Methods for creating Language report - Simon
     //------------------------------------------------------------------------------------------------------------------------------
