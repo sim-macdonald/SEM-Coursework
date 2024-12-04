@@ -58,25 +58,25 @@ public class App
         System.out.println("All the countries in a region organised by largest population to smallest.");
         System.out.println("---------------------------------------------------------------------------");
         // Extract country information
-        ArrayList<Country> countries = a.getCountryWorld(Country_queries.query1, N);
+        ArrayList<Country> countries4 = a.getCountryWorld(Country_queries.query1, N);
         // Display results
-        a.printCountries(countries);
+        a.printCountries(countries4);
 
         System.out.println("--------------------------------------------------------------------------");
         System.out.println("The top N populated countries in a region where N is provided by the user.");
         System.out.println("--------------------------------------------------------------------------");
         //Extract country information
-        ArrayList<Country> countries2 = a.getCountryRegion(Country_queries.query1,N,"North America");
+        ArrayList<Country> countries5 = a.getCountryRegion(Country_queries.query1,N,"North America");
         // Display results
-        a.printCountries(countries2);
+        a.printCountries(countries5);
 
         System.out.println("-----------------------------------------------------------------------------");
         System.out.println("The top N populated countries in a continent where N is provided by the user.");
         System.out.println("-----------------------------------------------------------------------------");
         //Extract country information
-        ArrayList<Country> countries3 = a.getCountryContinent(Country_queries.query1,N,"Asia");
+        ArrayList<Country> countries6 = a.getCountryContinent(Country_queries.query1,N,"Asia");
         // Display results
-        a.printCountries(countries3);
+        a.printCountries(countries6);
 
         System.out.println("-----------------------------------------------------------------------------");
         System.out.println("The number of people who speak the following the following languages: Chinese, English, Hindi, Spanish, Arabic");
