@@ -39,7 +39,7 @@ public class App
         a.printCountries(countries);
 
         System.out.println("--------------------------------------------------------------------------");
-        System.out.println("All the countries in a continent organised by largest population to smallest.");
+        System.out.println("All the countries in a region organised by largest population to smallest.");
         System.out.println("--------------------------------------------------------------------------");
         //Extract country information
         ArrayList<Country> countries2 = a.getCountryRegion(Country_queries.query1,0,"North America");
@@ -47,7 +47,7 @@ public class App
         a.printCountries(countries2);
 
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.println("All the countries in a region organised by largest population to smallest.");
+        System.out.println("All the countries in a continent organised by largest population to smallest.");
         System.out.println("-----------------------------------------------------------------------------");
         //Extract country information
         ArrayList<Country> countries3 = a.getCountryContinent(Country_queries.query1,0,"Asia");
