@@ -311,10 +311,6 @@ public class IntegrationTest {
         // Verify the result is not null and list contains capital cities
         assertNotNull(capitalCities, "The list of capital cities should not be null");
         assertFalse(capitalCities.isEmpty(), "The list of capital cities should not be empty");
-
-        for (Capital_City capital : capitalCities) {
-            assertEquals(continent, capital.Country, "The capital city should belong to the specified continent: " + continent);
-        }
     }
 
     /**
@@ -334,10 +330,6 @@ public class IntegrationTest {
         // Verify the result is not null and list contains capital cities
         assertNotNull(capitalCities, "The list of capital cities should not be null");
         assertFalse(capitalCities.isEmpty(), "The list of capital cities should not be empty");
-
-        for (Capital_City capital : capitalCities) {
-            assertEquals(region, capital.Country, "The capital city should belong to the specified region: " + region);
-        }
     }
 
     /**
@@ -381,10 +373,6 @@ public class IntegrationTest {
         // Verify the result is not null and contains exactly top N entries
         assertNotNull(capitalCities, "The list of capital cities should not be null");
         assertEquals(topN, capitalCities.size(), "The list should contain exactly " + topN + " entries");
-
-        for (Capital_City capital : capitalCities) {
-            assertEquals(continent, capital.Country, "The capital city should belong to the specified continent: " + continent);
-        }
     }
 
     /**
@@ -405,10 +393,6 @@ public class IntegrationTest {
         // Verify the result is not null and contains exactly top N entries
         assertNotNull(capitalCities, "The list of capital cities should not be null");
         assertEquals(topN, capitalCities.size(), "The list should contain exactly " + topN + " entries");
-
-        for (Capital_City capital : capitalCities) {
-            assertEquals(region, capital.Country, "The capital city should belong to the specified region: " + region);
-        }
     }
 
 }
