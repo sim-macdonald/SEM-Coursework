@@ -11,8 +11,6 @@ public class City {
 
     public String name;
 
-    public String continent;
-
     public String countryCode;
 
     public String district;

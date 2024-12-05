@@ -439,7 +439,6 @@ public class Database {
                 city.ID = rset.getInt("ID");
                 city.name = rset.getString("Name");
                 city.countryCode = rset.getString("CountryCode");
-                city.continent = rset.getString("Continent");
                 city.district = rset.getString("District");
                 city.population = rset.getLong("Population");
                 cities.add(city);
@@ -472,7 +471,7 @@ public class Database {
 
             String lang_string =
                     String.format("%-10s %-30s %-15s %-20s %-20s %-15s",
-                            cit.ID, cit.name, cit.countryCode, cit.continent, cit.district, cit.population);
+                            cit.ID, cit.name, cit.countryCode, cit.district, cit.population);
             System.out.println(lang_string);
         }
     }
@@ -498,7 +497,6 @@ public class Database {
                 cit.ID = rset.getInt("ID");
                 cit.name = rset.getString("Name");
                 cit.countryCode = rset.getString("CountryCode");
-                cit.continent = rset.getString("Continent");
                 cit.district = rset.getString("District");
                 cit.population = rset.getLong("Population");
                 city.add(cit);
@@ -532,7 +530,6 @@ public class Database {
                 cit.ID = rset.getInt("ID");
                 cit.name = rset.getString("Name");
                 cit.countryCode = rset.getString("CountryCode");
-                cit.continent = rset.getString("Continent");
                 cit.district = rset.getString("District");
                 cit.population = rset.getLong("Population");
                 city.add(cit);
@@ -566,7 +563,6 @@ public class Database {
                 cit.ID = rset.getInt("ID");
                 cit.name = rset.getString("Name");
                 cit.countryCode = rset.getString("CountryCode");
-                cit.continent = rset.getString("Continent");
                 cit.district = rset.getString("District");
                 cit.population = rset.getLong("Population");
                 city.add(cit);
@@ -600,7 +596,6 @@ public class Database {
                 cit.ID = rset.getInt("ID");
                 cit.name = rset.getString("Name");
                 cit.countryCode = rset.getString("CountryCode");
-                cit.continent = rset.getString("Continent");
                 cit.district = rset.getString("District");
                 cit.population = rset.getLong("Population");
                 city.add(cit);
