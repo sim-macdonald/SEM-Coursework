@@ -595,7 +595,6 @@ public class Database {
                 City cit = new City();
                 cit.ID = rset.getInt("ID");
                 cit.name = rset.getString("Name");
-                cit.countryCode = rset.getString("Continent");
                 cit.district = rset.getString("District");
                 cit.population = rset.getLong("Population");
                 city.add(cit);
