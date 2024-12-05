@@ -470,7 +470,7 @@ public class Database {
                 continue;
 
             String lang_string =
-                    String.format("%-10s %-30s %-15s %-20s %-20s %-15s",
+                    String.format("%-10s %-30s %-15s %-20s %-15s",
                             cit.ID, cit.name, cit.countryCode, cit.district, cit.population);
             System.out.println(lang_string);
         }
