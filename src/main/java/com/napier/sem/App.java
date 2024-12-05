@@ -261,13 +261,13 @@ public class App
         a.printPopulationReport(population7);
 
         System.out.println("---------------------------------------------------------------------------");
-        System.out.println("Population of people living in cities, and people not living in cities in each country.");
+        System.out.println("Population of people living in cities, and people not living in cities in each region.");
         System.out.println("---------------------------------------------------------------------------");
         ArrayList<Population> population8 = a.getPopulationReport(Population_queries.query8);
         a.printPopulationReport(population8);
 
         System.out.println("---------------------------------------------------------------------------");
-        System.out.println("Population of people living in cities, and people not living in cities in each region.");
+        System.out.println("Population of people living in cities, and people not living in cities in each country.");
         System.out.println("---------------------------------------------------------------------------");
         ArrayList<Population> population9 = a.getPopulationReport(Population_queries.query9);
         a.printPopulationReport(population9);
