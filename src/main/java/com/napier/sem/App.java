@@ -215,7 +215,7 @@ public class App
         System.out.println("I want to be able to generate the top N populated cities in a country where N is provided by the user.");
         System.out.println("-----------------------------------------------------------------------------");
         //Extract city information
-        ArrayList<City> cities9 = a.getCityCountry(City_queries.query1, 5,"Russia");
+        ArrayList<City> cities9 = a.getCityCountry(City_queries.query1, 5,"United States");
         // Display results
         a.printCities(cities9);
 
@@ -223,7 +223,7 @@ public class App
         System.out.println("I want to be able to generate all the cities in a country organised by largest population to smallest.");
         System.out.println("-----------------------------------------------------------------------------");
         //Extract city information
-        ArrayList<City> cities10 = a.getCityCountry(City_queries.query1, 0,"Russia");
+        ArrayList<City> cities10 = a.getCityCountry(City_queries.query1, 0,"United States");
         // Display results
         a.printCities(cities10);
 
