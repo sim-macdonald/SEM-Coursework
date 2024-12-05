@@ -94,6 +94,26 @@ public class IntegrationTest {
     }
 
     /**
+     * Integration test for retrieving a list of countries from the world.
+     * Verifies that the `getCountryWorld` method works as expected.
+     * N=0
+     */
+    @Test
+    void testGetCountryWorld2() {
+        String query = "SELECT * FROM country";
+        ArrayList<Country> countries = db.getCountryWorld(query, 0);
+
+        // Verify the result is not null and list contains countries
+        assertNotNull(countries, "The list of countries should not be null");
+        assertFalse(countries.isEmpty(), "The list of countries should not be empty");
+
+        Country country = countries.get(0);
+        assertNotNull(country, "The first country should not be null");
+        assertNotNull(country.name, "Country name should not be null");
+        assertNotNull(country.code, "Country code should not be null");
+    }
+
+    /**
      * Integration test for handling invalid queries.
      * Verifies that the method gracefully handles invalid SQL queries.
      */
@@ -129,6 +149,25 @@ public class IntegrationTest {
         String query = "SELECT * FROM country";
         String region = "North America";
         ArrayList<Country> countries = db.getCountryRegion(query, 5, region);  // Limit to 5 countries
+
+        // Verify the result is not null and contains the correct region
+        assertNotNull(countries, "The list of countries should not be null");
+        assertFalse(countries.isEmpty(), "The list of countries should not be empty");
+
+        for (Country country : countries) {
+            assertEquals(region, country.region, "Country region should be " + region);
+        }
+    }
+    /**
+     * Integration test for retrieving countries from a specific region.
+     * Verifies that the `getCountryRegion` works.
+     * N=0
+     */
+    @Test
+    void testGetCountryRegion2() {
+        String query = "SELECT * FROM country";
+        String region = "North America";
+        ArrayList<Country> countries = db.getCountryRegion(query, 0, region);  // Limit to 5 countries
 
         // Verify the result is not null and contains the correct region
         assertNotNull(countries, "The list of countries should not be null");
@@ -177,6 +216,26 @@ public class IntegrationTest {
         String query = "SELECT * FROM country";
         String continent = "Asia";
         ArrayList<Country> countries = db.getCountryContinent(query, 5, continent);  // Limit to 5 countries
+
+        // Verify the result is not null and contains the correct continent
+        assertNotNull(countries, "The list of countries should not be null");
+        assertFalse(countries.isEmpty(), "The list of countries should not be empty");
+
+        for (Country country : countries) {
+            assertEquals(continent, country.continent, "Country continent should be " + continent);
+        }
+    }
+
+    /**
+     * Integration test for retrieving countries from a specific continent.
+     * Verifies that the `getCountryContinent` method works.
+     * N=0
+     */
+    @Test
+    void testGetCountryContinent2() {
+        String query = "SELECT * FROM country";
+        String continent = "Asia";
+        ArrayList<Country> countries = db.getCountryContinent(query, 0, continent);  // Limit to 5 countries
 
         // Verify the result is not null and contains the correct continent
         assertNotNull(countries, "The list of countries should not be null");
@@ -744,7 +803,7 @@ public class IntegrationTest {
      */
 
 
-    //@Test
+    @Test
     void testGetCityWorldEmpty() {
         String query = "SELECT * FROM city WHERE Population < 0";
         ArrayList<City> cities = db.getCitiesByPopulation(query, 5);
@@ -780,9 +839,11 @@ public class IntegrationTest {
         assertNull(cities, "The result should be null due to invalid query");
     }
 
-    //@Test
+    @Test
     void testGetCityContinentEmpty() {
-        String query = "SELECT * FROM city";
+        String query = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population "
+                + "FROM city "
+                + "JOIN country ON city.CountryCode = country.Code";
         String continent = "Asia AND population < 0";
         ArrayList<City> cities = db.getCityContinent(query, 5, continent);
 
@@ -792,10 +853,12 @@ public class IntegrationTest {
     }
 
 
-    //@Test
+    @Test
     void testGetCityDistrict() {
-        String query = "SELECT * FROM city JOIN country ON city.ID = country.countryCode";
-        String district = "Asia";
+        String query = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population "
+                + "FROM city "
+                + "JOIN country ON city.CountryCode = country.Code";
+        String district = "Herat";
         ArrayList<City> cities = db.getCityDistrict(query, 5, district);  // Limit to 5 countries
 
         // Verify the result is not null and contains the correct continent
@@ -817,9 +880,11 @@ public class IntegrationTest {
         assertNull(cities, "The result should be null due to invalid query");
     }
 
-   // @Test
+    @Test
     void testGetCityDistrictEmpty() {
-        String query = "SELECT * FROM city";
+        String query = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population "
+                + "FROM city "
+                + "JOIN country ON city.CountryCode = country.Code";
         String district = "Asia AND population < 0";
         ArrayList<City> cities = db.getCityContinent(query, 5, district);
 
@@ -831,8 +896,10 @@ public class IntegrationTest {
 
     //@Test
     void testGetCityCountry() {
-        String query = "SELECT * FROM city JOIN country ON city.ID = country.countryCode";
-        String country = "BRA";
+        String query = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population "
+                + "FROM city "
+                + "JOIN country ON city.CountryCode = country.Code";
+        String country = "United States";
         ArrayList<City> cities = db.getCityDistrict(query, 5, country);  // Limit to 5 countries
 
         // Verify the result is not null and contains the correct continent
@@ -854,9 +921,11 @@ public class IntegrationTest {
         assertNull(cities, "The result should be null due to invalid query");
     }
 
-    //@Test
+    @Test
     void testGetCityCountryEmpty() {
-        String query = "SELECT * FROM city";
+        String query = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population "
+                + "FROM city "
+                + "JOIN country ON city.CountryCode = country.Code";
         String country = "BRA AND population < 0";
         ArrayList<City> cities = db.getCityContinent(query, 5, country);
 
