@@ -4,7 +4,7 @@ import com.napier.sem.queries.Country_queries;
 import com.napier.sem.reports.*;
 import com.napier.sem.queries.Population_queries;
 import com.napier.sem.queries.Language_queries;
-
+import com.napier.sem.queries.City_queries;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -299,80 +299,59 @@ public class Database {
         }
     }
 
+        //Captial City
+//-------------------------------------------------------------------------------------------------------------
 
+        public ArrayList<Capital_City> getCapitalCitiesByPopulation(String query, int limit) {
+            ArrayList<Capital_City> capitalCities = new ArrayList<>();
 
-    public ArrayList<City> getCitiesByPopulation() {
-        try {
-            Statement stmt = con.createStatement();
-            String strSelect = "SELECT ID, Name, CountryCode, District, Population FROM city ORDER BY Population DESC";
-            ResultSet rset = stmt.executeQuery(strSelect);
+            try {
+                // Prepare the query
+                PreparedStatement stmt = con.prepareStatement(query);
 
-            ArrayList<City> cities = new ArrayList<>();
-            while (rset.next()) {
-                City city = new City();
-                city.ID = rset.getInt("ID");
-                city.name = rset.getString("Name");
-                city.countryCode = rset.getString("CountryCode");
-                city.district = rset.getString("District");
-                city.population = rset.getLong("Population");
-                cities.add(city);
+                // Execute the query
+                ResultSet rs = stmt.executeQuery();
+
+                // Process the result set
+                while (rs.next() && (limit == 0 || capitalCities.size() < limit)) {
+                    Capital_City city = new Capital_City();
+                    city.name = rs.getString("Name");
+                    city.Country = rs.getString("Country");
+                    city.population = rs.getLong("Population");
+
+                    capitalCities.add(city);
+                }
+
+            } catch (SQLException e) {
+                System.err.println("SQL Error: " + e.getMessage());
             }
-            return cities;
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get city details");
-            return null;
+            return capitalCities;
         }
-    }
 
 
-    public ArrayList<Capital_City> getCapitalCitiesByPopulation() {
-        try {
-            Statement stmt = con.createStatement();
-            String strSelect = "SELECT city.name, country.name, city.population FROM city JOIN city ON country.code = city.countrycode WHERE city.id = country.capital ORDER BY city.Population DESC";
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            ArrayList<Capital_City> cities = new ArrayList<>();
-            while (rset.next()) {
-                Capital_City city = new Capital_City();
-                city.name = rset.getString("Name");
-                city.Country = rset.getString("Country");
-                city.population = rset.getLong("Population");
-                cities.add(city);
+        public void printCapital(ArrayList<Capital_City> capital)
+        {
+            // Check country is not null
+            if (capital == null)
+            {
+                System.out.println("No capital cities");
+                return;
             }
-            return cities;
+            // Print header
+            System.out.println(String.format("%-15s %-15s %15s", "Name","Country", "Population"));
+            // Loop over all countries in the list
+            for (Capital_City cap : capital)
+            {
+                if (cap == null)
+                    continue;
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get city details");
-            return null;
+                String cou_string =
+                        String.format("%-15s %-15s %15s",
+                                cap.name, cap.Country, cap.population);
+                System.out.println(cou_string);
+            }
         }
-    }
-
-    //--------------------------------------------------------------------------------------------------
-    public void printCapital(ArrayList<Capital_City> capital)
-    {
-        // Check country is not null
-        if (capital == null)
-        {
-            System.out.println("No capital cities");
-            return;
-        }
-        // Print header
-        System.out.println(String.format("%-15s %-15s %15s", "Name","Country", "Population"));
-        // Loop over all countries in the list
-        for (Capital_City cap : capital)
-        {
-            if (cap == null)
-                continue;
-
-            String cou_string =
-                    String.format("%-15s %-15s %15s",
-                            cap.name, cap.Country, cap.population);
-            System.out.println(cou_string);
-        }
-    }
 
     //Methods for creating Language report - Simon
     //------------------------------------------------------------------------------------------------------------------------------
@@ -441,4 +420,192 @@ public class Database {
             System.out.println(lang_string);
         }
     }
+
+    public ArrayList<City> getCitiesByPopulation(String query, int N) {
+        try {
+            Statement stmt = con.createStatement();
+            String strSelect = query + " ORDER BY Population DESC";
+
+            //if N <= 0 then set no limit
+            if(N>0) {
+                strSelect = strSelect + " LIMIT " + N;
+            }
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cities = new ArrayList<>();
+            while (rset.next()) {
+                City city = new City();
+                city.ID = rset.getInt("ID");
+                city.name = rset.getString("Name");
+                city.countryCode = rset.getString("CountryCode");
+                city.district = rset.getString("District");
+                city.population = rset.getLong("Population");
+                cities.add(city);
+            }
+            return cities;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public void printCities(ArrayList<City> cities)
+    {
+        // Check country is not null
+        if (cities == null)
+        {
+            System.out.println("No cities found");
+            return;
+        }
+        // Print header
+        System.out.println(String.format("%-10s %-30s %-15s %-20s %-15s", "ID", "Name", "CountryCode", "District", "Population"));
+
+        // Loop over all countries in the list
+        for (City cit : cities)
+        {
+            if (cit == null)
+                continue;
+
+            String lang_string =
+                    String.format("%-10s %-30s %-15s %-20s %-15s",
+                            cit.ID, cit.name, cit.countryCode, cit.district, cit.population);
+            System.out.println(lang_string);
+        }
+    }
+
+    public ArrayList<City> getCityRegion(String query, int N, String region) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = query + " " + City_queries.region + "'"+region+"'" + " ORDER BY Population DESC";
+
+            //if N <= 0 then set no limit
+            if(N>0) {
+                strSelect = strSelect + " LIMIT " + N;
+            }
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            //Extract country information
+            ArrayList<City> city = new ArrayList<City>();
+            while (rset.next()) {
+                City cit = new City();
+                cit.ID = rset.getInt("ID");
+                cit.name = rset.getString("Name");
+                cit.countryCode = rset.getString("CountryCode");
+                cit.district = rset.getString("District");
+                cit.population = rset.getLong("Population");
+                city.add(cit);
+            }
+            return city;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public ArrayList<City> getCityContinent(String query, int N, String continent) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = query + " " + City_queries.continent + "'"+continent+"'" + " ORDER BY Population DESC";
+
+            //if N <= 0 then set no limit
+            if(N>0) {
+                strSelect = strSelect + " LIMIT " + N;
+            }
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            //Extract country information
+            ArrayList<City> city = new ArrayList<City>();
+            while (rset.next()) {
+                City cit = new City();
+                cit.ID = rset.getInt("ID");
+                cit.name = rset.getString("Name");
+                cit.countryCode = rset.getString("CountryCode");
+                cit.district = rset.getString("District");
+                cit.population = rset.getLong("Population");
+                city.add(cit);
+            }
+            return city;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public ArrayList<City> getCityCountry(String query, int N, String country) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = query + " " + City_queries.country + "'"+country+"'" + " ORDER BY Population DESC";
+
+            //if N <= 0 then set no limit
+            if(N>0) {
+                strSelect = strSelect + " LIMIT " + N;
+            }
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            //Extract country information
+            ArrayList<City> city = new ArrayList<City>();
+            while (rset.next()) {
+                City cit = new City();
+                cit.ID = rset.getInt("ID");
+                cit.name = rset.getString("Name");
+                cit.countryCode = rset.getString("CountryCode");
+                cit.district = rset.getString("District");
+                cit.population = rset.getLong("Population");
+                city.add(cit);
+            }
+            return city;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public ArrayList<City> getCityDistrict(String query, int N, String district) {
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect = query + " " + City_queries.district + "'"+district+"'" + " ORDER BY Population DESC";
+
+            //if N <= 0 then set no limit
+            if(N>0) {
+                strSelect = strSelect + " LIMIT " + N;
+            }
+
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            //Extract country information
+            ArrayList<City> city = new ArrayList<City>();
+            while (rset.next()) {
+                City cit = new City();
+                cit.ID = rset.getInt("ID");
+                cit.name = rset.getString("Name");
+                cit.countryCode = rset.getString("CountryCode");
+                cit.district = rset.getString("District");
+                cit.population = rset.getLong("Population");
+                city.add(cit);
+            }
+            return city;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
 }
