@@ -1,22 +1,22 @@
 32 requirements of 32 have been implemented, which is 100%.
-| ID | Name | Met | Screenshot|                                                                              |
-|----|------|-----|--------------------------------------------------------------------------------------------| |
+| ID | Name | Met | Screenshot |
+|----|------|-----|------------|
 |1|All the countries in the world organised by largest population to smallest.| Yes |Too much data, start and end screenshotted. ![img_7.png](img_7.png)![img_8.png](img_8.png)|
 |2|All the countries in a continent organised by largest population to smallest.| Yes |![img_4.png](img_4.png)![img_5.png](img_5.png)|
 |3|All the countries in a region organised by largest population to smallest.| Yes |![img.png](img.png)|
 |4|The top N populated countries in the world where N is provided by the user.| Yes |![img_1.png](img_1.png)|
-|5|The top N populated countries in a continent where N is provided by the user.| Yes |![img_2.png](img_2.png)|
-|6|The top N populated countries in a region where N is provided by the user.| Yes |![img_3.png](img_3.png)|
-|7|All the cities in the world organised by largest population to smallest.|Yes| ![yeye.png](yeye.png)![yur.png](yur.png)                |                                   |
-|8|All the cities in a continent organised by largest population to smallest.|Yes| ![beee.png](beee.png)![burger.png](burger.png)       |                                      |
-|9|All the cities in a region organised by largest population to smallest.|Yes| ![img_90.png](img_90.png)![img_100.png](img_100.png)   |                                    |
-|10|All the cities in a country organised by largest population to smallest.|Yes| ![borger.png](borger.png)![chicken.png](chicken.png)|                                  |
-|11|All the cities in a district organised by largest population to smallest.|Yes| ![img_110.png](img_110.png)   |                                                             |
-|12|The top N populated cities in the world where N is provided by the user.|Yes| ![img_120.png](img_120.png)   |                                                             |
-|13|The top N populated cities in a continent where N is provided by the user.|Yes| ![img_130.png](img_130.png)|                                                                |
-|14|The top N populated cities in a region where N is provided by the user.|Yes| ![img_140.png](img_140.png)  |                                                              |
-|15|The top N populated cities in a country where N is provided by the user.|Yes| ![img_150.png](img_150.png)|                                                                |
-|16|The top N populated cities in a district where N is provided by the user.|Yes| ![img_160.png](img_160.png)|
+|5|The top N populated countries in a continent where N is provided by the user.| Yes |![img_3.png](img_3.png)|
+|6|The top N populated countries in a region where N is provided by the user.| Yes |![img_2.png](img_2.png)|
+|7|All the cities in the world organised by largest population to smallest.| Yes |![img_31.png](img_31.png)![img_32.png](img_32.png)|
+|8|All the cities in a continent organised by largest population to smallest.| Yes |![img_39.png](img_39.png)![img_40.png](img_40.png)|
+|9|All the cities in a region organised by largest population to smallest.| Yes |![img_36.png](img_36.png)![img_37.png](img_37.png)|
+|10|All the cities in a country organised by largest population to smallest.| Yes |![img_42.png](img_42.png)![img_43.png](img_43.png)|
+|11|All the cities in a district organised by largest population to smallest.| Yes |![img_34.png](img_34.png)|
+|12|The top N populated cities in the world where N is provided by the user.| Yes |![img_38.png](img_38.png)|
+|13|The top N populated cities in a continent where N is provided by the user.| Yes |![img_44.png](img_44.png)|
+|14|The top N populated cities in a region where N is provided by the user.| Yes |![img_35.png](img_35.png)|
+|15|The top N populated cities in a country where N is provided by the user.| Yes |![img_41.png](img_41.png)|
+|16|The top N populated cities in a district where N is provided by the user.| Yes | ![img_33.png](img_33.png)|
 |17|All the capital cities in the world organised by largest population to smallest.| Yes |![img_22.png](img_22.png)![img_23.png](img_23.png)|
 |18|All the capital cities in a continent organised by largest population to smallest.| Yes |![img_25.png](img_25.png)![img_26.png](img_26.png)|
 |19|All the capital cities in a region organised by largest to smallest.| Yes |![img_27.png](img_27.png)|
