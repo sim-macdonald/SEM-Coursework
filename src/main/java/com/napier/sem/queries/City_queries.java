@@ -5,7 +5,7 @@ package com.napier.sem.queries;
 public class City_queries {
 
     //Default string for country report
-    public static String query1 = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population"
+    public static String query1 = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population "
             + "FROM city "
             + "JOIN country ON city.CountryCode = country.Code";
 
