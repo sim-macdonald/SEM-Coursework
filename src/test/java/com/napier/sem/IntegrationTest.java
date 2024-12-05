@@ -636,7 +636,7 @@ public class IntegrationTest {
     @Test
     void testGetCityContinent() {
         String query = "SELECT * FROM city JOIN country ON city.ID = country.countryCode";
-        String continent = "Asia";
+        String continent = "Africa";
         ArrayList<City> cities = db.getCityContinent(query, 5, continent);  // Limit to 5 countries
 
         // Verify the result is not null and contains the correct continent
