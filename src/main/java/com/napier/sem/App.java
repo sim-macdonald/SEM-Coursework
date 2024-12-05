@@ -62,8 +62,88 @@ public class App
         a.printLanguage(languageReport);
 
 
-        //ArrayList<Capital_City> cap = a.getCapitalCitiesByPopulation();
-        //a.printCapital(cap);
+        //Cities
+
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("I want to be able to generate the top N populated cities in the world where N is provided by the user.");
+        System.out.println("-----------------------------------------------------------------------------");
+        //Extract city information
+        ArrayList<City> cities = a.getCitiesByPopulation(City_queries.query1, 5);
+        // Display results
+        a.printCities(cities);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("I want to be able to generate all the cities in the world organised by largest population to smallest.");
+        System.out.println("-----------------------------------------------------------------------------");
+        //Extract city information
+        ArrayList<City> cities2 = a.getCitiesByPopulation(City_queries.query1, 0);
+        // Display results
+        a.printCities(cities2);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("I want to be able to generate the top N populated cities in a district where N is provided by the user.");
+        System.out.println("-----------------------------------------------------------------------------");
+        //Extract city information
+        ArrayList<City> cities3 = a.getCityDistrict(City_queries.query1, 5,"Queensland");
+        // Display results
+        a.printCities(cities3);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("I want to be able to generate all the cities in a district organised by largest population to smallest.");
+        System.out.println("-----------------------------------------------------------------------------");
+        //Extract city information
+        ArrayList<City> cities4 = a.getCityDistrict(City_queries.query1, 0,"Queensland");
+        // Display results
+        a.printCities(cities4);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("I want to be able to generate the top N populated cities in a region where N is provided by the user.");
+        System.out.println("-----------------------------------------------------------------------------");
+        //Extract city information
+        ArrayList<City> cities5 = a.getCityRegion(City_queries.query1, 5,"Caribbean");
+        // Display results
+        a.printCities(cities5);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("I want to be able to generate all the cities in a region organised by largest population to smallest.");
+        System.out.println("-----------------------------------------------------------------------------");
+        //Extract city information
+        ArrayList<City> cities6 = a.getCityRegion(City_queries.query1, 0,"Caribbean");
+        // Display results
+        a.printCities(cities6);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("I want to be able to generate the top N populated cities in a continent where N is provided by the user.");
+        System.out.println("-----------------------------------------------------------------------------");
+        //Extract city information
+        ArrayList<City> cities7 = a.getCityContinent(City_queries.query1, 5,"Asia");
+        // Display results
+        a.printCities(cities7);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("I want to be able to generate all the cities in a continent organised by largest population to smallest.");
+        System.out.println("-----------------------------------------------------------------------------");
+        //Extract city information
+        ArrayList<City> cities8 = a.getCityContinent(City_queries.query1, 0,"Asia");
+        // Display results
+        a.printCities(cities8);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("I want to be able to generate the top N populated cities in a country where N is provided by the user.");
+        System.out.println("-----------------------------------------------------------------------------");
+        //Extract city information
+        ArrayList<City> cities9 = a.getCityCountry(City_queries.query1, 5,"AFG");
+        // Display results
+        a.printCities(cities9);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("I want to be able to generate all the cities in a country organised by largest population to smallest.");
+        System.out.println("-----------------------------------------------------------------------------");
+        //Extract city information
+        ArrayList<City> cities10 = a.getCityCountry(City_queries.query1, 0,"AFG");
+        // Display results
+        a.printCities(cities10);
 
         // Disconnect from database
         a.disconnect();
