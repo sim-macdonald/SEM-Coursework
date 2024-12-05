@@ -493,16 +493,18 @@ public class IntegrationTest {
                 "LEFT JOIN city ON country.Capital = city.ID " +
                 "GROUP BY country.Continent";
 
-        ArrayList<Population> populationReport = db.getPopulationReport(query);
+            ArrayList<Population> PopulationReport = db.getPopulationReport(query);
 
         // Verify the results
-        assertNotNull(populationReport, "Population report should not be null.");
-        assertFalse(populationReport.isEmpty(), "Population report should not be empty.");
-        populationReport.forEach(continent -> {
-            assertNotNull(continent.getName(), "Continent name should not be null.");
-            assertTrue(continent.getTotalPopulation() > 0, "Total population should be greater than 0.");
-            assertTrue(continent.getCityPercentage() >= 0, "City percentage should be non-negative.");
-            assertTrue(continent.getNonCityPercentage() >= 0, "Non-city percentage should be non-negative.");
+            assertNotNull(PopulationReport, "Population report should not be null.");
+            assertFalse(PopulationReport.isEmpty(), "Population report should not be empty.");
+
+            PopulationReport.forEach(continent -> {
+                Population population = PopulationReport.get(0);
+                assertNotNull(continent.getName(), "Continent name should not be null.");
+                assertTrue(population.getTotalPopulation() > 0, "Total population should be greater than 0.");
+                assertTrue(population.getCityPercentage() >= 0, "City percentage should be non-negative.");
+                assertTrue(population.getNonCityPercentage() >= 0, "Non-city percentage should be non-negative.");
         });
     }
 
@@ -522,16 +524,17 @@ public class IntegrationTest {
                 "LEFT JOIN city ON country.Capital = city.ID " +
                 "GROUP BY country.Region";
 
-        ArrayList<Population> populationReport = db.getPopulationReport(query);
+        ArrayList<Population> PopulationReport = db.getPopulationReport(query);
 
         // Verify the results
-        assertNotNull(populationReport, "Population report should not be null.");
-        assertFalse(populationReport.isEmpty(), "Population report should not be empty.");
-        populationReport.forEach(region -> {
+        assertNotNull(PopulationReport, "Population report should not be null.");
+        assertFalse(PopulationReport.isEmpty(), "Population report should not be empty.");
+        PopulationReport.forEach(region -> {
+            Population population = PopulationReport.get(0);
             assertNotNull(region.getName(), "Region name should not be null.");
-            assertTrue(region.getTotalPopulation() > 0, "Total population should be greater than 0.");
-            assertTrue(region.getCityPercentage() >= 0, "City percentage should be non-negative.");
-            assertTrue(region.getNonCityPercentage() >= 0, "Non-city percentage should be non-negative.");
+            assertTrue(population.getTotalPopulation() > 0, "Total population should be greater than 0.");
+            assertTrue(population.getCityPercentage() >= 0, "City percentage should be non-negative.");
+            assertTrue(population.getNonCityPercentage() >= 0, "Non-city percentage should be non-negative.");
         });
     }
 
@@ -551,16 +554,17 @@ public class IntegrationTest {
                 "LEFT JOIN city ON country.Capital = city.ID " +
                 "GROUP BY country.Name, country.Population";
 
-        ArrayList<Population> populationReport = db.getPopulationReport(query);
+        ArrayList<Population> PopulationReport = db.getPopulationReport(query);
 
         // Verify the results
-        assertNotNull(populationReport, "Population report should not be null.");
-        assertFalse(populationReport.isEmpty(), "Population report should not be empty.");
-        populationReport.forEach(country -> {
+        assertNotNull(PopulationReport, "Population report should not be null.");
+        assertFalse(PopulationReport.isEmpty(), "Population report should not be empty.");
+        PopulationReport.forEach(country -> {
+            Population population = PopulationReport.get(0);
             assertNotNull(country.getName(), "Country name should not be null.");
-            assertTrue(country.getTotalPopulation() > 0, "Total population should be greater than 0.");
-            assertTrue(country.getCityPercentage() >= 0, "City percentage should be non-negative.");
-            assertTrue(country.getNonCityPercentage() >= 0, "Non-city percentage should be non-negative.");
+            assertTrue(population.getTotalPopulation() > 0, "Total population should be greater than 0.");
+            assertTrue(population.getCityPercentage() >= 0, "City percentage should be non-negative.");
+            assertTrue(population.getNonCityPercentage() >= 0, "Non-city percentage should be non-negative.");
         });
     }
 
