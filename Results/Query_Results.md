@@ -1,5 +1,5 @@
 32 requirements of 32 have been implemented, which is 100%.
-| ID | Name | Met | Screenshot                                                                                 |
+| ID | Name | Met | Screenshot|                                                                              |
 |----|------|-----|--------------------------------------------------------------------------------------------| |
 |1|All the countries in the world organised by largest population to smallest.| Yes |Too much data, start and end screenshotted. ![img_7.png](img_7.png)![img_8.png](img_8.png)|
 |2|All the countries in a continent organised by largest population to smallest.| Yes |![img_4.png](img_4.png)![img_5.png](img_5.png)|
