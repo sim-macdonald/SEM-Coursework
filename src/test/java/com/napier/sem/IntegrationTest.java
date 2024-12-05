@@ -446,6 +446,38 @@ public class IntegrationTest {
     }
 
     /**
+     * Integration test for retrieving population data for a specific district.
+     */
+    @Test
+    void testGetPopulationDistrict() {
+        // Query to get population data for a specific district
+        String query = "SELECT city.District AS Name, "
+                + "SUM(city.Population) AS TotalPopulation, "
+                + "SUM(city.Population) AS CityPopulation, "
+                + "0 AS NonCityPopulation, "
+                + "100 AS CityPercentage, "
+                + "0 AS NonCityPercentage "
+                + "FROM city "
+                + "WHERE city.District = 'Kabol' "
+                + "GROUP BY city.District";
+
+        // Get the population report using the query
+        ArrayList<Population> populationReport = db.getPopulationReport(query);
+
+        // Ensure the report is not null and contains at least one entry
+        assertNotNull(populationReport, "The population report should not be null");
+        assertFalse(populationReport.isEmpty(), "The population report should contain data");
+
+        // Check if the first report entry has valid data
+        Population population = populationReport.get(0);
+        assertNotNull(population.getName(), "The district name should not be null");
+        assertTrue(population.getTotalPopulation() > 0, "Total population should be greater than zero");
+
+        // Print the population report for visual verification
+        db.printPopulationReport(populationReport);
+    }
+
+    /**
      * Integration test for retrieving population data of people, people living in cities, and people not living in cities in each continent.
      *
      */
@@ -530,38 +562,6 @@ public class IntegrationTest {
             assertTrue(country.getCityPercentage() >= 0, "City percentage should be non-negative.");
             assertTrue(country.getNonCityPercentage() >= 0, "Non-city percentage should be non-negative.");
         });
-    }
-
-    /**
-     * Integration test for retrieving population data for a specific district.
-     */
-    @Test
-    void testGetPopulationDistrict() {
-        // Query to get population data for a specific district
-        String query = "SELECT city.District AS Name, "
-                + "SUM(city.Population) AS TotalPopulation, "
-                + "SUM(city.Population) AS CityPopulation, "
-                + "0 AS NonCityPopulation, "
-                + "100 AS CityPercentage, "
-                + "0 AS NonCityPercentage "
-                + "FROM city "
-                + "WHERE city.District = 'Kabol' "
-                + "GROUP BY city.District";
-
-        // Get the population report using the query
-        ArrayList<Population> populationReport = db.getPopulationReport(query);
-
-        // Ensure the report is not null and contains at least one entry
-        assertNotNull(populationReport, "The population report should not be null");
-        assertFalse(populationReport.isEmpty(), "The population report should contain data");
-
-        // Check if the first report entry has valid data
-        Population population = populationReport.get(0);
-        assertNotNull(population.getName(), "The district name should not be null");
-        assertTrue(population.getTotalPopulation() > 0, "Total population should be greater than zero");
-
-        // Print the population report for visual verification
-        db.printPopulationReport(populationReport);
     }
 
 
