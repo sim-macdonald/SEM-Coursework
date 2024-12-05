@@ -425,12 +425,13 @@ public class Database {
         try {
             Statement stmt = con.createStatement();
             String strSelect = query + " ORDER BY Population DESC";
-            ResultSet rset = stmt.executeQuery(strSelect);
 
             //if N <= 0 then set no limit
             if(N>0) {
                 strSelect = strSelect + " LIMIT " + N;
             }
+
+            ResultSet rset = stmt.executeQuery(strSelect);
 
             ArrayList<City> cities = new ArrayList<>();
             while (rset.next()) {
