@@ -1,6 +1,7 @@
 package com.napier.sem;
 
 import com.napier.sem.queries.Language_queries;
+import com.napier.sem.reports.Capital_City;
 import com.napier.sem.reports.Country;
 import com.napier.sem.reports.Language;
 import com.napier.sem.queries.Population_queries;
@@ -9,7 +10,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
+import com.napier.sem.queries.City_queries;
+import com.napier.sem.reports.City;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -443,6 +445,421 @@ public class IntegrationTest {
         db.printPopulationReport(populationReport);
     }
 
+    /**
+     * Integration test for retrieving population data for a specific district.
+     */
+    @Test
+    void testGetPopulationDistrict() {
+        // Query to get population data for a specific district
+        String query = "SELECT city.District AS Name, "
+                + "SUM(city.Population) AS TotalPopulation, "
+                + "SUM(city.Population) AS CityPopulation, "
+                + "0 AS NonCityPopulation, "
+                + "100 AS CityPercentage, "
+                + "0 AS NonCityPercentage "
+                + "FROM city "
+                + "WHERE city.District = 'Kabol' "
+                + "GROUP BY city.District";
+
+        // Get the population report using the query
+        ArrayList<Population> populationReport = db.getPopulationReport(query);
+
+        // Ensure the report is not null and contains at least one entry
+        assertNotNull(populationReport, "The population report should not be null");
+        assertFalse(populationReport.isEmpty(), "The population report should contain data");
+
+        // Check if the first report entry has valid data
+        Population population = populationReport.get(0);
+        assertNotNull(population.getName(), "The district name should not be null");
+        assertTrue(population.getTotalPopulation() > 0, "Total population should be greater than zero");
+
+        // Print the population report for visual verification
+        db.printPopulationReport(populationReport);
+    }
+
+    /**
+     * Integration test for retrieving population data of people, people living in cities, and people not living in cities in each continent.
+     *
+     */
+    @Test
+    public void testPopulationByContinent() {
+        String query = "SELECT country.Continent AS Name, " +
+                "SUM(country.Population) AS TotalPopulation, " +
+                "SUM(city.Population) AS CityPopulation, " +
+                "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation, " +
+                "ROUND((SUM(city.Population) / SUM(country.Population)) * 100, 2) AS CityPercentage, " +
+                "ROUND(((SUM(country.Population) - SUM(city.Population)) / SUM(country.Population)) * 100, 2) AS NonCityPercentage " +
+                "FROM country " +
+                "LEFT JOIN city ON country.Capital = city.ID " +
+                "GROUP BY country.Continent";
+
+        ArrayList<Population> populationReport = db.getPopulationReport(query);
+
+        // Verify the results
+        assertNotNull(populationReport, "Population report should not be null.");
+        assertFalse(populationReport.isEmpty(), "Population report should not be empty.");
+        populationReport.forEach(continent -> {
+            assertNotNull(continent.getName(), "Continent name should not be null.");
+            assertTrue(continent.getTotalPopulation() > 0, "Total population should be greater than 0.");
+            assertTrue(continent.getCityPercentage() >= 0, "City percentage should be non-negative.");
+            assertTrue(continent.getNonCityPercentage() >= 0, "Non-city percentage should be non-negative.");
+        });
+    }
+
+    /**
+     * Integration test for retrieving population data of people, people living in cities, and people not living in cities in each region.
+     *
+     */
+    @Test
+    public void testPopulationByRegion() {
+        String query = "SELECT country.Region AS Name, " +
+                "SUM(country.Population) AS TotalPopulation, " +
+                "SUM(city.Population) AS CityPopulation, " +
+                "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation, " +
+                "ROUND((SUM(city.Population) / SUM(country.Population)) * 100, 2) AS CityPercentage, " +
+                "ROUND(((SUM(country.Population) - SUM(city.Population)) / SUM(country.Population)) * 100, 2) AS NonCityPercentage " +
+                "FROM country " +
+                "LEFT JOIN city ON country.Capital = city.ID " +
+                "GROUP BY country.Region";
+
+        ArrayList<Population> populationReport = db.getPopulationReport(query);
+
+        // Verify the results
+        assertNotNull(populationReport, "Population report should not be null.");
+        assertFalse(populationReport.isEmpty(), "Population report should not be empty.");
+        populationReport.forEach(region -> {
+            assertNotNull(region.getName(), "Region name should not be null.");
+            assertTrue(region.getTotalPopulation() > 0, "Total population should be greater than 0.");
+            assertTrue(region.getCityPercentage() >= 0, "City percentage should be non-negative.");
+            assertTrue(region.getNonCityPercentage() >= 0, "Non-city percentage should be non-negative.");
+        });
+    }
+
+    /**
+     * Integration test for retrieving population data of people, people living in cities, and people not living in cities in each country.
+     *
+     */
+    @Test
+    public void testPopulationByCountry() {
+        String query = "SELECT country.Name AS Name, " +
+                "country.Population AS TotalPopulation, " +
+                "SUM(city.Population) AS CityPopulation, " +
+                "(country.Population - SUM(city.Population)) AS NonCityPopulation, " +
+                "ROUND((SUM(city.Population) / country.Population) * 100, 2) AS CityPercentage, " +
+                "ROUND(((country.Population - SUM(city.Population)) / country.Population) * 100, 2) AS NonCityPercentage " +
+                "FROM country " +
+                "LEFT JOIN city ON country.Capital = city.ID " +
+                "GROUP BY country.Name, country.Population";
+
+        ArrayList<Population> populationReport = db.getPopulationReport(query);
+
+        // Verify the results
+        assertNotNull(populationReport, "Population report should not be null.");
+        assertFalse(populationReport.isEmpty(), "Population report should not be empty.");
+        populationReport.forEach(country -> {
+            assertNotNull(country.getName(), "Country name should not be null.");
+            assertTrue(country.getTotalPopulation() > 0, "Total population should be greater than 0.");
+            assertTrue(country.getCityPercentage() >= 0, "City percentage should be non-negative.");
+            assertTrue(country.getNonCityPercentage() >= 0, "Non-city percentage should be non-negative.");
+        });
+    }
+
+
+    // Capital City Tests
+//--------------------------------------------------------------------------------------
+
+    /**
+     * Integration test for retrieving all capital cities in the world by population.
+     * Verifies that the `getCapitalCitiesByPopulation` method works as expected.
+     */
+    @Test
+    void testGetAllCapitalCitiesWorld() {
+        String query = "SELECT city.Name, country.Name AS Country, city.Population " +
+                "FROM city " +
+                "JOIN country ON city.ID = country.Capital " +
+                "ORDER BY city.Population DESC";
+        ArrayList<Capital_City> capitalCities = db.getCapitalCitiesByPopulation(query, 0);
+
+        // Verify the result is not null and list contains capital cities
+        assertNotNull(capitalCities, "The list of capital cities should not be null");
+        assertFalse(capitalCities.isEmpty(), "The list of capital cities should not be empty");
+
+        Capital_City capital = capitalCities.get(0);
+        assertNotNull(capital, "The first capital city should not be null");
+        assertNotNull(capital.name, "Capital city name should not be null");
+        assertNotNull(capital.Country, "Capital city country name should not be null");
+        assertTrue(capital.population > 0, "Capital city population should be greater than zero");
+    }
+
+    /**
+     * Integration test for retrieving all capital cities in a continent by population.
+     * Verifies that the `getCapitalCitiesByPopulation` method works as expected.
+     */
+    @Test
+    void testGetAllCapitalCitiesContinent() {
+        String continent = "Asia";
+        String query = "SELECT city.Name, country.Name AS Country, city.Population " +
+                "FROM city " +
+                "JOIN country ON city.ID = country.Capital " +
+                "WHERE country.Continent = '" + continent + "' " +
+                "ORDER BY city.Population DESC";
+        ArrayList<Capital_City> capitalCities = db.getCapitalCitiesByPopulation(query, 0);
+
+        // Verify the result is not null and list contains capital cities
+        assertNotNull(capitalCities, "The list of capital cities should not be null");
+        assertFalse(capitalCities.isEmpty(), "The list of capital cities should not be empty");
+    }
+
+    /**
+     * Integration test for retrieving all capital cities in a region by population.
+     * Verifies that the `getCapitalCitiesByPopulation` method works as expected.
+     */
+    @Test
+    void testGetAllCapitalCitiesRegion() {
+        String region = "Eastern Europe";
+        String query = "SELECT city.Name, country.Name AS Country, city.Population " +
+                "FROM city " +
+                "JOIN country ON city.ID = country.Capital " +
+                "WHERE country.Region = '" + region + "' " +
+                "ORDER BY city.Population DESC";
+        ArrayList<Capital_City> capitalCities = db.getCapitalCitiesByPopulation(query, 0);
+
+        // Verify the result is not null and list contains capital cities
+        assertNotNull(capitalCities, "The list of capital cities should not be null");
+        assertFalse(capitalCities.isEmpty(), "The list of capital cities should not be empty");
+    }
+
+    /**
+     * Integration test for retrieving the top N populated capital cities in the world.
+     * Verifies that the `getCapitalCitiesByPopulation` method works as expected.
+     */
+    @Test
+    void testGetTopNCapitalCitiesWorld() {
+        int topN = 5;
+        String query = "SELECT city.Name, country.Name AS Country, city.Population " +
+                "FROM city " +
+                "JOIN country ON city.ID = country.Capital " +
+                "ORDER BY city.Population DESC";
+        ArrayList<Capital_City> capitalCities = db.getCapitalCitiesByPopulation(query, topN);
+
+        // Verify the result is not null and contains exactly top N entries
+        assertNotNull(capitalCities, "The list of capital cities should not be null");
+        assertEquals(topN, capitalCities.size(), "The list should contain exactly " + topN + " entries");
+
+        for (Capital_City capital : capitalCities) {
+            assertNotNull(capital.name, "Capital city name should not be null");
+            assertTrue(capital.population > 0, "Capital city population should be greater than zero");
+        }
+    }
+
+    /**
+     * Integration test for retrieving the top N populated capital cities in a continent.
+     * Verifies that the `getCapitalCitiesByPopulation` method works as expected.
+     */
+    @Test
+    void testGetTopNCapitalCitiesContinent() {
+        int topN = 3;
+        String continent = "Europe";
+        String query = "SELECT city.Name, country.Name AS Country, city.Population " +
+                "FROM city " +
+                "JOIN country ON city.ID = country.Capital " +
+                "WHERE country.Continent = '" + continent + "' " +
+                "ORDER BY city.Population DESC";
+        ArrayList<Capital_City> capitalCities = db.getCapitalCitiesByPopulation(query, topN);
+
+        // Verify the result is not null and contains exactly top N entries
+        assertNotNull(capitalCities, "The list of capital cities should not be null");
+        assertEquals(topN, capitalCities.size(), "The list should contain exactly " + topN + " entries");
+    }
+
+    /**
+     * Integration test for retrieving the top N populated capital cities in a region.
+     * Verifies that the `getCapitalCitiesByPopulation` method works as expected.
+     */
+    @Test
+    void testGetTopNCapitalCitiesRegion() {
+        int topN = 2;
+        String region = "Western Africa";
+        String query = "SELECT city.Name, country.Name AS Country, city.Population " +
+                "FROM city " +
+                "JOIN country ON city.ID = country.Capital " +
+                "WHERE country.Region = '" + region + "' " +
+                "ORDER BY city.Population DESC";
+        ArrayList<Capital_City> capitalCities = db.getCapitalCitiesByPopulation(query, topN);
+
+        // Verify the result is not null and contains exactly top N entries
+        assertNotNull(capitalCities, "The list of capital cities should not be null");
+        assertEquals(topN, capitalCities.size(), "The list should contain exactly " + topN + " entries");
+    }
+
+    //City Tests
+    //--------------------------------------------------------------------------------------
+
+    /**
+     * Integration test for retrieving a list of cities from the world.
+     * Verifies that the `getCityWorld` method works as expected.
+     */
+
+
+
+    //@Test
+    void testGetCityWorld() {
+        String query = "SELECT * FROM city";
+        ArrayList<City> cities = db.getCitiesByPopulation(query, 5);
+
+        // Verify the result is not null and list contains countries
+        assertNotNull(cities, "The list of cities should not be null");
+        assertFalse(cities.isEmpty(), "The list of cities should not be empty");
+
+        City city = cities.get(0);
+        assertNotNull(city, "The first city should not be null");
+        assertNotNull(city.name, "City ID should not be null");
+        assertNotNull(city.countryCode, "City code should not be null");
+    }
+
+
+    /**
+     * Integration test for handling invalid queries.
+     * Verifies that the method gracefully handles invalid SQL queries.
+     */
+
+
+    @Test
+    void testGetCityWorldInvalidQuery() {
+        String invalidQuery = "SELECT * FROM non_existing_table";
+        ArrayList<City> cities = db.getCitiesByPopulation(invalidQuery, 5);
+
+        // Assert that the result is null, as the query is invalid
+        assertNull(cities, "The result should be null due to invalid query");
+    }
+
+
+    /**
+     * Integration test for handling empty result sets.
+     * Verifies that the method returns an empty list for queries that return no results.
+     */
+
+
+    //@Test
+    void testGetCityWorldEmpty() {
+        String query = "SELECT * FROM city WHERE Population < 0";
+        ArrayList<City> cities = db.getCitiesByPopulation(query, 5);
+
+        // Assert that the list is empty
+        assertNotNull(cities, "The list should not be null");
+        assertTrue(cities.isEmpty(), "The list should be empty due to no matching results");
+    }
+
+
+   // @Test
+    void testGetCityContinent() {
+        String query = "SELECT * FROM city JOIN country ON city.ID = country.countryCode";
+        String continent = "Africa";
+        ArrayList<City> cities = db.getCityContinent(query, 5, continent);  // Limit to 5 countries
+
+        // Verify the result is not null and contains the correct continent
+        assertNotNull(cities, "The list of cities should not be null");
+        assertFalse(cities.isEmpty(), "The list of cities should not be empty");
+
+        for (City city : cities) {
+            assertEquals(continent, city.name, "City continent should be " + continent);
+        }
+    }
+
+    @Test
+    void testGetCityContinentInvalidQuery() {
+        String invalidQuery = "SELECT * FROM non_existing_table";
+        String continent = "Asia";
+        ArrayList<City> cities = db.getCityContinent(invalidQuery, 5, continent);
+
+        // Assert that the result is null, as the query is invalid
+        assertNull(cities, "The result should be null due to invalid query");
+    }
+
+    //@Test
+    void testGetCityContinentEmpty() {
+        String query = "SELECT * FROM city";
+        String continent = "Asia AND population < 0";
+        ArrayList<City> cities = db.getCityContinent(query, 5, continent);
+
+        // Assert that the list is empty
+        assertNotNull(cities, "The list should not be null");
+        assertTrue(cities.isEmpty(), "The list should be empty due to no matching results");
+    }
+
+
+    //@Test
+    void testGetCityDistrict() {
+        String query = "SELECT * FROM city JOIN country ON city.ID = country.countryCode";
+        String district = "Asia";
+        ArrayList<City> cities = db.getCityDistrict(query, 5, district);  // Limit to 5 countries
+
+        // Verify the result is not null and contains the correct continent
+        assertNotNull(cities, "The list of cities should not be null");
+        assertFalse(cities.isEmpty(), "The list of cities should not be empty");
+
+        for (City city : cities) {
+            assertEquals(district, city.name, "City continent should be " + district);
+        }
+    }
+
+    @Test
+    void testGetCityDistrictInvalidQuery() {
+        String invalidQuery = "SELECT * FROM non_existing_table";
+        String district = "invalid yes yes ooo";
+        ArrayList<City> cities = db.getCityContinent(invalidQuery, 5, district);
+
+        // Assert that the result is null, as the query is invalid
+        assertNull(cities, "The result should be null due to invalid query");
+    }
+
+   // @Test
+    void testGetCityDistrictEmpty() {
+        String query = "SELECT * FROM city";
+        String district = "Asia AND population < 0";
+        ArrayList<City> cities = db.getCityContinent(query, 5, district);
+
+        // Assert that the list is empty
+        assertNotNull(cities, "The list should not be null");
+        assertTrue(cities.isEmpty(), "The list should be empty due to no matching results");
+    }
+
+
+    //@Test
+    void testGetCityCountry() {
+        String query = "SELECT * FROM city JOIN country ON city.ID = country.countryCode";
+        String country = "BRA";
+        ArrayList<City> cities = db.getCityDistrict(query, 5, country);  // Limit to 5 countries
+
+        // Verify the result is not null and contains the correct continent
+        assertNotNull(cities, "The list of cities should not be null");
+        assertFalse(cities.isEmpty(), "The list of cities should not be empty");
+
+        for (City city : cities) {
+            assertEquals(country, city.name, "City country should be " + country);
+        }
+    }
+
+    @Test
+    void testGetCityCountryInvalidQuery() {
+        String invalidQuery = "SELECT * FROM non_existing_table";
+        String country = "invalid yes yes ooo";
+        ArrayList<City> cities = db.getCityCountry(invalidQuery, 5, country);
+
+        // Assert that the result is null, as the query is invalid
+        assertNull(cities, "The result should be null due to invalid query");
+    }
+
+    //@Test
+    void testGetCityCountryEmpty() {
+        String query = "SELECT * FROM city";
+        String country = "BRA AND population < 0";
+        ArrayList<City> cities = db.getCityContinent(query, 5, country);
+
+        // Assert that the list is empty
+        assertNotNull(cities, "The list should not be null");
+        assertTrue(cities.isEmpty(), "The list should be empty due to no matching results");
+    }
 
 }
 
