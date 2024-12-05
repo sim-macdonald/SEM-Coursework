@@ -658,7 +658,7 @@ public class IntegrationTest {
         assertNull(cities, "The result should be null due to invalid query");
     }
 
-  //  @Test
+    @Test
     void testGetCityContinentEmpty() {
         String query = "SELECT * FROM city";
         String continent = "Asia AND population < 0";
@@ -670,7 +670,7 @@ public class IntegrationTest {
     }
 
 
-  //  @Test
+    @Test
     void testGetCityDistrict() {
         String query = "SELECT * FROM city JOIN country ON city.ID = country.countryCode";
         String district = "Asia";
@@ -695,7 +695,7 @@ public class IntegrationTest {
         assertNull(cities, "The result should be null due to invalid query");
     }
 
-  //  @Test
+    @Test
     void testGetCityDistrictEmpty() {
         String query = "SELECT * FROM city";
         String district = "Asia AND population < 0";
@@ -707,7 +707,7 @@ public class IntegrationTest {
     }
 
 
-  //  @Test
+    @Test
     void testGetCityCountry() {
         String query = "SELECT * FROM city JOIN country ON city.ID = country.countryCode";
         String country = "BRA";
@@ -732,7 +732,7 @@ public class IntegrationTest {
         assertNull(cities, "The result should be null due to invalid query");
     }
 
-   // @Test
+    @Test
     void testGetCityCountryEmpty() {
         String query = "SELECT * FROM city";
         String country = "BRA AND population < 0";
