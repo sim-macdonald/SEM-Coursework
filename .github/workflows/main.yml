@@ -22,6 +22,7 @@ jobs:
       - name: Unit Tests
         run: mvn -Dtest=com.napier.sem.DatabaseTest test
 
+
   IntegrationTests:
     name: Integration Tests
     runs-on: ubuntu-20.04
