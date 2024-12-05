@@ -200,4 +200,59 @@ public class DatabaseTest
         languages.add(lang);
         db.printLanguage(languages);
     }
+//--------------------------------------------------------------------------------------------------
+    /**
+     * Test case for the `printCountries` method when the input is `null`.
+     * This test ensures that the method handles a `null` input.
+     */
+    @Test
+    void printCitiesTestNull()
+    {
+        db.printCities(null);
+    }
+
+    /**
+     * Test case for the `printCountries` method when the input is an empty list.
+     * This test ensures that the method handles an empty list correctly,
+     * printing a message indicating no countries are found.
+     */
+    @Test
+    void printCitiesTestEmpty()
+    {
+        ArrayList<City> cities = new ArrayList<City>();
+        db.printCities(cities);
+    }
+
+    /**
+     * Test case for the `printCountries` method when the input list contains a `null` element.
+     * This test ensures that the method can handle a list where one or more elements are `null`,
+     * and continues processing the remaining valid elements or prints nothing if all are `null`.
+     */
+    @Test
+    void printCitiesTestContainsNull()
+    {
+        ArrayList<City> cities = new ArrayList<City>();
+        cities.add(null);
+        db.printCities(cities);
+    }
+
+    /**
+     * Test case for the `printCountries` method when the input contains a valid country.
+     * This test ensures that the method correctly formats and prints a country's code, name, continent, region, population and capital.
+     */
+    @Test
+    void printCities()
+    {
+        ArrayList<City> cities = new ArrayList<City>();
+        City city= new City();
+        city.ID = 123;
+        city.name = "TestName";
+        city.countryCode = "ASDF";
+        city.district = "TestDistrict";
+        city.population = 123;
+        cities.add(city);
+        db.printCities(cities);
+    }
 }
+
+
