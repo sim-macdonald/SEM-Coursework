@@ -299,34 +299,6 @@ public class Database {
         }
     }
 
-
-
-    public ArrayList<City> getCitiesByPopulation() {
-        try {
-            Statement stmt = con.createStatement();
-            String strSelect = "SELECT ID, Name, CountryCode, District, Population FROM city ORDER BY Population DESC";
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            ArrayList<City> cities = new ArrayList<>();
-            while (rset.next()) {
-                City city = new City();
-                city.ID = rset.getInt("ID");
-                city.name = rset.getString("Name");
-                city.countryCode = rset.getString("CountryCode");
-                city.district = rset.getString("District");
-                city.population = rset.getLong("Population");
-                cities.add(city);
-            }
-            return cities;
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get city details");
-            return null;
-        }
-    }
-
-
         //Captial City
 //-------------------------------------------------------------------------------------------------------------
 
@@ -634,5 +606,5 @@ public class Database {
             return null;
         }
     }
-    
+
 }
