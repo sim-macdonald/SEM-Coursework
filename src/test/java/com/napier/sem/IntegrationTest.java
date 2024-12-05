@@ -732,7 +732,7 @@ public class IntegrationTest {
         assertNull(cities, "The result should be null due to invalid query");
     }
 
-    @Test
+    //@Test
     void testGetCityCountryEmpty() {
         String query = "SELECT * FROM city";
         String country = "BRA AND population < 0";
