@@ -7,7 +7,7 @@ public class City_queries {
     //Default string for country report
     public static String query1 = "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population"
             + "FROM city "
-            + "JOIN country ON city.ID = country.Name";
+            + "JOIN country ON city.CountryCode = country.Code";
 
     //WHERE statements
     public static String continent = "WHERE country.Continent=";
