@@ -402,8 +402,41 @@ public class IntegrationTest {
     }
 
 
+    @Test
+    void testGetCityCountry() {
+        String query = "SELECT * FROM city JOIN country ON city.ID = country.countryCode";
+        String country = "BRA";
+        ArrayList<City> cities = db.getCityDistrict(query, 5, country);  // Limit to 5 countries
 
+        // Verify the result is not null and contains the correct continent
+        assertNotNull(cities, "The list of cities should not be null");
+        assertFalse(cities.isEmpty(), "The list of cities should not be empty");
 
+        for (City city : cities) {
+            assertEquals(country, city.name, "City country should be " + country);
+        }
+    }
+
+    @Test
+    void testGetCityCountryInvalidQuery() {
+        String invalidQuery = "SELECT * FROM non_existing_table";
+        String country = "invalid yes yes ooo";
+        ArrayList<City> cities = db.getCityCountry(invalidQuery, 5, country);
+
+        // Assert that the result is null, as the query is invalid
+        assertNull(cities, "The result should be null due to invalid query");
+    }
+
+    @Test
+    void testGetCityCountryEmpty() {
+        String query = "SELECT * FROM city";
+        String country = "BRA AND population < 0";
+        ArrayList<City> cities = db.getCityContinent(query, 5, country);
+
+        // Assert that the list is empty
+        assertNotNull(cities, "The list should not be null");
+        assertTrue(cities.isEmpty(), "The list should be empty due to no matching results");
+    }
 }
 
 
