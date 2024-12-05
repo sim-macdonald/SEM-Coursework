@@ -132,16 +132,26 @@ public class App
         ArrayList<Capital_City> topNCapitalCitiesRegion = a.getCapitalCitiesByPopulation(CapitalCity_queries.query6, N);
         a.printCapital(topNCapitalCitiesRegion);
 
-        ArrayList<Population> population1 = a.getPopulationReport(Population_queries.query1);
-        a.printPopulationReport(population1);
-        ArrayList<Population> population2 = a.getPopulationReport(Population_queries.query2);
-        a.printPopulationReport(population2);
-        ArrayList<Population> population3 = a.getPopulationReport(Population_queries.query3);
-        a.printPopulationReport(population3);
-        ArrayList<Population> population4 = a.getPopulationReport(Population_queries.query4);
-        a.printPopulationReport(population4);
-        ArrayList<Population> population5 = a.getPopulationReport(Population_queries.query5);
-        a.printPopulationReport(population5);
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Total population of the world");
+        System.out.println("---------------------------------------------------------------------------");
+
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of a specific continent");
+        System.out.println("---------------------------------------------------------------------------");
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of a specific region");
+        System.out.println("---------------------------------------------------------------------------");
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of a specific country");
+        System.out.println("---------------------------------------------------------------------------");
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of a specific city");
+        System.out.println("---------------------------------------------------------------------------");
 
 
         //Cities
@@ -227,6 +237,30 @@ public class App
         // Display results
         a.printCities(cities10);
 
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of people living in cities, and people not living in cities in each continent.");
+        System.out.println("---------------------------------------------------------------------------");
+        ArrayList<Population> population6 = a.getPopulationReport(Population_queries.query6);
+        a.printPopulationReport(population6);
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of people living in cities, and people not living in cities in each region.");
+        System.out.println("---------------------------------------------------------------------------");
+        ArrayList<Population> population7 = a.getPopulationReport(Population_queries.query7);
+        a.printPopulationReport(population7);
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of people living in cities, and people not living in cities in each country.");
+        System.out.println("---------------------------------------------------------------------------");
+        ArrayList<Population> population8 = a.getPopulationReport(Population_queries.query8);
+        a.printPopulationReport(population8);
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("Population of a specific district");
+        System.out.println("---------------------------------------------------------------------------");
+        ArrayList<Population> population9 = a.getPopulationReport(Population_queries.query9);
+        a.printPopulationReport(population9);
 
         // Disconnect from database
         a.disconnect();

@@ -57,4 +57,48 @@ public class Population_queries {
             + "0 AS NonCityPercentage "
             + "FROM city "
             + "WHERE city.Name = 'Delhi'";
+
+    // Query to get population data of people living in cities, and people not living in cities in each continent.
+    public static String query6 = "SELECT country.Continent AS Name, " +
+            "SUM(country.Population) AS TotalPopulation, " +
+            "SUM(city.Population) AS CityPopulation, " +
+            "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation, " +
+            "ROUND((SUM(city.Population) / SUM(country.Population)) * 100, 2) AS CityPercentage, " +
+            "ROUND(((SUM(country.Population) - SUM(city.Population)) / SUM(country.Population)) * 100, 2) AS NonCityPercentage " +
+            "FROM country " +
+            "LEFT JOIN city ON country.Capital = city.ID " +
+            "GROUP BY country.Continent";
+
+    // Query to get population data of people living in cities, and people not living in cities in each region.
+    public static String query7 = "SELECT country.Region AS Name, " +
+            "SUM(country.Population) AS TotalPopulation, " +
+            "SUM(city.Population) AS CityPopulation, " +
+            "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation, " +
+            "ROUND((SUM(city.Population) / SUM(country.Population)) * 100, 2) AS CityPercentage, " +
+            "ROUND(((SUM(country.Population) - SUM(city.Population)) / SUM(country.Population)) * 100, 2) AS NonCityPercentage " +
+            "FROM country " +
+            "LEFT JOIN city ON country.Capital = city.ID " +
+            "GROUP BY country.Region";
+
+    // Query to get population data of people living in cities, and people not living in cities in each country.
+    public static String query8 = "SELECT country.Name AS Name, " +
+            "country.Population AS TotalPopulation, " +
+            "SUM(city.Population) AS CityPopulation, " +
+            "(country.Population - SUM(city.Population)) AS NonCityPopulation, " +
+            "ROUND((SUM(city.Population) / country.Population) * 100, 2) AS CityPercentage, " +
+            "ROUND(((country.Population - SUM(city.Population)) / country.Population) * 100, 2) AS NonCityPercentage " +
+            "FROM country " +
+            "LEFT JOIN city ON country.Capital = city.ID " +
+            "GROUP BY country.Name, country.Population";
+
+    // Query to get population data for a specific district
+    public static String query9 = "SELECT city.District AS Name, "
+            + "SUM(city.Population) AS TotalPopulation, "
+            + "SUM(city.Population) AS CityPopulation, "
+            + "0 AS NonCityPopulation, "
+            + "100 AS CityPercentage, "
+            + "0 AS NonCityPercentage "
+            + "FROM city "
+            + "WHERE city.District = 'YourDistrictName' "
+            + "GROUP BY city.District";
 }
