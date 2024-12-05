@@ -545,7 +545,7 @@ public class IntegrationTest {
                 + "100 AS CityPercentage, "
                 + "0 AS NonCityPercentage "
                 + "FROM city "
-                + "WHERE city.District = 'YourDistrictName' "
+                + "WHERE city.District = 'Kabol' "
                 + "GROUP BY city.District";
 
         // Get the population report using the query

@@ -99,6 +99,6 @@ public class Population_queries {
             + "100 AS CityPercentage, "
             + "0 AS NonCityPercentage "
             + "FROM city "
-            + "WHERE city.District = 'YourDistrictName' "
+            + "WHERE city.District = 'Kabol' "
             + "GROUP BY city.District";
 }
